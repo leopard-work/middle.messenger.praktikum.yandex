@@ -7,7 +7,7 @@ import signUpPage from "./pages/sign-up";
 import error404Page from "./pages/error404";
 import error500Page from "./pages/error500";
 import { linkEvents } from "./components/link/linkEvents";
-import { tempNavEvents } from "./components/tempNav/tempNavEvents";
+import { tempNavEvents } from "./components/tempNav/tempNavEvents"; 
 import {profilePage, editProfilePage, editProfilePasswordPage} from "./pages/profile";
 
 const root = document.querySelector("#root");
