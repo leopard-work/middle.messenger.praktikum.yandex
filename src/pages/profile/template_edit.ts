@@ -2,7 +2,7 @@ export const editTemplate = `
 [[ temp_nav? ]]
 <main class="profile-wrapper">
     <form class="auth profile">
-        [[ link? &href='#profile' &className='profile__back' &title='{{ back }}' ]]
+        [[ link? &href='/profile' &className='profile__back' &title='{{ back }}' ]]
         <h1 class="auth__title profile__title">{{ titleEdit }}</h1>
         [[ input? &name='email' &className='input-text auth__input-text profile__input-text' &placeholder='{{ email }}' &value='test@mail.ru' ]]
         [[ input? &name='login' &className='input-text auth__input-text profile__input-text' &placeholder='{{ login }}' &value='test' ]]

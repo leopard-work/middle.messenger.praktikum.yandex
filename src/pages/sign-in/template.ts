@@ -10,7 +10,7 @@ export const template = `
         [[ input? &name='password' &type='password' &className='input-text auth__input-text' ]]
         <button type="submit" class="input-button auth__button">{{ button }}</button>
         <div class="auth__link">
-            [[ link? &href='#sign-up' &title='{{ reg_link }}' ]]
+            [[ link? &href='/sign-up' &title='{{ reg_link }}' ]]
         </div>
     </form>
 </main>

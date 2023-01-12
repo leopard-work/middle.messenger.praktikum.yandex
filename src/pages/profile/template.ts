@@ -8,7 +8,7 @@ export const template = `
             <span></span>
         </div>
         <div class="auth__link profile__edit-avatar">
-            [[ link? &href='#profile/' &title='{{ photo }}' ]]
+            [[ link? &href='/profile' &title='{{ photo }}' ]]
             <input type="file" name="avatar" style="display: none">
         </div>
         [[ input? &name='email' &className='input-text auth__input-text profile__input-text' &placeholder='{{ email }}' &value='test@mail.ru' &disabled='true' ]]
@@ -18,10 +18,10 @@ export const template = `
         [[ input? &name='display_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ chat_name }}' &disabled='true' ]]
         [[ input? &name='phone' &className='input-text auth__input-text profile__input-text' &placeholder='{{ phone }}' &value='+79763653344' &disabled='true' ]]
         <div class="auth__link profile__link">
-            [[ link? &href='#profile/edit/' &title='{{ edit }}' ]]
+            [[ link? &href='/profile/edit' &title='{{ edit }}' ]]
         </div>
         <div class="auth__link profile__link">
-            [[ link? &href='#profile/password/' &title='{{ edit_password }}' ]]
+            [[ link? &href='/profile/password' &title='{{ edit_password }}' ]]
         </div>
         <div class="auth__link profile__link profile__sign-out">
             [[ link? &href='/' &title='{{ sign_out }}' ]]

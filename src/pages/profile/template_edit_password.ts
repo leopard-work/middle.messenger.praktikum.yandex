@@ -2,7 +2,7 @@ export const editPasswordTemplate = `
 [[ temp_nav? ]]
 <main class="profile-wrapper">
     <form class="auth profile">
-        [[ link? &href='#profile' &className='profile__back' &title='{{ back }}' ]]
+        [[ link? &href='/profile' &className='profile__back' &title='{{ back }}' ]]
         <h1 class="auth__title profile__title">{{ titleEditPassword }}</h1>
         [[ input? &name='oldPassword' &type='password' &className='input-text auth__input-text profile__input-text' &placeholder='{{ oldPassword }}' ]]
         [[ input? &name='newPassword' &type='password' &className='input-text auth__input-text profile__input-text' &placeholder='{{ newPassword }}' ]]

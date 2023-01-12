@@ -13,20 +13,31 @@ import {profilePage, editProfilePage, editProfilePasswordPage} from "./pages/pro
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
 
-//const pathName = window.location.pathname;
-const pathHash = window.location.hash;
+const pathName = window.location.pathname;
 
-export const pageOpen = (pathHash: string) => {
-  let page = homePage();
+type templateProps = {
+  pageTitle: string,
+  content: string
+}
+type pagesProps = {
+  [key: string]: templateProps
+}
 
-  if (pathHash === "") page = homePage();
-  if (pathHash === "#sign-in") page = signInPage();
-  if (pathHash === "#sign-up") page = signUpPage();
-  if (pathHash === "#404") page = error404Page();
-  if (pathHash === "#500") page = error500Page();
-  if (pathHash === "#profile") page = profilePage();
-  if (pathHash === "#profile/edit/") page = editProfilePage();
-  if (pathHash === "#profile/password/") page = editProfilePasswordPage();
+const pages: pagesProps  = {
+  '': homePage(),
+  '/sign-in': signInPage(),
+  '/sign-up': signUpPage(),
+  '/page404': error404Page(),
+  '/page500': error500Page(),
+  '/profile': profilePage(),
+  '/profile/edit': editProfilePage(),
+  '/profile/password': editProfilePasswordPage(),
+}
+
+export const pageOpen = (pathName: string) => {
+  let page = error404Page();
+  if (pathName[pathName.length - 1] === '/') pathName = pathName.slice(0,-1);
+  if (pages[pathName]) page = pages[pathName];
 
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
@@ -39,4 +50,4 @@ export const pageOpen = (pathHash: string) => {
   return true;
 };
 
-pageOpen(pathHash);
+pageOpen(pathName);
