@@ -8,7 +8,6 @@
   align-items: center;
   align-content: center;
   min-height: 100vh;
-  background-color: $color_blue;
   padding: 24px 0;
 }
 .page-error__title {
@@ -17,6 +16,7 @@
   font-size: 40px;
   margin-bottom: 40px;
   text-transform: uppercase;
+  color: $color_red;
 }
 .page-error__text {
   width: 100%;

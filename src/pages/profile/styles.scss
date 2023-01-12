@@ -8,44 +8,34 @@
   align-items: center;
   align-content: center;
   min-height: 100vh;
-  background-color: $color_blue;
   padding: 24px 0;
 }
 .auth {
-  width: 400px;
-  border: solid 1px $color_blue2;
+  width: 100%;
+  max-width: 600px;
   border-radius: 5px;
   padding: 40px;
-  background-color: #ffffff;
+  background-color: $color_blue;
 }
 .auth__title {
   font-size: 24px;
   text-align: center;
   margin-bottom: 24px;
 }
-.auth__text {
-  color: $color_blue2;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-.auth__input-text {
-  border-bottom: solid 1px $color_gray !important;
-  border-radius: 0 !important;
+.auth__input-text-wrapper {
   margin-bottom: 20px;
-  &:focus {
-    border-radius: 5px !important;
-  }
+  display: block;
 }
-.auth__error {
-  background-color: $color_red;
-  color: #ffffff;
-  padding: 12px;
-  font-size: 12px;
-  border-radius: 5px;
-  margin-bottom: 24px;
+.auth__button-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 .auth__button {
-  margin: 32px 0 16px 0;
+  margin: 16px 0;
 }
 .auth__link {
   text-align: center;
@@ -58,18 +48,12 @@
     }
   }
 }
-
-.profile-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  min-height: 100vh;
-  background-color: $color_blue;
-  padding: 24px 0;
+.auth_error {
+  margin-top: 8px;
+  color: $color_red;
+  font-size: 12px;
 }
+
 .profile {
   position: relative;
 }
@@ -101,7 +85,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #c4c4c4;
+    background-color: transparentize(#000000, 0.9);
   }
 }
 .profile__edit-avatar {
@@ -112,10 +96,17 @@
   left: 12px;
   top: 12px;
   font-size: 12px;
-  color: $color_blue2;
-  text-decoration: none;
+  svg {
+    width: 40px;
+    height: 40px;
+    polygon {
+      fill: $color_blue2 !important;
+    }
+  }
   &:hover {
-    color: $color_red;
+    svg polygon {
+      fill: $color_red !important;
+    }
   }
 }
 .profile__button {

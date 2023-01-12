@@ -108,17 +108,24 @@
     align-content: stretch;
     background-color: #fff;
     padding: 15px 20px;
-    border-bottom: solid 1px $color_gray;
+    border-top: solid 1px $color_gray;
     color: #000;
     text-decoration: none;
     font-size: 14px;
+    margin-top: -1px;
     &:hover {
         background-color: $color_gray2;
     }
+    &:first-child {
+        border-top: none;
+    }
 }
 .nav-user_active {
-    background-color: $color_gray2;
+    background-color: $color_blue;
     border-bottom: solid 1px $color_blue2;
+    border-top: solid 1px $color_blue2;
+    z-index: 2;
+    position: relative;
 }
 .nav-user__logo {
     width: 50px;

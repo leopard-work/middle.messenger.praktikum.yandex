@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
+
 @import "variables";
+
+$font_titles: 'Oswald', sans-serif;
 
 
 * {
@@ -8,10 +12,10 @@
   font-family: 'Open Sans', sans-serif !important;
 }
 
-::-webkit-input-placeholder {color:$color_gray;}
-::-moz-placeholder          {color:$color_gray;}
-:-moz-placeholder           {color:$color_gray;}
-:-ms-input-placeholder      {color:$color_gray;}
+::-webkit-input-placeholder {color:transparentize($color_blue2,0.5);}
+::-moz-placeholder          {color:transparentize($color_blue2,0.5);}
+:-moz-placeholder           {color:transparentize($color_blue2,0.5);}
+:-ms-input-placeholder      {color:transparentize($color_blue2,0.5);}
 
 body {
   font-size: 14px;
@@ -22,7 +26,7 @@ body {
   border-radius: 5px;
   border: none;
   outline: none;
-  padding: 0 15px;
+  padding: 0 16px;
   &:focus {
     -webkit-box-shadow: 0 0 5px 0 rgba(1,58,113,0.3);
     -moz-box-shadow: 0 0 50px 0 rgba(1,58,113,0.3);
@@ -30,29 +34,34 @@ body {
   }
 }
 .input-button {
-  width: 100%;
   background-color: $color_blue2;
   color: #ffffff;
   border-radius: 5px;
   border: none;
-  padding: 10px;
+  padding: 12px 40px;
   cursor: pointer;
   &:hover {
     background-color: $color_red;
   }
 }
 
+h1 {
+  font-family: $font_titles !important;
+  text-transform: uppercase;
+}
+
 .temp-nav {
   position: absolute;
   z-index: 3;
   background-color: rgba(0,0,0,0.05);
-  width: 250px;
   left: calc(50% - 125px);
   padding: 10px;
+  border-radius: 0 0 5px 5px;
 }
 .temp-nav__title {
   cursor: pointer;
   text-decoration: underline;
+  color: $color_red;
   margin-bottom: 10px;
   font-size: 12px;
   &:hover {
@@ -63,6 +72,7 @@ body {
   a {
     display: block;
     color: black;
+    text-align: center;
     font-size: 12px;
     &:hover {
       text-decoration: none;

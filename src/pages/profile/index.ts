@@ -17,7 +17,7 @@ const values = {
   edit: "Изменить данные",
   edit_password: "Изменить пароль",
   sign_out: "Выйти",
-  back: "Вернуться назад",
+  back: '<svg height="512px" style="enable-background:new 0 0 512 512;" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>',
   pageTitleEdit: "Редактировать профиль",
   titleEdit: "Редактировать профиль",
   pageTitleEditPassword: "Изменить пароль",

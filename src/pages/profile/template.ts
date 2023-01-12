@@ -1,6 +1,6 @@
 export const template = `
 [[ temp_nav? ]]
-<main class="profile-wrapper">
+<main class="auth-wrapper">
     <form class="auth profile">
         [[ link? &href='/' &className='profile__back' &title='{{ back }}' ]]
         <h1 class="auth__title profile__title">{{ title }}</h1>
@@ -11,12 +11,24 @@ export const template = `
             [[ link? &href='/profile' &title='{{ photo }}' ]]
             <input type="file" name="avatar" style="display: none">
         </div>
-        [[ input? &name='email' &className='input-text auth__input-text profile__input-text' &placeholder='{{ email }}' &value='test@mail.ru' &disabled='true' ]]
-        [[ input? &name='login' &className='input-text auth__input-text profile__input-text' &placeholder='{{ login }}' &value='test' &disabled='true' ]]
-        [[ input? &name='first_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ name }}' &value='Василий' &disabled='true' ]]
-        [[ input? &name='second_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ surname }}' &disabled='true' ]]
-        [[ input? &name='display_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ chat_name }}' &disabled='true' ]]
-        [[ input? &name='phone' &className='input-text auth__input-text profile__input-text' &placeholder='{{ phone }}' &value='+79763653344' &disabled='true' ]]
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='email' &className='input-text auth__input-text profile__input-text' &placeholder='{{ email }}' &value='test@mail.ru' &disabled='true' ]]
+        </label>
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='login' &className='input-text auth__input-text profile__input-text' &placeholder='{{ login }}' &value='test' &disabled='true' ]]
+        </label>
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='first_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ name }}' &value='Василий' &disabled='true' ]]
+        </label>
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='second_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ surname }}' &disabled='true' ]]
+        </label>
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='display_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ chat_name }}' &disabled='true' ]]
+        </label>
+        <label class="auth__input-text-wrapper">
+            [[ input? &name='phone' &className='input-text auth__input-text profile__input-text' &placeholder='{{ phone }}' &value='+79763653344' &disabled='true' ]]
+        </label>
         <div class="auth__link profile__link">
             [[ link? &href='/profile/edit' &title='{{ edit }}' ]]
         </div>
