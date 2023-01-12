@@ -1,6 +1,6 @@
 {
   "name": "yp_messenger",
-  "version": "1.0.0",
+  "version": "0.2",
   "description": "Yandex practicum messenger project",
   "scripts": {
     "dev": "parcel index.html --open",
@@ -17,6 +17,6 @@
     "prettier": "2.8.1"
   },
   "dependencies": {
-    "reset-css": "^5.0.1"
+    "reset-css": "5.0.1"
   }
 }
