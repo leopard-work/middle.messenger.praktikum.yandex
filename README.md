@@ -14,3 +14,4 @@
 - Запуск приложения `npm run start`
 - Запуск development версии `npm run dev`
 - Проверка ESLint `npm run lint`
+- StyleLint проверка `npx stylelint "**/*.scss"`
