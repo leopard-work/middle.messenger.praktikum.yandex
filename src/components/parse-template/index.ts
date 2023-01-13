@@ -3,7 +3,7 @@ import { modulesList } from "./modules-list";
 const parseTemplate = (template: string, values: any) => {
   const tplRegularVariable = /\{\{(.*?)\}\}/g;
   const tplRegularModule = /\[\[(.*?)\]\]/g;
-  const tplRegularModuleVariable = /\'(.*?)\'/;
+  const tplRegularModuleVariable = /'(.*?)'/;
 
   let match = null;
   let result = template;
@@ -20,7 +20,7 @@ const parseTemplate = (template: string, values: any) => {
   while ((match = tplRegularModule.exec(result))) {
     const tplRegularModuleName = /\[\[(.*?)\?/g;
     const moduleName = tplRegularModuleName.exec(match[0]);
-    let data:string | (() => string) = "";
+    let data: string | (() => string) = "";
     if (moduleName && moduleName[1]) {
       const moduleVariables = match[0].split("&");
       const moduleValues: any = {};
