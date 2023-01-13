@@ -33,9 +33,7 @@ const parseTemplate = (template: string, values: any) => {
       });
       data = modulesList(moduleName[1].trim(), moduleValues);
     }
-    if (typeof data === "string") {
-      result = result.replace(match[0], data);
-    }
+    result = result.replace(match[0], data);
   }
 
   return result;
