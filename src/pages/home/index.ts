@@ -6,10 +6,13 @@ const homePage = () => {
   const values = {
     pageTitle: "Страница чатов",
     search_placeholder: "Поиск...",
-    message_placeholder: "Сообщение..."
+    message_placeholder: "Сообщение...",
   };
   const content = parseTemplate(template, values);
-  return { pageTitle: values.pageTitle, content: content };
+  return {
+    pageTitle: values.pageTitle,
+    content: content,
+  };
 };
 
 export default homePage;

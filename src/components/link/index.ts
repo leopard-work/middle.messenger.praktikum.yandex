@@ -196,13 +196,18 @@ export const button = new Link({
   href: "profile",
 });
 
+const button2 = new Link({
+  title: "Click me 22",
+  href: "profile",
+});
+
+export const stack = { ["a5"]: button, [1]: button2 };
+
 export const link = () => {
   setTimeout(() => {
     button.setProps({
       title: "Click me, please",
     });
   }, 1000);
-  return button;
+  return '<div id="a5"></div>';
 };
-
-console.log(button);
