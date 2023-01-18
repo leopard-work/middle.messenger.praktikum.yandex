@@ -13,6 +13,7 @@ import {
   editProfilePage,
   editProfilePasswordPage,
 } from "./pages/profile";
+import { button } from "./components/link";
 
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
@@ -45,7 +46,7 @@ export const pageOpen = (pathName: string) => {
 
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
-    root.innerHTML = page.content;
+    root.appendChild = page.content;
   }
 
   tempNavEvents();
@@ -55,3 +56,11 @@ export const pageOpen = (pathName: string) => {
 };
 
 pageOpen(pathName);
+
+// function render(query, block) {
+//   const root = document.querySelector(query);
+//   root.appendChild(block.getContent());
+//   return root;
+// }
+//
+// render("#root", button);

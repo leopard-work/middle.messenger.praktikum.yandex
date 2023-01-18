@@ -1,3 +1,5 @@
+import { pageOpen } from "../../index";
+
 class EventBus {
   constructor() {
     this.listeners = {};
@@ -189,7 +191,7 @@ class Link extends Component {
   }
 }
 
-const button = new Link({
+export const button = new Link({
   title: "Click me",
   href: "profile",
 });
@@ -197,10 +199,10 @@ const button = new Link({
 export const link = () => {
   setTimeout(() => {
     button.setProps({
-      text: "Click me, please",
+      title: "Click me, please",
     });
   }, 1000);
-  return button.render();
+  return button;
 };
 
 console.log(button);
