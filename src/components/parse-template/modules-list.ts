@@ -2,9 +2,10 @@ import { link, linkProps } from "../link";
 import { input, inputProps } from "../input";
 import { tempNav } from "../tempNav";
 
-type modulesProps = linkProps | inputProps;
-
-export const modulesList = (title: string, moduleValues: modulesProps) => {
+export const modulesList = (
+  title: string,
+  moduleValues: { [key: string]: string }
+) => {
   switch (title) {
     case "link":
       return link(<linkProps>moduleValues);

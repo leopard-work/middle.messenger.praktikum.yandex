@@ -1,6 +1,6 @@
 import { modulesList } from "./modules-list";
 
-const parseTemplate = (template: string, values: any) => {
+const parseTemplate = (template: string, values: { [key: string]: string }) => {
   const tplRegularVariable = /\{\{(.*?)\}\}/g;
   const tplRegularModule = /\[\[(.*?)\]\]/g;
   const tplRegularModuleVariable = /'(.*?)'/;
@@ -23,12 +23,12 @@ const parseTemplate = (template: string, values: any) => {
     let data: string | (() => string) = "";
     if (moduleName && moduleName[1]) {
       const moduleVariables = match[0].split("&");
-      const moduleValues: any = {};
+      const moduleValues: { [key: string]: string } = {};
       moduleVariables.map((cur, i) => {
         if (i > 0) {
           const key = cur.split("=")[0];
           const value = tplRegularModuleVariable.exec(cur);
-          if (value) moduleValues[key] = value[1];
+          if (value && moduleValues != null) moduleValues[key] = value[1];
         }
       });
       data = modulesList(moduleName[1].trim(), moduleValues);
