@@ -1,36 +1,4 @@
-class EventBus {
-  constructor() {
-    this.listeners = {};
-  }
-
-  on(event, callback) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
-
-    this.listeners[event].push(callback);
-  }
-
-  off(event, callback) {
-    if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
-    }
-
-    this.listeners[event] = this.listeners[event].filter(
-      (listener) => listener !== callback
-    );
-  }
-
-  emit(event, ...args) {
-    if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
-    }
-
-    this.listeners[event].forEach(function (listener) {
-      listener(...args);
-    });
-  }
-}
+import EventBus from "../eventBus";
 
 class Component {
   static EVENTS = {
@@ -169,38 +137,4 @@ class Component {
   }
 }
 
-export type linkProps = {
-  title: string;
-  href: string;
-  className?: string;
-};
-
-// export const link = ({ title = "", href = "", className = "" }: linkProps) => {
-//   return `<a rel="link" class="${className}" href="${href}">${title}</a>`;
-// };
-
-class Link extends Component {
-  private props: any;
-  constructor(props: any) {
-    super("a", props);
-  }
-  render() {
-    return `<a class="${this.props.className}" href="${this.props.href}">${this.props.title}</a>`;
-  }
-}
-
-const button = new Link({
-  title: "Click me",
-  href: "profile",
-});
-
-export const link = () => {
-  setTimeout(() => {
-    button.setProps({
-      text: "Click me, please",
-    });
-  }, 1000);
-  return button.render();
-};
-
-console.log(button);
+export default Component;
