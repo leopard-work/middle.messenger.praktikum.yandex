@@ -47,6 +47,7 @@ export const pageOpen = (pathName: string) => {
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
     root.innerHTML = page.content;
+    render("#a4", stack["a4"]);
     render("#a5", stack["a5"]);
   }
 

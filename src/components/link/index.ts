@@ -125,6 +125,8 @@ class Component {
     // Нужно не в строку компилировать (или делать это правильно),
     // либо сразу в DOM-элементы возвращать из compile DOM-ноду
     this._element.innerHTML = block;
+
+    this._addEvents();
   }
 
   render() {}
@@ -169,6 +171,14 @@ class Component {
   hide() {
     this.getContent().style.display = "none";
   }
+
+  _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.addEventListener(eventName, events[eventName]);
+    });
+  }
 }
 
 export type linkProps = {
@@ -194,6 +204,12 @@ class Link extends Component {
 export const button = new Link({
   title: "Click me",
   href: "profile",
+  events: {
+    click: (event) => {
+      event.preventDefault();
+      alert("ok");
+    },
+  },
 });
 
 const button2 = new Link({
@@ -201,7 +217,7 @@ const button2 = new Link({
   href: "profile",
 });
 
-export const stack = { ["a5"]: button, [1]: button2 };
+export const stack = { ["a5"]: button, ["a4"]: button2 };
 
 export const link = () => {
   setTimeout(() => {
@@ -209,5 +225,5 @@ export const link = () => {
       title: "Click me, please",
     });
   }, 1000);
-  return '<div id="a5"></div>';
+  return '<div id="a5"><div id="a4"></div></div>';
 };
