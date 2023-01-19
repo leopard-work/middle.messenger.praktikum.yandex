@@ -58,12 +58,33 @@ class Component {
       props,
     };
 
+    const { children, props2 } = this._getChildren(props);
+
+    this.children = children;
+
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
     eventBus.emit(Component.EVENTS.INIT);
+  }
+
+  _getChildren(propsAndChildren) {
+    const children = {};
+    const props2 = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      console.log(key);
+      if (value instanceof Component) {
+        console.log(value);
+        children[key] = value;
+      } else {
+        props2[key] = value;
+      }
+    });
+
+    return { children, props2 };
   }
 
   _registerEvents(eventBus) {
@@ -201,8 +222,16 @@ class Link extends Component {
   }
 }
 
+const test = new Link({
+  title: "tttt",
+  click: (event) => {
+    event.preventDefault();
+    alert("ok");
+  },
+});
+
 export const button = new Link({
-  title: "Click me",
+  title: test,
   href: "profile",
   events: {
     click: (event) => {
@@ -213,7 +242,7 @@ export const button = new Link({
 });
 
 const button2 = new Link({
-  title: "Click me 22",
+  title: new Link({ title: "tttt" }),
   href: "profile",
 });
 
@@ -221,9 +250,15 @@ export const stack = { ["a5"]: button, ["a4"]: button2 };
 
 export const link = () => {
   setTimeout(() => {
-    button.setProps({
-      title: "Click me, please",
+    test.setProps({
+      title: "xxxxxx",
     });
+    console.log(test);
   }, 1000);
+  // setTimeout(() => {
+  //   button.setProps({
+  //     title: "Click me, please",
+  //   });
+  // }, 1000);
   return '<div id="a5"><div id="a4"></div></div>';
 };
