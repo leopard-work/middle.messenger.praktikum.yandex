@@ -58,33 +58,12 @@ class Component {
       props,
     };
 
-    const { children, props2 } = this._getChildren(props);
-
-    this.children = children;
-
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
     eventBus.emit(Component.EVENTS.INIT);
-  }
-
-  _getChildren(propsAndChildren) {
-    const children = {};
-    const props2 = {};
-
-    Object.entries(propsAndChildren).forEach(([key, value]) => {
-      console.log(key);
-      if (value instanceof Component) {
-        console.log(value);
-        children[key] = value;
-      } else {
-        props2[key] = value;
-      }
-    });
-
-    return { children, props2 };
   }
 
   _registerEvents(eventBus) {
@@ -150,7 +129,13 @@ class Component {
     this._addEvents();
   }
 
-  render() {}
+  render() {
+    // for (let a in this.props) {
+    //   console.log(a);
+    // }
+    this.element.setAttribute("href", this.props["href"]);
+    return `${this.props.children}`;
+  }
 
   getContent() {
     return this.element;
@@ -213,27 +198,21 @@ export type linkProps = {
 // };
 
 class Link extends Component {
-  private props: any;
+  props: any;
   constructor(props: any) {
     super("a", props);
-  }
-  render() {
-    return `${this.props.content}`;
   }
 }
 
 class Text extends Component {
-  private props: any;
+  props: any;
   constructor(props: any) {
     super("p", props);
-  }
-  render() {
-    return `${this.props.title}`;
   }
 }
 
 const test = new Text({
-  title: "tttt",
+  children: "tttt",
   events: {
     click: (event) => {
       event.preventDefault();
@@ -245,7 +224,7 @@ const test = new Text({
 export const button = new Link({
   title: "text",
   href: "profile",
-  content: "<div id='a4'>123</div>",
+  children: "<div id='a4'>123</div>",
   events: {
     click: (event) => {
       event.preventDefault();
@@ -264,14 +243,13 @@ export const stack = { ["a5"]: button, ["a4"]: test };
 export const link = () => {
   setTimeout(() => {
     test.setProps({
-      title: "xxxxxx",
+      children: "xxxxxx",
     });
-    console.log(test);
   }, 1000);
-  // setTimeout(() => {
-  //   button.setProps({
-  //     title: "Click me, please",
-  //   });
-  // }, 1000);
+  setTimeout(() => {
+    button.setProps({
+      href: "/",
+    });
+  }, 3000);
   return '<div id="a5"></div>';
 };
