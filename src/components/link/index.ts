@@ -49,13 +49,15 @@ class Component {
    * @param {string} tagName
    * @param {Object} props
    *
+   * @param childs
    * @returns {void}
    */
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName = "div", props = {}, childs = {}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
       props,
+      childs,
     };
 
     this.props = this._makePropsProxy(props);
@@ -95,6 +97,7 @@ class Component {
   }
 
   _componentDidUpdate(oldProps, newProps) {
+    console.log(this.props.modules);
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -232,7 +235,6 @@ const test = new Text({
 export const button = new Link({
   title: "text",
   href: "profile",
-  modules: test,
   children: "<div id='a4'>123</div>",
   events: {
     click: (event) => {
@@ -266,5 +268,11 @@ export const link = () => {
       children: "vvvvvv",
     });
   }, 4000);
+  setTimeout(() => {
+    button.setProps({
+      href: "/ololo/",
+    });
+    render("#a4", stack["a4"]);
+  }, 5000);
   return '<div id="a5"></div>';
 };
