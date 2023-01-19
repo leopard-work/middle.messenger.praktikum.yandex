@@ -1,4 +1,4 @@
-import { pageOpen } from "../../index";
+import { pageOpen, render } from "../../index";
 
 class EventBus {
   constructor() {
@@ -130,10 +130,18 @@ class Component {
   }
 
   render() {
-    // for (let a in this.props) {
-    //   console.log(a);
-    // }
     this.element.setAttribute("href", this.props["href"]);
+
+    // if (this.props.modules) {
+    //   const fragment = this._createDocumentElement("template");
+    //   fragment.innerHTML = `<div id="a4">123</div>`;
+    //   //return `${this.props.modules.getContent()}`;
+    //   const stub = fragment.content.querySelector(`#a4`);
+    //   stub.replaceWith(this.props.modules.getContent());
+    //   console.log(fragment.content);
+    //   return fragment.innerHTML;
+    // }
+
     return `${this.props.children}`;
   }
 
@@ -224,6 +232,7 @@ const test = new Text({
 export const button = new Link({
   title: "text",
   href: "profile",
+  modules: test,
   children: "<div id='a4'>123</div>",
   events: {
     click: (event) => {
@@ -250,6 +259,12 @@ export const link = () => {
     button.setProps({
       href: "/",
     });
+    render("#a4", stack["a4"]);
   }, 3000);
+  setTimeout(() => {
+    test.setProps({
+      children: "vvvvvv",
+    });
+  }, 4000);
   return '<div id="a5"></div>';
 };

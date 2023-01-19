@@ -59,7 +59,7 @@ export const pageOpen = (pathName: string) => {
 
 pageOpen(pathName);
 
-function render(query, block) {
+export function render(query, block) {
   const root = document.querySelector(query);
   root.replaceWith(block.getContent());
   return root;
