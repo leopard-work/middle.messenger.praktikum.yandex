@@ -218,21 +218,34 @@ class Link extends Component {
     super("a", props);
   }
   render() {
-    return `<a class="${this.props.className}" href="${this.props.href}">${this.props.title}</a>`;
+    return `${this.props.content}`;
   }
 }
 
-const test = new Link({
+class Text extends Component {
+  private props: any;
+  constructor(props: any) {
+    super("p", props);
+  }
+  render() {
+    return `${this.props.title}`;
+  }
+}
+
+const test = new Text({
   title: "tttt",
-  click: (event) => {
-    event.preventDefault();
-    alert("ok");
+  events: {
+    click: (event) => {
+      event.preventDefault();
+      alert("ok2s");
+    },
   },
 });
 
 export const button = new Link({
-  title: test,
+  title: "text",
   href: "profile",
+  content: "<div id='a4'>123</div>",
   events: {
     click: (event) => {
       event.preventDefault();
@@ -246,7 +259,7 @@ const button2 = new Link({
   href: "profile",
 });
 
-export const stack = { ["a5"]: button, ["a4"]: button2 };
+export const stack = { ["a5"]: button, ["a4"]: test };
 
 export const link = () => {
   setTimeout(() => {
@@ -260,5 +273,5 @@ export const link = () => {
   //     title: "Click me, please",
   //   });
   // }, 1000);
-  return '<div id="a5"><div id="a4"></div></div>';
+  return '<div id="a5"></div>';
 };
