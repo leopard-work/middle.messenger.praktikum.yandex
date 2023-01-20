@@ -1,4 +1,4 @@
-import { pageOpen, render } from "../../index";
+import { pageOpen, render, rnd } from "../../index";
 
 class EventBus {
   constructor() {
@@ -34,6 +34,8 @@ class EventBus {
   }
 }
 
+export let stack = {};
+
 class Component {
   static EVENTS = {
     INIT: "init",
@@ -52,20 +54,37 @@ class Component {
    * @param childs
    * @returns {void}
    */
-  constructor(tagName = "div", props = {}, childs = {}) {
+  constructor(tagName = "div", propsAndChilds = {}) {
+    const { children, props } = this.getChildren(propsAndChilds);
+
     const eventBus = new EventBus();
     this._meta = {
       tagName,
       props,
-      childs,
     };
 
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
+    this.temp = () => render;
 
     this._registerEvents(eventBus);
     eventBus.emit(Component.EVENTS.INIT);
+  }
+
+  getChildren(propsAndChilds) {
+    const children = propsAndChilds;
+    const props = propsAndChilds;
+    //
+    // Object.keys(propsAndChilds).forEach((key) => {
+    //   if (propsAndChilds[key] instanceof Component)
+    //     children[key] = propsAndChilds[key];
+    //   else props[key] = propsAndChilds[key];
+    // });
+    //
+    // console.log(props);
+
+    return { children, props };
   }
 
   _registerEvents(eventBus) {
@@ -97,7 +116,6 @@ class Component {
   }
 
   _componentDidUpdate(oldProps, newProps) {
-    console.log(this.props.modules);
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -113,7 +131,6 @@ class Component {
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
   };
 
@@ -128,6 +145,17 @@ class Component {
     // Нужно не в строку компилировать (или делать это правильно),
     // либо сразу в DOM-элементы возвращать из compile DOM-ноду
     this._element.innerHTML = block;
+
+    let elements = this._element.querySelectorAll("*[id]");
+    let myArray = Array.from(elements);
+    if (myArray.length) {
+      const idd = myArray[0].getAttribute("id");
+      if (document.querySelector(`#${idd}`)) rnd(`#${idd}`, stack[idd]);
+    }
+    // const root = document.querySelector("#a4");
+    // if (stack["a4"] && root) {
+    //   rnd("#a4", stack["a4"]);
+    // }
 
     this._addEvents();
   }
@@ -144,6 +172,10 @@ class Component {
     //   console.log(fragment.content);
     //   return fragment.innerHTML;
     // }
+
+    //let e = this.props.children;
+
+    //console.log(this.props.children.querySelector("#a4"));
 
     return `${this.props.children}`;
   }
@@ -211,22 +243,21 @@ export type linkProps = {
 class Link extends Component {
   props: any;
   constructor(props: any) {
-    super("a", props);
+    super("form", props);
   }
 }
 
 class Text extends Component {
   props: any;
   constructor(props: any) {
-    super("p", props);
+    super("button", props);
   }
 }
 
 const test = new Text({
-  children: "tttt",
+  children: "отправить",
   events: {
     click: (event) => {
-      event.preventDefault();
       alert("ok2s");
     },
   },
@@ -235,21 +266,24 @@ const test = new Text({
 export const button = new Link({
   title: "text",
   href: "profile",
-  children: "<div id='a4'>123</div>",
+  children: 'Заголовок <br /> <div id="a4"></div>',
   events: {
-    click: (event) => {
+    submit: (event) => {
       event.preventDefault();
-      alert("ok");
+      test.hide();
+      button.setProps({
+        children: "Отправлено",
+      });
     },
   },
 });
 
-const button2 = new Link({
-  title: new Link({ title: "tttt" }),
-  href: "profile",
-});
+// const button2 = new Link({
+//   title: new Link({ title: "tttt" }),
+//   href: "profile",
+// });
 
-export const stack = { ["a5"]: button, ["a4"]: test };
+stack = { ["a5"]: button, ["a4"]: test };
 
 export const link = () => {
   setTimeout(() => {
@@ -261,7 +295,6 @@ export const link = () => {
     button.setProps({
       href: "/",
     });
-    render("#a4", stack["a4"]);
   }, 3000);
   setTimeout(() => {
     test.setProps({
@@ -272,7 +305,6 @@ export const link = () => {
     button.setProps({
       href: "/ololo/",
     });
-    render("#a4", stack["a4"]);
   }, 5000);
   return '<div id="a5"></div>';
 };

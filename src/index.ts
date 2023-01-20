@@ -47,8 +47,8 @@ export const pageOpen = (pathName: string) => {
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
     root.innerHTML = page.content;
-    render("#a5", stack["a5"]);
-    render("#a4", stack["a4"]);
+    rnd("#a5", stack["a5"]);
+    rnd("#a4", stack["a4"]);
   }
 
   tempNavEvents();
@@ -59,7 +59,7 @@ export const pageOpen = (pathName: string) => {
 
 pageOpen(pathName);
 
-export function render(query, block) {
+export function rnd(query, block) {
   const root = document.querySelector(query);
   root.replaceWith(block.getContent());
   return root;
