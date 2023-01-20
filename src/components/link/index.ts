@@ -149,8 +149,10 @@ class Component {
     let elements = this._element.querySelectorAll("*[id]");
     let myArray = Array.from(elements);
     if (myArray.length) {
-      const idd = myArray[0].getAttribute("id");
-      if (document.querySelector(`#${idd}`)) rnd(`#${idd}`, stack[idd]);
+      myArray.forEach((item) => {
+        const idd = item.getAttribute("id");
+        if (document.querySelector(`#${idd}`)) rnd(`#${idd}`, stack[idd]);
+      });
     }
     // const root = document.querySelector("#a4");
     // if (stack["a4"] && root) {
@@ -161,7 +163,8 @@ class Component {
   }
 
   render() {
-    this.element.setAttribute("href", this.props["href"]);
+    this.element.setAttribute("type", this.props["type"]);
+    this.element.setAttribute("name", this.props["name"]);
 
     // if (this.props.modules) {
     //   const fragment = this._createDocumentElement("template");
@@ -221,6 +224,11 @@ class Component {
     this.getContent().style.display = "none";
   }
 
+  addClass(value) {
+    this.getContent().classList.add(value);
+    this.getContent().style.borderColor = "red";
+  }
+
   _addEvents() {
     const { events = {} } = this.props;
 
@@ -254,25 +262,55 @@ class Text extends Component {
   }
 }
 
+class TextField extends Component {
+  props: any;
+  constructor(props: any) {
+    super("input", props);
+  }
+}
+
 const test = new Text({
   children: "отправить",
   events: {
     click: (event) => {
-      alert("ok2s");
+      alert("нажатие на кнопку");
     },
   },
 });
 
+const checkField = (element, value) => {
+  if (!value) {
+    //element.hide();
+    element.addClass("error");
+    console.log("error");
+  }
+};
+
+const inputs = [];
+for (let i = 0; i < 2; i++) {
+  inputs[i] = new TextField({
+    type: "text",
+    name: `name${i}`,
+    events: {
+      blur: (event) => {
+        console.log(event.target.value);
+        checkField(inputs[i], event.target.value);
+      },
+    },
+  });
+}
+
 export const button = new Link({
   title: "text",
-  href: "profile",
-  children: 'Заголовок <br /> <div id="a4"></div>',
+  children:
+    'Заголовок <br /> <div id="a3"></div><br /> <div id="a2"></div> <br /> <div id="a4"></div>',
   events: {
     submit: (event) => {
       event.preventDefault();
       test.hide();
       button.setProps({
-        children: "Отправлено",
+        children:
+          'Заголовок <br /> <div id="a3"></div><br /> <div id="a2"></div> <br /> <div id="a4"></div>',
       });
     },
   },
@@ -283,28 +321,28 @@ export const button = new Link({
 //   href: "profile",
 // });
 
-stack = { ["a5"]: button, ["a4"]: test };
+stack = { ["a5"]: button, ["a4"]: test, ["a3"]: inputs[0], ["a2"]: inputs[1] };
 
 export const link = () => {
-  setTimeout(() => {
-    test.setProps({
-      children: "xxxxxx",
-    });
-  }, 1000);
-  setTimeout(() => {
-    button.setProps({
-      href: "/",
-    });
-  }, 3000);
-  setTimeout(() => {
-    test.setProps({
-      children: "vvvvvv",
-    });
-  }, 4000);
-  setTimeout(() => {
-    button.setProps({
-      href: "/ololo/",
-    });
-  }, 5000);
+  // setTimeout(() => {
+  //   test.setProps({
+  //     children: "xxxxxx",
+  //   });
+  // }, 1000);
+  // setTimeout(() => {
+  //   button.setProps({
+  //     href: "/",
+  //   });
+  // }, 3000);
+  // setTimeout(() => {
+  //   test.setProps({
+  //     children: "vvvvvv",
+  //   });
+  // }, 4000);
+  // setTimeout(() => {
+  //   button.setProps({
+  //     href: "/ololo/",
+  //   });
+  // }, 5000);
   return '<div id="a5"></div>';
 };

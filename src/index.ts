@@ -49,6 +49,8 @@ export const pageOpen = (pathName: string) => {
     root.innerHTML = page.content;
     rnd("#a5", stack["a5"]);
     rnd("#a4", stack["a4"]);
+    rnd("#a3", stack["a3"]);
+    rnd("#a2", stack["a2"]);
   }
 
   tempNavEvents();
