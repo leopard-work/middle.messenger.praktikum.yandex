@@ -29,7 +29,7 @@ type pagesProps = {
 };
 
 const pages: pagesProps = {
-  "": homePage(),
+  //"": homePage(),
   "/sign-in": signInPage(),
   "/sign-up": signUpPage(),
   "/page404": error404Page(),

@@ -224,9 +224,18 @@ class Component {
     this.getContent().style.display = "none";
   }
 
+  setDisabled() {
+    this.getContent().setAttribute('disabled', true);
+  }
+
   addClass(value) {
     this.getContent().classList.add(value);
     this.getContent().style.borderColor = "red";
+  }
+
+  removeClass(value) {
+    this.getContent().classList.remove(value);
+    this.getContent().style.borderColor = "green";
   }
 
   _addEvents() {
@@ -248,47 +257,32 @@ export type linkProps = {
 //   return `<a rel="link" class="${className}" href="${href}">${title}</a>`;
 // };
 
-class Link extends Component {
-  props: any;
-  constructor(props: any) {
-    super("form", props);
-  }
-}
 
-class Text extends Component {
-  props: any;
-  constructor(props: any) {
-    super("button", props);
-  }
-}
 
-class TextField extends Component {
-  props: any;
-  constructor(props: any) {
-    super("input", props);
-  }
-}
 
-const test = new Text({
+const formButton = new Component("button",{
   children: "отправить",
-  events: {
-    click: (event) => {
-      alert("нажатие на кнопку");
-    },
-  },
 });
 
 const checkField = (element, value) => {
+  const error = new Component('p',{
+    children: 'Поле не заполнено'
+  });
+  const parent = element.getContent().closest('label');
+  if (parent && parent.querySelector('p')) parent.querySelector('p').remove();
   if (!value) {
-    //element.hide();
+    if (parent) parent.appendChild(error.getContent());
     element.addClass("error");
-    console.log("error");
+    return false;
+  } else {
+    element.removeClass("error");
   }
+  return true;
 };
 
 const inputs = [];
 for (let i = 0; i < 2; i++) {
-  inputs[i] = new TextField({
+  inputs[i] = new Component('input',{
     type: "text",
     name: `name${i}`,
     events: {
@@ -300,18 +294,35 @@ for (let i = 0; i < 2; i++) {
   });
 }
 
-export const button = new Link({
+class Form extends Component {
+  checkFields() {
+    let ok = true;
+    this.props.modules.inputs.forEach(item => {
+      if (!checkField(item, item.getContent().value)) ok = false;
+    });
+    return ok;
+  }
+}
+
+export const frm = new Form("form",{
   title: "text",
   children:
-    'Заголовок <br /> <div id="a3"></div><br /> <div id="a2"></div> <br /> <div id="a4"></div>',
+    'Заголовок <br /> <label><div id="a3">инпут 1</div></label><br /> <label><div id="a2">инпут 2</div></label> <br /> <div id="a4">кнопка</div>',
+  modules: { inputs },
   events: {
     submit: (event) => {
       event.preventDefault();
-      test.hide();
-      button.setProps({
-        children:
-          'Заголовок <br /> <div id="a3"></div><br /> <div id="a2"></div> <br /> <div id="a4"></div>',
-      });
+      if (frm.checkFields()) {
+        formButton.setDisabled();
+        formButton.setProps({
+          children: 'Загрузка...'
+        });
+        setTimeout(() => {
+          frm.setProps({
+            children: 'Отправлено'
+          })
+        }, 2000)
+      }
     },
   },
 });
@@ -321,7 +332,7 @@ export const button = new Link({
 //   href: "profile",
 // });
 
-stack = { ["a5"]: button, ["a4"]: test, ["a3"]: inputs[0], ["a2"]: inputs[1] };
+stack = { ["a5"]: frm, ["a4"]: formButton, ["a3"]: inputs[0], ["a2"]: inputs[1] };
 
 export const link = () => {
   // setTimeout(() => {
