@@ -65,7 +65,7 @@ const button1 = new Component("button", {
   template: inputTemplate,
   value: "кнопка 1",
   events: {
-    click: (event: any) => {
+    click: (event: Event) => {
       event.preventDefault();
       alert("button1");
     },
@@ -76,7 +76,7 @@ const button2 = new Component("button", {
   template: inputTemplate,
   value: "кнопка 2",
   events: {
-    click: (event: any) => {
+    click: (event: Event) => {
       event.preventDefault();
       alert("button2");
     },
@@ -94,7 +94,7 @@ page1.setProps({
   input1: button2,
   title: "Заголовок 2222",
   events: {
-    click: (event: any) => {
+    click: (event: Event) => {
       event.preventDefault();
       alert("page1");
     },
