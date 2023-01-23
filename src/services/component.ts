@@ -18,6 +18,7 @@ class Block {
   eventBus: () => EventBus;
   props: TProps;
   children: Record<string, Block>;
+  id: string | undefined;
 
   constructor(tagName: string | null = "div", propsAndChilds: TProps) {
     const { children, props } = this._getChildren(propsAndChilds);
@@ -105,10 +106,9 @@ class Block {
   }
 
   _render() {
-    const block = this.render();
+    const block = this.render() as unknown as HTMLTemplateElement;
     // this._removeEvents();
     this._element!.innerHTML = "";
-    // @ts-ignore
     this._element!.appendChild(block);
     this._addEvents();
   }
@@ -149,7 +149,6 @@ class Block {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      //@ts-ignore
       propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
@@ -160,7 +159,6 @@ class Block {
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector<HTMLInputElement>(
-        //@ts-ignore
         `[data-id=${child.id}]`
       );
       (stub as HTMLElement).replaceWith(child.getContent());
