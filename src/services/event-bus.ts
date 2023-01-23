@@ -1,7 +1,3 @@
-type EventBusArgsProps = {
-  args: { [key: string]: string };
-};
-
 class EventBus {
   listeners: {
     [key: string]: Function[];
@@ -18,7 +14,7 @@ class EventBus {
     this.listeners[event].push(callback);
   }
 
-  off(event: string, callback: VoidFunction) {
+  off(event: string, callback: () => void) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
@@ -28,7 +24,7 @@ class EventBus {
     );
   }
 
-  emit(event: string, ...args: EventBusArgsProps[]) {
+  emit(event: string, ...args: { [key: string]: string }[]) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
