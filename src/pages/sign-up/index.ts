@@ -1,9 +1,10 @@
-import parseTemplate from "../../components/parse-template";
 import { template } from "./template";
 import "../profile/styles.scss";
+import Component from "../../services/component";
 
 const signUpPage = () => {
   const values = {
+    template: template,
     pageTitle: "Регистрация",
     title: "Регистрация",
     email: "Почта",
@@ -15,9 +16,9 @@ const signUpPage = () => {
     password_confirm: "Пароль (ещё раз)",
     button: "Зарегистрироваться",
     error: "Ошибка ошибка ошибка",
-    login_link: "Войти"
+    login_link: "Войти",
   };
-  const content = parseTemplate(template, values);
+  const content = new Component("div", values);
   return { pageTitle: values.pageTitle, content: content };
 };
 

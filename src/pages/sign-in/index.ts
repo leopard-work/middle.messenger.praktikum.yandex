@@ -1,9 +1,10 @@
-import parseTemplate from "../../components/parse-template";
 import { template } from "./template";
 import "../profile/styles.scss";
+import Component from "../../services/component";
 
 const signInPage = () => {
   const values = {
+    template: template,
     pageTitle: "Авторизация",
     title: "Авторизация",
     login: "Логин",
@@ -12,7 +13,7 @@ const signInPage = () => {
     reg_link: "Ещё не зарегистрированы?",
     error: "Ошибка ошибка ошибка",
   };
-  const content = parseTemplate(template, values);
+  const content = new Component("div", values);
   return { pageTitle: values.pageTitle, content: content };
 };
 

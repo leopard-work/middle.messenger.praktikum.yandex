@@ -1,6 +1,9 @@
-const render = (query: any, block: any) => {
+import Component from "../services/component";
+
+const render = (query: string, block: Component) => {
   const root = document.querySelector(query);
-  root.appendChild(block.getContent());
+  root!.innerHTML = "";
+  root!.appendChild(block.getContent());
   return root;
 };
 

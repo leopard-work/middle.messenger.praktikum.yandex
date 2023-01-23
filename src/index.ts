@@ -19,11 +19,11 @@ import {
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
 
-//const pathName = window.location.pathname;
+const pathName = window.location.pathname;
 
 type templateProps = {
   pageTitle: string;
-  content: string;
+  content: Component;
 };
 type pagesProps = {
   [key: string]: templateProps;
@@ -47,7 +47,7 @@ export const pageOpen = (pathName: string) => {
 
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
-    root.innerHTML = page.content;
+    render("#root", page.content);
   }
 
   tempNavEvents();
@@ -56,69 +56,69 @@ export const pageOpen = (pathName: string) => {
   return true;
 };
 
-//pageOpen(pathName);
+pageOpen(pathName);
 
-const frmTemplate = `{{ title }} {{ input1 }} {{ input2 }} {{ button }}`;
-const inputTemplate = `{{ value }}`;
+// const frmTemplate = `{{ title }} {{ input1 }} {{ input2 }} {{ button }}`;
+// const inputTemplate = `{{ value }}`;
+//
+// const button1 = new Component("button", {
+//   template: inputTemplate,
+//   value: "кнопка 1",
+//   attr: {
+//     disabled: "true",
+//   },
+//   events: {
+//     click: (event: Event) => {
+//       event.preventDefault();
+//       alert("button1");
+//       button1.setProps({
+//         attr: {
+//           disabled: "true",
+//         },
+//       });
+//     },
+//   },
+// });
+//
+// const button2 = new Component("button", {
+//   template: inputTemplate,
+//   value: "кнопка 2",
+//   events: {
+//     click: (event: Event) => {
+//       event.preventDefault();
+//       alert("button2");
+//     },
+//   },
+// });
+//
+// const page1 = new Component("div", {
+//   template: frmTemplate,
+//   title: "Заголовок",
+//   input1: button1,
+//   input2: button2,
+// });
+//
+// page1.setProps({
+//   input1: button2,
+//   title: "Заголовок 2222",
+//   events: {
+//     click: (event: Event) => {
+//       event.preventDefault();
+//       alert("page1");
+//     },
+//   },
+// });
+//
+// setTimeout(() => {
+//   button1.setProps({
+//     value: "Кнопка 1 изменена",
+//     attr: {
+//       disabled: "false",
+//     },
+//   });
+//   page1.setProps({
+//     title: "test",
+//   });
+// }, 1000);
 
-const button1 = new Component("button", {
-  template: inputTemplate,
-  value: "кнопка 1",
-  attr: {
-    disabled: "true",
-  },
-  events: {
-    click: (event: Event) => {
-      event.preventDefault();
-      alert("button1");
-      button1.setProps({
-        attr: {
-          disabled: "true",
-        },
-      });
-    },
-  },
-});
-
-const button2 = new Component("button", {
-  template: inputTemplate,
-  value: "кнопка 2",
-  events: {
-    click: (event: Event) => {
-      event.preventDefault();
-      alert("button2");
-    },
-  },
-});
-
-const page1 = new Component("div", {
-  template: frmTemplate,
-  title: "Заголовок",
-  input1: button1,
-  input2: button2,
-});
-
-page1.setProps({
-  input1: button2,
-  title: "Заголовок 2222",
-  events: {
-    click: (event: Event) => {
-      event.preventDefault();
-      alert("page1");
-    },
-  },
-});
-
-setTimeout(() => {
-  button1.setProps({
-    value: "Кнопка 1 изменена",
-    attr: {
-      disabled: "false",
-    },
-  });
-  page1.setProps({
-    title: "test",
-  });
-}, 1000);
-
-render("#root", page1);
+//render("#root", page1);

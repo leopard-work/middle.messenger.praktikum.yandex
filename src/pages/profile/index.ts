@@ -1,8 +1,8 @@
-import parseTemplate from "../../components/parse-template";
 import { template } from "./template";
 import { editTemplate } from "./template_edit";
 import { editPasswordTemplate } from "./template_edit_password";
 import "./styles.scss";
+import Component from "../../services/component";
 
 const values = {
   pageTitle: "Профиль",
@@ -29,16 +29,19 @@ const values = {
 };
 
 export const profilePage = () => {
-  const content = parseTemplate(template, values);
+  const content = new Component("div", { ...values, template: template });
   return { pageTitle: values.pageTitle, content: content };
 };
 
 export const editProfilePage = () => {
-  const content = parseTemplate(editTemplate, values);
+  const content = new Component("div", { ...values, template: editTemplate });
   return { pageTitle: values.pageTitleEdit, content: content };
 };
 
 export const editProfilePasswordPage = () => {
-  const content = parseTemplate(editPasswordTemplate, values);
+  const content = new Component("div", {
+    ...values,
+    template: editPasswordTemplate,
+  });
   return { pageTitle: values.pageTitleEditPassword, content: content };
 };
