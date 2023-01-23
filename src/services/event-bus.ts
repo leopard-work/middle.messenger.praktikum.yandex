@@ -10,7 +10,7 @@ class EventBus {
     this.listeners = {};
   }
 
-  on(event: string, callback: VoidFunction) {
+  on(event: string, callback: any) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
