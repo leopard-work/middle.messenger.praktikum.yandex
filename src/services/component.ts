@@ -2,7 +2,7 @@ import EventBus from "./event-bus";
 import parseTemplate from "../components/parse-template";
 import { v4 as uuid } from "uuid";
 
-type TProps = Record<string, any>;
+type BlockProps = Record<string, any>;
 
 class Block {
   static EVENTS = {
@@ -13,14 +13,14 @@ class Block {
   };
 
   _element: Element | null = null;
-  _meta: { tagName: string | null; props: TProps } | null = null;
+  _meta: { tagName: string | null; props: BlockProps } | null = null;
   _id: string = uuid();
   eventBus: () => EventBus;
-  props: TProps;
+  props: BlockProps;
   children: Record<string, Block>;
   id: string | undefined;
 
-  constructor(tagName: string | null = "div", propsAndChilds: TProps) {
+  constructor(tagName: string | null = "div", propsAndChilds: BlockProps) {
     const { children, props } = this._getChildren(propsAndChilds);
     const eventBus = new EventBus();
     this._meta = {
@@ -38,9 +38,9 @@ class Block {
     return this._element;
   }
 
-  _getChildren(propsAndChildren: TProps) {
+  _getChildren(propsAndChildren: BlockProps) {
     const children: Record<string, Block> = {};
-    const props: TProps = {};
+    const props: BlockProps = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -53,14 +53,14 @@ class Block {
     return { children, props };
   }
 
-  _makePropsProxy(props: TProps) {
+  _makePropsProxy(props: BlockProps) {
     const self = this;
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: TProps, prop: string, value: unknown) {
+      set(target: BlockProps, prop: string, value: unknown) {
         const oldProps = target[prop];
         target[prop] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target[prop]);
@@ -88,7 +88,7 @@ class Block {
     this.componentDidMount();
   }
 
-  _componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  _componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -105,11 +105,23 @@ class Block {
     });
   }
 
+  _setAttributes() {
+    if (this.props["attr"]) {
+      Object.entries(this.props["attr"]).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          if (value != "false") this._element!.setAttribute(key, value);
+          else this._element!.removeAttribute(key);
+        }
+      });
+    }
+  }
+
   _render() {
     const block = this.render() as unknown as HTMLTemplateElement;
     // this._removeEvents();
     this._element!.innerHTML = "";
     this._element!.appendChild(block);
+    this._setAttributes();
     this._addEvents();
   }
 
@@ -128,7 +140,7 @@ class Block {
   componentDidMount() {}
 
   //@ts-ignore
-  componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     return true;
   }
 
@@ -138,14 +150,14 @@ class Block {
 
   render() {}
 
-  setProps = (nextProps: TProps) => {
+  setProps = (nextProps: BlockProps) => {
     if (!nextProps) {
       return;
     }
     Object.assign(this.props, nextProps);
   };
 
-  compile(template: string, props?: TProps) {
+  compile(template: string, props?: BlockProps) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {

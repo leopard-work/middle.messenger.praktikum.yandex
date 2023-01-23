@@ -64,10 +64,18 @@ const inputTemplate = `{{ value }}`;
 const button1 = new Component("button", {
   template: inputTemplate,
   value: "кнопка 1",
+  attr: {
+    disabled: "true",
+  },
   events: {
     click: (event: Event) => {
       event.preventDefault();
       alert("button1");
+      button1.setProps({
+        attr: {
+          disabled: "true",
+        },
+      });
     },
   },
 });
@@ -104,6 +112,9 @@ page1.setProps({
 setTimeout(() => {
   button1.setProps({
     value: "Кнопка 1 изменена",
+    attr: {
+      disabled: "false",
+    },
   });
   page1.setProps({
     title: "test",
