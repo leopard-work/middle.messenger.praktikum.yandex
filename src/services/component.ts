@@ -129,6 +129,10 @@ class Block {
     return true;
   }
 
+  getContent() {
+    return this.element;
+  }
+
   render() {}
 
   setProps = (nextProps: any) => {
@@ -147,9 +151,7 @@ class Block {
     });
 
     const fragment = this._createDocumentElement("template");
-    const result = parseTemplate(template, { ...propsAndStubs });
-
-    fragment.innerHTML = result;
+    fragment.innerHTML = parseTemplate(template, { ...propsAndStubs });
 
     Object.values(this.children).forEach((child: any) => {
       const stub = fragment.content.querySelector(`[data-id=${child.id}]`);

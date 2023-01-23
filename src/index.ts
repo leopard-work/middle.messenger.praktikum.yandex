@@ -1,5 +1,7 @@
 import "reset-css";
 import "./styles.scss";
+import Component from "./services/component";
+import render from "./utils/render";
 
 import homePage from "./pages/home/index";
 import signInPage from "./pages/sign-in";
@@ -17,7 +19,7 @@ import {
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
 
-const pathName = window.location.pathname;
+//const pathName = window.location.pathname;
 
 type templateProps = {
   pageTitle: string;
@@ -54,4 +56,58 @@ export const pageOpen = (pathName: string) => {
   return true;
 };
 
-pageOpen(pathName);
+//pageOpen(pathName);
+
+const frmTemplate = `{{ title }} {{ input1 }} {{ input2 }} {{ button }}`;
+const inputTemplate = `{{ value }}`;
+
+const button1 = new Component("button", {
+  template: inputTemplate,
+  value: "кнопка 1",
+  events: {
+    click: (event: any) => {
+      event.preventDefault();
+      alert("button1");
+    },
+  },
+});
+
+const button2 = new Component("button", {
+  template: inputTemplate,
+  value: "кнопка 2",
+  events: {
+    click: (event: any) => {
+      event.preventDefault();
+      alert("button2");
+    },
+  },
+});
+
+const page1 = new Component("div", {
+  template: frmTemplate,
+  title: "Заголовок",
+  input1: button1,
+  input2: button2,
+});
+
+page1.setProps({
+  input1: button2,
+  title: "Заголовок 2222",
+  events: {
+    click: (event: any) => {
+      event.preventDefault();
+      alert("page1");
+    },
+  },
+});
+
+setTimeout(() => {
+  button1.setProps({
+    value: "Кнопка 1 изменена",
+  });
+  page1.setProps({
+    title: "test",
+  });
+}, 1000);
+
+render("#root", page1);
