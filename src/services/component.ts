@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 type TProps = Record<string, any>;
 
-class Block<T = unknown> {
+class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -13,13 +13,13 @@ class Block<T = unknown> {
   };
 
   _element: Element | null = null;
-  _meta: { tagName: string | null; props: T | TProps } | null = null;
+  _meta: { tagName: string | null; props: TProps } | null = null;
   _id: string = uuid();
   eventBus: () => EventBus;
-  props: T & TProps;
+  props: TProps;
   children: Record<string, Block>;
 
-  constructor(tagName: string | null = "div", propsAndChilds: T & TProps) {
+  constructor(tagName: string | null = "div", propsAndChilds: TProps) {
     const { children, props } = this._getChildren(propsAndChilds);
     const eventBus = new EventBus();
     this._meta = {
@@ -37,7 +37,7 @@ class Block<T = unknown> {
     return this._element;
   }
 
-  _getChildren(propsAndChildren: T & TProps) {
+  _getChildren(propsAndChildren: TProps) {
     const children: Record<string, Block> = {};
     const props: TProps = {};
 
@@ -52,7 +52,7 @@ class Block<T = unknown> {
     return { children, props };
   }
 
-  _makePropsProxy(props: T & TProps) {
+  _makePropsProxy(props: TProps) {
     const self = this;
     return new Proxy(props, {
       get(target, prop: string) {
@@ -87,7 +87,7 @@ class Block<T = unknown> {
     this.componentDidMount();
   }
 
-  _componentDidUpdate(oldProps: T & TProps, newProps: T & TProps) {
+  _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -128,7 +128,7 @@ class Block<T = unknown> {
   componentDidMount() {}
 
   //@ts-ignore
-  componentDidUpdate(oldProps: T & TProps, newProps: T & TProps) {
+  componentDidUpdate(oldProps: TProps, newProps: TProps) {
     return true;
   }
 
@@ -138,17 +138,18 @@ class Block<T = unknown> {
 
   render() {}
 
-  setProps = (nextProps: T & TProps) => {
+  setProps = (nextProps: TProps) => {
     if (!nextProps) {
       return;
     }
     Object.assign(this.props, nextProps);
   };
 
-  compile(template: string, props?: T & TProps) {
+  compile(template: string, props?: TProps) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
+      //@ts-ignore
       propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
@@ -159,6 +160,7 @@ class Block<T = unknown> {
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector<HTMLInputElement>(
+        //@ts-ignore
         `[data-id=${child.id}]`
       );
       (stub as HTMLElement).replaceWith(child.getContent());
