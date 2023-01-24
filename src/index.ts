@@ -11,7 +11,6 @@ import error500Page from "./pages/error500";
 import profilePage from "./pages/profile";
 import editProfilePage from "./pages/profile/edit";
 import editProfilePasswordPage from "./pages/profile/editPassword";
-import { linkEvents } from "./components/link/linkEvents";
 import { tempNavEvents } from "./components/tempNav/tempNavEvents";
 
 const root = document.querySelector("#root");

@@ -1,23 +1,27 @@
-// export type linkProps = {
-//   title: string;
-//   href: string;
-//   className?: string;
-// };
-//
-// export const link = ({ title = "", href = "", className = "" }: linkProps) => {
-//   return `<a rel="link" class="${className}" href="${href}">${title}</a>`;
-// };
-
 import Component from "../../services/component";
+import { pageOpen } from "../../index";
 
-const Link = (props: any) => {
+type LinkProps = {
+  title: string,
+  href: string,
+  class?: string
+}
+
+const Link = (props: LinkProps) => {
+  const attr:Partial<LinkProps> = {...props};
+  delete attr.title;
+  console.log(attr);
   return new Component("a", {
-    ...props,
+    title: props.title,
     template: "{{title}}",
+    attr: {
+      ...props
+    },
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        alert("ok");
+        pageOpen(props.href);
+        window.history.pushState(null, "", props.href);
       },
     },
   });

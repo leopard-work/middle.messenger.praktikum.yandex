@@ -1,5 +1,5 @@
 export const form_template = `
-    <h1 class="auth__title">Регистрация</h1>
+    <h1 class="auth__title">{{title}}</h1>
     <p class="auth__text"></p>
     <label class="auth__input-text-wrapper">
         {{emailBlock}}
@@ -26,7 +26,6 @@ export const form_template = `
         {{ buttonBlock }}
     </div>
     <div class="auth__link">
-        [[ link? &href='/sign-in' &title='{{ login_link }}' ]]
         {{signInLink}}
     </div>
 `;

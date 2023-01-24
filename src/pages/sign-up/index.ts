@@ -128,7 +128,7 @@ const signUpPage = () => {
     ...values,
     ...inputs,
     buttonBlock: formButton,
-    signInLink: Link({ title: "Войти" }),
+    signInLink: Link({ title: "Войти", href: "/sign-in" }),
     template: form_template,
     attr: {
       class: "auth",
