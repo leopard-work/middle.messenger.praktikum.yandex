@@ -7,6 +7,7 @@ import {
   setInputsValidate,
 } from "../../components/form-validate";
 import { form_template } from "./template-form";
+import Link from "../../components/link";
 
 const signUpPage = () => {
   const values = {
@@ -127,6 +128,7 @@ const signUpPage = () => {
     ...values,
     ...inputs,
     buttonBlock: formButton,
+    signInLink: Link({ title: "Войти" }),
     template: form_template,
     attr: {
       class: "auth",

@@ -27,5 +27,6 @@ export const form_template = `
     </div>
     <div class="auth__link">
         [[ link? &href='/sign-in' &title='{{ login_link }}' ]]
+        {{signInLink}}
     </div>
 `;
