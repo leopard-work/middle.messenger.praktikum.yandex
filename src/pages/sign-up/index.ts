@@ -8,6 +8,7 @@ import {
 } from "../../components/form-validate";
 import { form_template } from "./template-form";
 import Link from "../../components/link";
+import tempNav from "../../components/temp-nav";
 
 const signUpPage = () => {
   const values = {
@@ -156,6 +157,7 @@ const signUpPage = () => {
   });
 
   const content = new Component("div", {
+    tempNav: tempNav(),
     ...values,
     template: template,
     form: form,

@@ -11,7 +11,6 @@ import error500Page from "./pages/error500";
 import profilePage from "./pages/profile";
 import editProfilePage from "./pages/profile/edit";
 import editProfilePasswordPage from "./pages/profile/editPassword";
-import { tempNavEvents } from "./components/tempNav/tempNavEvents";
 
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
@@ -46,8 +45,6 @@ export const pageOpen = (pathName: string) => {
     title.textContent = page.pageTitle;
     render("#root", page.content);
   }
-
-  tempNavEvents();
 
   return true;
 };

@@ -10,7 +10,6 @@ type LinkProps = {
 const Link = (props: LinkProps) => {
   const attr:Partial<LinkProps> = {...props};
   delete attr.title;
-  console.log(attr);
   return new Component("a", {
     title: props.title,
     template: "{{title}}",

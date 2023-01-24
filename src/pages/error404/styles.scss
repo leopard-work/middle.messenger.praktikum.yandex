@@ -2,36 +2,40 @@
 
 .page-error {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   align-content: center;
   min-height: 100vh;
   padding: 24px 0;
-}
-.page-error__title {
-  width: 100%;
-  text-align: center;
-  font-size: 40px;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  color: $color_red;
-}
-.page-error__text {
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  margin-bottom: 40px;
-}
-.page-error__link {
-  text-align: center;
-  a {
+
+  &__title {
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    color: $color_red;
+  }
+
+  &__text {
+    width: 100%;
+    text-align: center;
     font-size: 14px;
-    text-decoration: none;
-    color: $color_blue2;
-    &:hover {
-      color: $color_red;
+    margin-bottom: 40px;
+  }
+
+  &__link {
+    text-align: center;
+
+    a {
+      font-size: 14px;
+      text-decoration: none;
+      color: $color_blue2;
+
+      &:hover {
+        color: $color_red;
+      }
     }
   }
 }

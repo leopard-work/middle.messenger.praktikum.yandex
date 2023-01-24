@@ -114,6 +114,7 @@ class Block {
         }
       });
     }
+
   }
 
   _render() {
@@ -156,6 +157,14 @@ class Block {
     }
     Object.assign(this.props, nextProps);
   };
+
+  show() {
+    this.getContent().style.display = "block";
+  }
+
+  hide() {
+    this.getContent().style.display = "none";
+  }
 
   compile(template: string, props?: BlockProps) {
     const propsAndStubs = { ...props };
