@@ -27,7 +27,7 @@ const inputs = {
       placeholder: values.login,
     },
     validate: {
-      ...validateTypes.name,
+      ...validateTypes.login,
       class: "auth_error",
     },
   },
@@ -39,7 +39,7 @@ const inputs = {
       placeholder: values.password,
     },
     validate: {
-      ...validateTypes.empty,
+      ...validateTypes.password,
       class: "auth_error",
     },
   },
