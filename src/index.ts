@@ -48,7 +48,6 @@ export const pageOpen = (pathName: string) => {
   }
 
   tempNavEvents();
-  linkEvents();
 
   return true;
 };
