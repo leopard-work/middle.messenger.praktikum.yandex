@@ -1,6 +1,7 @@
 import { template } from "./template";
 import "./styles.scss";
 import Component from "../../services/component";
+import { setInputsValidate } from "../../components/form-validate";
 
 export const values = {
   pageTitle: "Профиль",
@@ -26,8 +27,72 @@ export const values = {
   passwordBtn: "Сохранить",
 };
 
+const inputs = {
+  emailBlock: {
+    attr: {
+      type: "email",
+      name: "email",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.email,
+      value: "test@mail.ru",
+      disabled: "true",
+    },
+  },
+  loginBlock: {
+    attr: {
+      type: "text",
+      name: "login",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.login,
+      disabled: "true",
+    },
+  },
+  nameBlock: {
+    attr: {
+      type: "text",
+      name: "first_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.name,
+      disabled: "true",
+    },
+  },
+  surnameBlock: {
+    attr: {
+      type: "text",
+      name: "second_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.surname,
+      disabled: "true",
+    },
+  },
+  chatNameBlock: {
+    attr: {
+      type: "text",
+      name: "display_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.chat_name,
+      disabled: "true",
+    },
+  },
+  phoneBlock: {
+    attr: {
+      type: "phone",
+      name: "phone",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.phone,
+      disabled: "true",
+    },
+  },
+};
+
+setInputsValidate(inputs);
+
 const profilePage = () => {
-  const content = new Component("div", { ...values, template: template });
+  const content = new Component("div", {
+    template: template,
+    ...values,
+    ...inputs,
+  });
   return { pageTitle: values.pageTitle, content: content };
 };
 

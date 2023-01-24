@@ -1,7 +1,7 @@
 export const template = `
 [[ temp_nav? ]]
 <main class="auth-wrapper">
-    <form class="auth profile">
+    <div class="auth profile">
         [[ link? &href='/' &className='profile__back' &title='{{ back }}' ]]
         <h1 class="auth__title profile__title">{{ title }}</h1>
         <div class="profile__avatar">
@@ -12,22 +12,22 @@ export const template = `
             <input type="file" name="avatar" style="display: none">
         </div>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='email' &className='input-text auth__input-text profile__input-text' &placeholder='{{ email }}' &value='test@mail.ru' &disabled='true' ]]
+            {{emailBlock}}
         </label>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='login' &className='input-text auth__input-text profile__input-text' &placeholder='{{ login }}' &value='test' &disabled='true' ]]
+            {{loginBlock}}
         </label>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='first_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ name }}' &value='Василий' &disabled='true' ]]
+            {{nameBlock}}
         </label>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='second_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ surname }}' &disabled='true' ]]
+            {{surnameBlock}}
         </label>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='display_name' &className='input-text auth__input-text profile__input-text' &placeholder='{{ chat_name }}' &disabled='true' ]]
+            {{chatNameBlock}}
         </label>
         <label class="auth__input-text-wrapper">
-            [[ input? &name='phone' &className='input-text auth__input-text profile__input-text' &placeholder='{{ phone }}' &value='+79763653344' &disabled='true' ]]
+            {{phoneBlock}}
         </label>
         <div class="auth__link profile__link">
             [[ link? &href='/profile/edit' &title='{{ edit }}' ]]
@@ -38,6 +38,6 @@ export const template = `
         <div class="auth__link profile__link profile__sign-out">
             [[ link? &href='/' &title='{{ sign_out }}' ]]
         </div>
-    </form>
+    </div>
 </main>
 `;
