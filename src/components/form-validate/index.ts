@@ -35,7 +35,7 @@ export const checkField = (element: unknown, value: string) => {
   return true;
 };
 
-export const inputsValidate = (inputs: Record<string, any>) => {
+export const setInputsValidate = (inputs: Record<string, any>) => {
   Object.keys(inputs).forEach((inputName) => {
     inputs[inputName] = new Input("input", {
       attr: inputs[inputName]["attr"],

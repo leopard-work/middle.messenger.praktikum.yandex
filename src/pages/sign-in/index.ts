@@ -2,7 +2,10 @@ import { template } from "./template";
 import "../profile/styles.scss";
 import Component from "../../services/component";
 import validateTypes from "../../utils/validate-types";
-import { FormValidate, inputsValidate } from "../../components/form-validate";
+import {
+  FormValidate,
+  setInputsValidate,
+} from "../../components/form-validate";
 import { form_template } from "./template-form";
 
 const values = {
@@ -24,7 +27,7 @@ const inputs = {
       placeholder: values.login,
     },
     validate: {
-      ...validateTypes.empty,
+      ...validateTypes.name,
       class: "auth_error",
     },
   },
@@ -42,7 +45,7 @@ const inputs = {
   },
 };
 
-inputsValidate(inputs);
+setInputsValidate(inputs);
 
 const formButton = new Component("button", {
   ...values,
