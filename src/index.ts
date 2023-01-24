@@ -8,13 +8,11 @@ import signInPage from "./pages/sign-in";
 import signUpPage from "./pages/sign-up";
 import error404Page from "./pages/error404";
 import error500Page from "./pages/error500";
+import profilePage from "./pages/profile";
+import editProfilePage from "./pages/profile/edit";
+import editProfilePasswordPage from "./pages/profile/editPassword";
 import { linkEvents } from "./components/link/linkEvents";
 import { tempNavEvents } from "./components/tempNav/tempNavEvents";
-import {
-  profilePage,
-  editProfilePage,
-  editProfilePasswordPage,
-} from "./pages/profile";
 
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
@@ -57,68 +55,3 @@ export const pageOpen = (pathName: string) => {
 };
 
 pageOpen(pathName);
-
-// const frmTemplate = `{{ title }} {{ input1 }} {{ input2 }} {{ button }}`;
-// const inputTemplate = `{{ value }}`;
-//
-// const button1 = new Component("button", {
-//   template: inputTemplate,
-//   value: "кнопка 1",
-//   attr: {
-//     disabled: "true",
-//   },
-//   events: {
-//     click: (event: Event) => {
-//       event.preventDefault();
-//       alert("button1");
-//       button1.setProps({
-//         attr: {
-//           disabled: "true",
-//         },
-//       });
-//     },
-//   },
-// });
-//
-// const button2 = new Component("button", {
-//   template: inputTemplate,
-//   value: "кнопка 2",
-//   events: {
-//     click: (event: Event) => {
-//       event.preventDefault();
-//       alert("button2");
-//     },
-//   },
-// });
-//
-// const page1 = new Component("div", {
-//   template: frmTemplate,
-//   title: "Заголовок",
-//   input1: button1,
-//   input2: button2,
-// });
-//
-// page1.setProps({
-//   input1: button2,
-//   title: "Заголовок 2222",
-//   events: {
-//     click: (event: Event) => {
-//       event.preventDefault();
-//       alert("page1");
-//     },
-//   },
-// });
-//
-// setTimeout(() => {
-//   button1.setProps({
-//     value: "Кнопка 1 изменена",
-//     attr: {
-//       disabled: "false",
-//     },
-//   });
-//   page1.setProps({
-//     title: "test",
-//   });
-// }, 1000);
-//
-// render("#root", page1);

@@ -1,10 +1,8 @@
 import { template } from "./template";
-import { editTemplate } from "./template_edit";
-import { editPasswordTemplate } from "./template_edit_password";
 import "./styles.scss";
 import Component from "../../services/component";
 
-const values = {
+export const values = {
   pageTitle: "Профиль",
   title: "Профиль",
   photo: "Загрузить фото",
@@ -28,20 +26,9 @@ const values = {
   passwordBtn: "Сохранить",
 };
 
-export const profilePage = () => {
+const profilePage = () => {
   const content = new Component("div", { ...values, template: template });
   return { pageTitle: values.pageTitle, content: content };
 };
 
-export const editProfilePage = () => {
-  const content = new Component("div", { ...values, template: editTemplate });
-  return { pageTitle: values.pageTitleEdit, content: content };
-};
-
-export const editProfilePasswordPage = () => {
-  const content = new Component("div", {
-    ...values,
-    template: editPasswordTemplate,
-  });
-  return { pageTitle: values.pageTitleEditPassword, content: content };
-};
+export default profilePage;
