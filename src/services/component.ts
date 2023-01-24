@@ -1,6 +1,6 @@
 import EventBus from "./event-bus";
-import parseTemplate from "../components/parse-template";
 import { v4 as uuid } from "uuid";
+import parseTemplate from "./parse-template";
 
 type BlockProps = Record<string, any>;
 
