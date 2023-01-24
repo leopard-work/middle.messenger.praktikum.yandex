@@ -1,22 +1,9 @@
 import { template } from "./template";
 import "../profile/styles.scss";
 import Component from "../../services/component";
-
-const form_template = `
-        <h1 class="auth__title">{{ title }}</h1>
-        <label class="auth__input-text-wrapper">
-            {{ loginBlock }}
-        </label>
-        <label class="auth__input-text-wrapper">
-            {{ passwordBlock }}
-        </label>
-        <div class="auth__button-wrapper">
-            {{ buttonBlock }}
-        </div>
-        <div class="auth__link">
-            [[ link? &href='/sign-up' &title='{{ reg_link }}' ]]
-        </div>
-    `;
+import validateTypes from "../../utils/validate-types";
+import { FormValidate, inputsValidate } from "../../components/form-validate";
+import { form_template } from "./template-form";
 
 const values = {
   pageTitle: "Авторизация",
@@ -28,14 +15,7 @@ const values = {
   error: "Ошибка ошибка ошибка",
 };
 
-const validateTypes = {
-  empty: {
-    pattern: /\S+/,
-    message: "Поле не должно быть пустым",
-  },
-};
-
-const inputs: Record<string, any> = {
+const inputs = {
   loginBlock: {
     attr: {
       type: "text",
@@ -53,7 +33,7 @@ const inputs: Record<string, any> = {
       type: "password",
       name: "password",
       class: "input-text auth__input-text",
-      placeholder: "Пароль",
+      placeholder: values.password,
     },
     validate: {
       ...validateTypes.empty,
@@ -62,61 +42,9 @@ const inputs: Record<string, any> = {
   },
 };
 
-class Input extends Component {}
+inputsValidate(inputs);
 
-const checkField = (element: unknown, value: string) => {
-  if (element instanceof Input) {
-    const pattern = element.props.validate["pattern"];
-    const error = new Component("p", {
-      template: element.props.validate["message"],
-      attr: {
-        class: element.props.validate["class"],
-      },
-    });
-    const parent = element.getContent().closest("label");
-    const parentElement = parent!.querySelector("p");
-    if (parentElement) parentElement!.remove();
-    if (!pattern.test(value)) {
-      if (parent) parent.appendChild(error.getContent());
-      return false;
-    }
-  }
-
-  return true;
-};
-
-Object.keys(inputs).forEach((inputName) => {
-  inputs[inputName] = new Input("input", {
-    attr: inputs[inputName]["attr"],
-    validate: inputs[inputName]["validate"],
-    events: {
-      blur: (event: Event) => {
-        const { target } = event;
-        const value = (target as HTMLInputElement).value;
-        checkField(inputs[inputName], value);
-      },
-      focus: (event: Event) => {
-        const { target } = event;
-        const value = (target as HTMLInputElement).value;
-        if (value != "") checkField(inputs[inputName], value);
-      },
-    },
-  });
-});
-
-class FormValidate extends Component {
-  checkFields() {
-    let ok = true;
-    Object.keys(this.children).forEach((input) => {
-      const value = (this.children[input].getContent() as HTMLInputElement)
-        .value;
-      if (!checkField(this.children[input], value)) ok = false;
-    });
-    return ok;
-  }
-}
-
-const button = new Component("button", {
+const formButton = new Component("button", {
   ...values,
   template: "{{ button }}",
   attr: {
@@ -128,7 +56,7 @@ const button = new Component("button", {
 const form = new FormValidate("form", {
   ...values,
   ...inputs,
-  buttonBlock: button,
+  buttonBlock: formButton,
   template: form_template,
   attr: {
     class: "auth",
@@ -143,6 +71,7 @@ const form = new FormValidate("form", {
           data[pair[0]] = pair[1];
         }
         console.log(data);
+        (form.getContent() as HTMLFormElement).reset();
         form.children.buttonBlock.setProps({
           button: "Отправлено",
           attr: {
