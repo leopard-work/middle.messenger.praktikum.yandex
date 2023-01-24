@@ -182,8 +182,9 @@ class Block {
 
 class Component extends Block {
   render() {
-    if (this.props.template)
-      return this.compile(this.props.template, { ...this.props });
+    let template: string = "";
+    if (this.props.template) template = this.props.template;
+    return this.compile(template, { ...this.props });
   }
 }
 

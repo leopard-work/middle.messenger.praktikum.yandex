@@ -43,6 +43,9 @@ body {
   &:hover {
     background-color: $color_red;
   }
+  &:disabled {
+    background-color: $color_gray;
+  }
 }
 
 h1 {
