@@ -26,7 +26,7 @@ export const checkField = (element: unknown, value: string) => {
     const parent = element.getContent().closest("label");
     if (parent) {
       const parentElement = parent.querySelector("p");
-      if (parentElement) parentElement!.remove();
+      if (parentElement) parentElement.remove();
     }
     if (!pattern.test(value)) {
       if (parent) parent.appendChild(error.getContent());

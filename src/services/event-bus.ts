@@ -1,12 +1,14 @@
+import { BlockProps } from "../utils/types";
+
 class EventBus {
   listeners: {
-    [key: string]: Function[];
+    [key: string]: ((...args: BlockProps[]) => void)[];
   };
   constructor() {
     this.listeners = {};
   }
 
-  on(event: string, callback: any) {
+  on(event: string, callback: (...args: BlockProps[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }

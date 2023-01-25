@@ -65,7 +65,8 @@ class HTTPTransport {
     options: HTTPTransportOptionsProps,
     timeout = 5000
   ) => {
-    let { data, headers, method } = options;
+    let { data } = options;
+    const { headers, method } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -85,8 +86,8 @@ class HTTPTransport {
       xhr.ontimeout = reject;
 
       if (headers) {
-        for (let key in headers) {
-          if (headers.hasOwnProperty(key))
+        for (const key in headers) {
+          if (Object.prototype.hasOwnProperty.call(headers, key))
             xhr.setRequestHeader(key, headers[key]);
         }
       }

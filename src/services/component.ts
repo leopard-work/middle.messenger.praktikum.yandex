@@ -2,8 +2,7 @@ import EventBus from "./event-bus";
 import { v4 as uuid } from "uuid";
 import parseTemplate from "./parse-template";
 import isEqual from "../utils/is-equal";
-
-type BlockProps = Record<string, any>;
+import { BlockProps } from "../utils/types";
 
 class Block {
   static EVENTS = {
@@ -55,16 +54,15 @@ class Block {
   }
 
   _makePropsProxy(props: BlockProps) {
-    const self = this;
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: BlockProps, prop: string, value: unknown) {
+      set: (target: BlockProps, prop: string, value: unknown) => {
         const oldProps = target[prop];
         target[prop] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target[prop]);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target[prop]);
         return true;
       },
       deleteProperty() {
@@ -75,13 +73,13 @@ class Block {
 
   _createDocumentElement(tagName: string) {
     const element = document.createElement(tagName);
-    element.setAttribute("data-id", this._id!);
+    element.setAttribute("data-id", this._id);
     return element;
   }
 
   _createResources() {
-    const { tagName } = this._meta!;
-    this._element = this._createDocumentElement(tagName!);
+    if (this._meta && this._meta.tagName != null)
+      this._element = this._createDocumentElement(this._meta.tagName);
   }
 
   _componentDidMount() {
@@ -118,9 +116,9 @@ class Block {
   _setAttributes() {
     if (this.props["attr"]) {
       Object.entries(this.props["attr"]).forEach(([key, value]) => {
-        if (typeof value === "string") {
-          if (value != "false") this._element!.setAttribute(key, value);
-          else this._element!.removeAttribute(key);
+        if (typeof value === "string" && this._element != null) {
+          if (value != "false") this._element.setAttribute(key, value);
+          else this._element.removeAttribute(key);
         }
       });
     }
@@ -129,10 +127,12 @@ class Block {
   _render() {
     const block = this.render() as unknown as HTMLTemplateElement;
     this._removeEvents();
-    this._element!.innerHTML = "";
-    this._element!.appendChild(block);
-    this._setAttributes();
-    this._addEvents();
+    if (this._element != null) {
+      this._element.innerHTML = "";
+      this._element.appendChild(block);
+      this._setAttributes();
+      this._addEvents();
+    }
   }
 
   _registerEvents(eventBus: EventBus) {
@@ -147,7 +147,9 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    return;
+  }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     return isEqual(oldProps, newProps);
@@ -157,7 +159,9 @@ class Block {
     return <HTMLElement>this.element;
   }
 
-  render() {}
+  render() {
+    return;
+  }
 
   setProps = (nextProps: BlockProps) => {
     if (!nextProps) {
@@ -207,7 +211,7 @@ class Block {
 
 class Component extends Block {
   render() {
-    let template: string = "";
+    let template = "";
     if (this.props.template) template = this.props.template;
     return this.compile(template, { ...this.props });
   }

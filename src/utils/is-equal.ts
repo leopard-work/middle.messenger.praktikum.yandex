@@ -1,4 +1,4 @@
-type isEqualProps = { [key: string]: any };
+type isEqualProps = Record<string, any>;
 
 const isEqual = (object1: isEqualProps, object2: isEqualProps) => {
   const props1 = Object.getOwnPropertyNames(object1);
