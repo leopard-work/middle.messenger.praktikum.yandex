@@ -95,7 +95,7 @@ const profilePage = () => {
     tempNav: tempNav(),
     backLink: Link({
       children: values.back,
-      href: "/profile",
+      href: "/",
       class: "profile__back",
     }),
     loadPhotoLink: Link({

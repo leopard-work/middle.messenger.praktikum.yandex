@@ -1,6 +1,7 @@
 import EventBus from "./event-bus";
 import { v4 as uuid } from "uuid";
 import parseTemplate from "./parse-template";
+import isEqual from "../utils/is-equal";
 
 type BlockProps = Record<string, any>;
 
@@ -105,6 +106,15 @@ class Block {
     });
   }
 
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      if (this._element)
+        this._element.removeEventListener(eventName, events[eventName]);
+    });
+  }
+
   _setAttributes() {
     if (this.props["attr"]) {
       Object.entries(this.props["attr"]).forEach(([key, value]) => {
@@ -114,12 +124,11 @@ class Block {
         }
       });
     }
-
   }
 
   _render() {
     const block = this.render() as unknown as HTMLTemplateElement;
-    // this._removeEvents();
+    this._removeEvents();
     this._element!.innerHTML = "";
     this._element!.appendChild(block);
     this._setAttributes();
@@ -140,9 +149,8 @@ class Block {
 
   componentDidMount() {}
 
-  //@ts-ignore
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    return true;
+    return isEqual(oldProps, newProps);
   }
 
   getContent(): HTMLElement {
