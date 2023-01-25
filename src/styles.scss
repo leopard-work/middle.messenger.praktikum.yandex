@@ -5,7 +5,6 @@
 
 $font_titles: 'Oswald', sans-serif;
 
-
 * {
   box-sizing: border-box;
   transition: $anim;
@@ -20,6 +19,7 @@ $font_titles: 'Oswald', sans-serif;
 body {
   font-size: 14px;
 }
+
 .input-text {
   width: 100%;
   height: 40px;
@@ -27,12 +27,14 @@ body {
   border: none;
   outline: none;
   padding: 0 16px;
+
   &:focus {
     -webkit-box-shadow: 0 0 5px 0 rgba(1,58,113,0.3);
     -moz-box-shadow: 0 0 50px 0 rgba(1,58,113,0.3);
     box-shadow: 0 0 5px 0 rgba(1,58,113,0.3);
   }
 }
+
 .input-button {
   background-color: $color_blue2;
   color: #ffffff;
@@ -40,9 +42,11 @@ body {
   border: none;
   padding: 12px 40px;
   cursor: pointer;
+
   &:hover {
     background-color: $color_red;
   }
+
   &:disabled {
     background-color: $color_gray;
   }
@@ -65,25 +69,29 @@ h1 {
   left: calc(50% - 105px);
   padding: 10px;
   border-radius: 0 0 5px 5px;
-}
-.temp-nav__title {
-  cursor: pointer;
-  text-decoration: underline;
-  color: $color_red;
-  margin-bottom: 10px;
-  font-size: 12px;
-  &:hover {
-    text-decoration: none;
-  }
-}
-.temp-nav__items {
-  a {
-    display: block;
-    color: black;
-    text-align: center;
+
+  &__title {
+    cursor: pointer;
+    text-decoration: underline;
+    color: $color_red;
+    margin-bottom: 10px;
     font-size: 12px;
+
     &:hover {
       text-decoration: none;
+    }
+  }
+
+  &__items {
+    a {
+      display: block;
+      color: black;
+      text-align: center;
+      font-size: 12px;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }
