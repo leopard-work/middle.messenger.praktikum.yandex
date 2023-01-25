@@ -1,6 +1,6 @@
 export const template = `
-{{tempNav}}
-<main class="auth-wrapper">
-    {{form}}
-</main>
+    {{tempNav}}
+    <main class="auth-wrapper">
+        {{form}}
+    </main>
 `;

@@ -7,6 +7,8 @@ import {
   setInputsValidate,
 } from "../../../components/form-validate";
 import { templateForm } from "./template-form";
+import tempNav from "../../../components/temp-nav";
+import Link from "../../../components/link";
 
 const inputs = {
   oldPasswordBlock: {
@@ -59,6 +61,11 @@ const formButton = new Component("button", {
 });
 
 const form = new FormValidate("form", {
+  backLink: Link({
+    children: values.back,
+    href: "/profile",
+    class: "profile__back",
+  }),
   ...values,
   ...inputs,
   buttonBlock: formButton,
@@ -90,6 +97,7 @@ const form = new FormValidate("form", {
 
 const editProfilePasswordPage = () => {
   const content = new Component("div", {
+    tempNav: tempNav(),
     ...values,
     template: editPasswordTemplate,
     form: form,

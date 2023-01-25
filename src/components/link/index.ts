@@ -2,19 +2,20 @@ import Component from "../../services/component";
 import { pageOpen } from "../../index";
 
 type LinkProps = {
-  title: string,
-  href: string,
-  class?: string
-}
+  children: string;
+  href: string;
+  class?: string;
+  title?: string;
+};
 
 const Link = (props: LinkProps) => {
-  const attr:Partial<LinkProps> = {...props};
-  delete attr.title;
+  const attr: Partial<LinkProps> = { ...props };
+  delete attr.children;
   return new Component("a", {
-    title: props.title,
-    template: "{{title}}",
+    children: props.children,
+    template: "{{children}}",
     attr: {
-      ...props
+      ...props,
     },
     events: {
       click: (event: Event) => {

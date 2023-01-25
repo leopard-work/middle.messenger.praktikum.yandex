@@ -2,6 +2,8 @@ import { template } from "./template";
 import "./styles.scss";
 import Component from "../../services/component";
 import { setInputsValidate } from "../../components/form-validate";
+import Link from "../../components/link";
+import tempNav from "../../components/temp-nav";
 
 export const values = {
   pageTitle: "Профиль",
@@ -90,8 +92,24 @@ setInputsValidate(inputs);
 const profilePage = () => {
   const content = new Component("div", {
     template: template,
+    tempNav: tempNav(),
+    backLink: Link({
+      children: values.back,
+      href: "/profile",
+      class: "profile__back",
+    }),
+    loadPhotoLink: Link({
+      children: values.photo,
+      href: "/profile",
+    }),
     ...values,
     ...inputs,
+    editLink: Link({ children: values.edit, href: "/profile/edit" }),
+    editPasswordLink: Link({
+      children: values.edit_password,
+      href: "/profile/password",
+    }),
+    signOutLink: Link({ children: values.sign_out, href: "/" }),
   });
   return { pageTitle: values.pageTitle, content: content };
 };

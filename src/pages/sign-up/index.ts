@@ -129,7 +129,7 @@ const signUpPage = () => {
     ...values,
     ...inputs,
     buttonBlock: formButton,
-    signInLink: Link({ title: "Войти", href: "/sign-in" }),
+    signInLink: Link({ children: values.login_link, href: "/sign-in" }),
     template: form_template,
     attr: {
       class: "auth",

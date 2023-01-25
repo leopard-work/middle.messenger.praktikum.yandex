@@ -1,6 +1,6 @@
 export const template = `
-[[ temp_nav? ]]
-<main class="auth-wrapper">
-    {{form}}
-</main>
+    {{tempNav}}
+    <main class="auth-wrapper">
+        {{form}}
+    </main>
 `;

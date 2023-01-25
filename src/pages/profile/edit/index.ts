@@ -7,6 +7,8 @@ import {
   FormValidate,
   setInputsValidate,
 } from "../../../components/form-validate";
+import Link from "../../../components/link";
+import tempNav from "../../../components/temp-nav";
 
 const inputs = {
   emailBlock: {
@@ -96,6 +98,11 @@ const formButton = new Component("button", {
 });
 
 const form = new FormValidate("form", {
+  backLink: Link({
+    children: values.back,
+    href: "/profile",
+    class: "profile__back",
+  }),
   ...values,
   ...inputs,
   buttonBlock: formButton,
@@ -127,6 +134,7 @@ const form = new FormValidate("form", {
 
 const editProfilePage = () => {
   const content = new Component("div", {
+    tempNav: tempNav(),
     ...values,
     template: editTemplate,
     form: form,

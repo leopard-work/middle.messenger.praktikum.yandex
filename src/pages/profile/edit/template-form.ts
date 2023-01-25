@@ -1,5 +1,5 @@
 export const templateForm = `
-    [[ link? &href='/profile' &className='profile__back' &title='{{ back }}' ]]
+    {{backLink}}
     <h1 class="auth__title profile__title">{{ titleEdit }}</h1>
     <label class="auth__input-text-wrapper">
         {{emailBlock}}

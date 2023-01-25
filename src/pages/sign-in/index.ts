@@ -7,6 +7,8 @@ import {
   setInputsValidate,
 } from "../../components/form-validate";
 import { form_template } from "./template-form";
+import Link from "../../components/link";
+import tempNav from "../../components/temp-nav";
 
 const values = {
   pageTitle: "Авторизация",
@@ -61,6 +63,7 @@ const form = new FormValidate("form", {
   ...inputs,
   buttonBlock: formButton,
   template: form_template,
+  signUpLink: Link({ children: values.reg_link, href: "/sign-up" }),
   attr: {
     class: "auth",
   },
@@ -88,6 +91,7 @@ const form = new FormValidate("form", {
 
 const signInPage = () => {
   const content = new Component("div", {
+    tempNav: tempNav(),
     ...values,
     template: template,
     form: form,

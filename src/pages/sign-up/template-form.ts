@@ -23,7 +23,7 @@ export const form_template = `
         {{passwordConfirmBlock}}
     </label>
     <div class="auth__button-wrapper">
-        {{ buttonBlock }}
+        {{buttonBlock}}
     </div>
     <div class="auth__link">
         {{signInLink}}
