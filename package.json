@@ -6,8 +6,8 @@
     "dev": "parcel index.html --open",
     "build": "parcel build index.html",
     "start": "node ./server.js",
-    "lint": "eslint .",
-    "stylelint": "stylelint src/**/*.scss"
+    "test:lint": "eslint .",
+    "test:stylelint": "stylelint src/**/*.scss"
   },
   "keywords": [],
   "author": "Vladislav Zobnin",
