@@ -3,6 +3,12 @@ import "./styles.scss";
 import Component from "../../services/component";
 import tempNav from "../../components/temp-nav";
 import Link from "../../components/link";
+import {
+  FormValidate,
+  setInputsValidate,
+} from "../../components/form-validate";
+import validateTypes from "../../utils/validate-types";
+import { templateForm } from "./template-form";
 
 const homePage = () => {
   const profileBtnIcon =
@@ -13,6 +19,9 @@ const homePage = () => {
     pageTitle: "Страница чатов",
     search_placeholder: "Поиск...",
     message_placeholder: "Сообщение...",
+  };
+
+  const modules = {
     tempNav: tempNav(),
     profileLink: Link({
       children: profileBtnIcon,
@@ -20,7 +29,47 @@ const homePage = () => {
       class: "nav-info__profile-btn",
     }),
   };
-  const content = new Component("div", values);
+
+  const inputs = {
+    messageBlock: {
+      attr: {
+        name: "message",
+        class: "chat-write__textarea",
+        placeholder: values.message_placeholder,
+      },
+      validate: {
+        ...validateTypes.empty,
+        class: "auth_error",
+      },
+    },
+  };
+
+  setInputsValidate(inputs, "textarea");
+
+  const form = new FormValidate("form", {
+    ...values,
+    ...inputs,
+    attr: {
+      class: "chat-write",
+    },
+    template: templateForm,
+    events: {
+      submit: (event: Event) => {
+        event.preventDefault();
+        if (form.checkFields()) {
+          const values = new FormData(form.getContent() as HTMLFormElement);
+          const data: Record<string, FormDataEntryValue> = {};
+          for (const pair of values.entries()) {
+            data[pair[0]] = pair[1];
+          }
+          console.log(data);
+          (form.getContent() as HTMLFormElement).reset();
+        }
+      },
+    },
+  });
+
+  const content = new Component("div", { ...values, ...modules, form: form });
   return { pageTitle: values.pageTitle, content: content };
 };
 

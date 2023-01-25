@@ -47,6 +47,11 @@ body {
     background-color: $color_gray;
   }
 }
+.input-error {
+  -webkit-box-shadow: 0 0 5px 0 rgba(179,8,56,0.3);
+  -moz-box-shadow: 0 0 50px 0 rgba(179,8,56,0.3);
+  box-shadow: 0 0 5px 0 rgba(179,8,56,0.3);
+}
 
 h1 {
   font-family: $font_titles !important;

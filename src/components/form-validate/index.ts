@@ -24,20 +24,26 @@ export const checkField = (element: unknown, value: string) => {
       },
     });
     const parent = element.getContent().closest("label");
-    const parentElement = parent!.querySelector("p");
-    if (parentElement) parentElement!.remove();
+    if (parent) {
+      const parentElement = parent.querySelector("p");
+      if (parentElement) parentElement!.remove();
+    }
     if (!pattern.test(value)) {
       if (parent) parent.appendChild(error.getContent());
+      element.addClass("input-error");
       return false;
     }
+    element.removeClass("input-error");
   }
-
   return true;
 };
 
-export const setInputsValidate = (inputs: Record<string, any>) => {
+export const setInputsValidate = (
+  inputs: Record<string, any>,
+  tag = "input"
+) => {
   Object.keys(inputs).forEach((inputName) => {
-    inputs[inputName] = new Input("input", {
+    inputs[inputName] = new Input(tag, {
       attr: inputs[inputName]["attr"],
       validate: inputs[inputName]["validate"],
       events: {

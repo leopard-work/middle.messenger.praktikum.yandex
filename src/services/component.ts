@@ -174,6 +174,14 @@ class Block {
     this.getContent().style.display = "none";
   }
 
+  addClass(className: string) {
+    this.getContent().classList.add(className);
+  }
+
+  removeClass(className: string) {
+    this.getContent().classList.remove(className);
+  }
+
   compile(template: string, props?: BlockProps) {
     const propsAndStubs = { ...props };
 
