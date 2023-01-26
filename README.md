@@ -6,7 +6,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a2eb8394-4092-4792-ad4e-5299b9636e3f/deploy-status)](https://app.netlify.com/sites/regal-trifle-19850c/deploys)
 
-#### `#Javascript` `#Typescript` `#SCSS` `#БЭМ` `#REST API`
+#### `#JavaScript` `#TypeScript` `#SCSS` `#БЭМ` `#REST_API`
 
 #
 
