@@ -38,6 +38,13 @@ export const checkField = (element: unknown, value: string) => {
   return true;
 };
 
+const validateInput = (event: Event, element: Input) => {
+  const { target } = event;
+  const value = (target as HTMLInputElement).value;
+  if (event.type !== "focus") checkField(element, value);
+  else if (value != "") checkField(element, value);
+};
+
 export const setInputsValidate = (
   inputs: Record<string, any>,
   tag = "input"
@@ -47,16 +54,8 @@ export const setInputsValidate = (
       attr: inputs[inputName]["attr"],
       validate: inputs[inputName]["validate"],
       events: {
-        blur: (event: Event) => {
-          const { target } = event;
-          const value = (target as HTMLInputElement).value;
-          checkField(inputs[inputName], value);
-        },
-        focus: (event: Event) => {
-          const { target } = event;
-          const value = (target as HTMLInputElement).value;
-          if (value != "") checkField(inputs[inputName], value);
-        },
+        blur: (event: Event) => validateInput(event, inputs[inputName]),
+        focus: (event: Event) => validateInput(event, inputs[inputName]),
       },
     });
   });

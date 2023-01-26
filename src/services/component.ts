@@ -4,13 +4,13 @@ import parseTemplate from "./parse-template";
 import isEqual from "../utils/is-equal";
 import { BlockProps } from "../utils/types";
 
-class Block {
+abstract class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render",
-  };
+  } as const;
 
   _element: Element | null = null;
   _meta: { tagName: string | null; props: BlockProps } | null = null;
@@ -152,7 +152,7 @@ class Block {
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    return isEqual(oldProps, newProps);
+    return !isEqual(oldProps, newProps);
   }
 
   getContent(): HTMLElement {
