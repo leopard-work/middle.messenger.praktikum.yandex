@@ -1,42 +1,52 @@
 import "reset-css";
 import "./styles.scss";
+import Component from "./services/component";
+import render from "./utils/render";
 
 import homePage from "./pages/home/index";
 import signInPage from "./pages/sign-in";
 import signUpPage from "./pages/sign-up";
 import error404Page from "./pages/error404";
 import error500Page from "./pages/error500";
-import { linkEvents } from "./components/link/linkEvents";
-import { tempNavEvents } from "./components/tempNav/tempNavEvents";
-import {profilePage, editProfilePage, editProfilePasswordPage} from "./pages/profile";
+import profilePage from "./pages/profile";
+import editProfilePage from "./pages/profile/edit";
+import editProfilePasswordPage from "./pages/profile/editPassword";
 
 const root = document.querySelector("#root");
 const title = document.querySelector("title");
 
-//const pathName = window.location.pathname;
-const pathHash = window.location.hash;
+const pathName = window.location.pathname;
 
-export const pageOpen = (pathHash: string) => {
-  let page = homePage();
+type templateProps = {
+  pageTitle: string;
+  content: Component;
+};
+type pagesProps = {
+  [key: string]: templateProps;
+};
 
-  if (pathHash === "") page = homePage();
-  if (pathHash === "#sign-in") page = signInPage();
-  if (pathHash === "#sign-up") page = signUpPage();
-  if (pathHash === "#404") page = error404Page();
-  if (pathHash === "#500") page = error500Page();
-  if (pathHash === "#profile") page = profilePage();
-  if (pathHash === "#profile/edit/") page = editProfilePage();
-  if (pathHash === "#profile/password/") page = editProfilePasswordPage();
+const pages: pagesProps = {
+  "": homePage(),
+  "/sign-in": signInPage(),
+  "/sign-up": signUpPage(),
+  "/page404": error404Page(),
+  "/page500": error500Page(),
+  "/profile": profilePage(),
+  "/profile/edit": editProfilePage(),
+  "/profile/password": editProfilePasswordPage(),
+};
+
+export const pageOpen = (pathName: string) => {
+  let page = error404Page();
+  if (pathName[pathName.length - 1] === "/") pathName = pathName.slice(0, -1);
+  if (pages[pathName]) page = pages[pathName];
 
   if (title != null && root != null) {
     title.textContent = page.pageTitle;
-    root.innerHTML = page.content;
+    render("#root", page.content);
   }
-
-  tempNavEvents();
-  linkEvents();
 
   return true;
 };
 
-pageOpen(pathHash);
+pageOpen(pathName);

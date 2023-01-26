@@ -1,10 +1,11 @@
-import parseTemplate from "../../components/parse-template";
 import { template } from "./template";
-import { editTemplate } from "./template_edit";
-import { editPasswordTemplate } from "./template_edit_password";
 import "./styles.scss";
+import Component from "../../services/component";
+import { setInputsValidate } from "../../components/form-validate";
+import Link from "../../components/link";
+import tempNav from "../../components/temp-nav";
 
-const values = {
+export const values = {
   pageTitle: "Профиль",
   title: "Профиль",
   photo: "Загрузить фото",
@@ -17,7 +18,7 @@ const values = {
   edit: "Изменить данные",
   edit_password: "Изменить пароль",
   sign_out: "Выйти",
-  back: "Вернуться назад",
+  back: '<svg height="512px" style="enable-background:new 0 0 512 512;" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>',
   pageTitleEdit: "Редактировать профиль",
   titleEdit: "Редактировать профиль",
   pageTitleEditPassword: "Изменить пароль",
@@ -28,17 +29,89 @@ const values = {
   passwordBtn: "Сохранить",
 };
 
-export const profilePage = () => {
-  const content = parseTemplate(template, values);
+const inputs = {
+  emailBlock: {
+    attr: {
+      type: "email",
+      name: "email",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.email,
+      value: "test@mail.ru",
+      disabled: "true",
+    },
+  },
+  loginBlock: {
+    attr: {
+      type: "text",
+      name: "login",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.login,
+      disabled: "true",
+    },
+  },
+  nameBlock: {
+    attr: {
+      type: "text",
+      name: "first_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.name,
+      disabled: "true",
+    },
+  },
+  surnameBlock: {
+    attr: {
+      type: "text",
+      name: "second_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.surname,
+      disabled: "true",
+    },
+  },
+  chatNameBlock: {
+    attr: {
+      type: "text",
+      name: "display_name",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.chat_name,
+      disabled: "true",
+    },
+  },
+  phoneBlock: {
+    attr: {
+      type: "phone",
+      name: "phone",
+      class: "input-text auth__input-text profile__input-text",
+      placeholder: values.phone,
+      disabled: "true",
+    },
+  },
+};
+
+setInputsValidate(inputs);
+
+const profilePage = () => {
+  const content = new Component("div", {
+    template: template,
+    tempNav: tempNav(),
+    backLink: Link({
+      children: values.back,
+      href: "/",
+      class: "profile__back",
+    }),
+    loadPhotoLink: Link({
+      children: values.photo,
+      href: "/profile",
+    }),
+    ...values,
+    ...inputs,
+    editLink: Link({ children: values.edit, href: "/profile/edit" }),
+    editPasswordLink: Link({
+      children: values.edit_password,
+      href: "/profile/password",
+    }),
+    signOutLink: Link({ children: values.sign_out, href: "/" }),
+  });
   return { pageTitle: values.pageTitle, content: content };
 };
 
-export const editProfilePage = () => {
-  const content = parseTemplate(editTemplate, values);
-  return { pageTitle: values.pageTitleEdit, content: content };
-};
-
-export const editProfilePasswordPage = () => {
-  const content = parseTemplate(editPasswordTemplate, values);
-  return { pageTitle: values.pageTitleEditPassword, content: content };
-};
+export default profilePage;

@@ -1,4 +1,4 @@
-export const template = `
+export const editTemplate = `
     {{tempNav}}
     <main class="auth-wrapper">
         {{form}}

@@ -1,10 +1,30 @@
-export type linkProps = {
-  title: string;
+import Component from "../../services/component";
+import { pageOpen } from "../../index";
+
+type LinkProps = {
+  children: string;
   href: string;
-  className?: string;
+  class?: string;
+  title?: string;
 };
 
-export const link = ({ title = "", href = "", className = "" }: linkProps) => {
-  return `<a rel="link" class="${className}" href="${href}">${title}</a>`;
+const Link = (props: LinkProps) => {
+  const attr: Partial<LinkProps> = { ...props };
+  delete attr.children;
+  return new Component("a", {
+    children: props.children,
+    template: "{{children}}",
+    attr: {
+      ...props,
+    },
+    events: {
+      click: (event: Event) => {
+        event.preventDefault();
+        pageOpen(props.href);
+        window.history.pushState(null, "", props.href);
+      },
+    },
+  });
 };
 
+export default Link;
