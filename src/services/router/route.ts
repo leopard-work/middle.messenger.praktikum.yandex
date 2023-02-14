@@ -38,7 +38,7 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = this._blockClass().content;
+      this._block = this._blockClass();
       render(this._props.rootQuery, this._block as Component);
       return;
     }

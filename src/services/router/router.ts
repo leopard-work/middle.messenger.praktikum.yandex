@@ -23,8 +23,11 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: routeBlockClassProps) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(pathname: string, block: routeBlockClassProps, pageTitle?: string) {
+    const route = new Route(pathname, block, {
+      rootQuery: this._rootQuery,
+      pageTitle: pageTitle,
+    });
     this.routes.push(route);
     return this;
   }
@@ -39,7 +42,9 @@ class Router {
   }
 
   _onRoute(pathname: string) {
+    if (pathname[pathname.length - 1] === "/") pathname = pathname.slice(0, -1);
     let route = this.getRoute(pathname);
+    const title = document.querySelector("title");
 
     if (this._currentRoute) {
       this._currentRoute.leave();
@@ -52,6 +57,8 @@ class Router {
 
     if (route) {
       this._currentRoute = route;
+      if (title)
+        title.textContent = this._currentRoute._props.pageTitle as string;
       route.render();
     }
   }

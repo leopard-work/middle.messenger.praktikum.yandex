@@ -55,14 +55,12 @@ export const router = new Router("#root");
 router.errorPage(error404Page);
 
 router
-  .use("/", homePage)
-  .use("/sign-in", signInPage)
-  .use("/sign-up", signUpPage)
-  .use("/page404", error404Page)
-  .use("/page500", error500Page)
-  .use("/settings", profilePage)
-  .use("/settings/edit", editProfilePage)
-  .use("/settings/password", editProfilePasswordPage)
+  .use("", homePage, "Страница чатов")
+  .use("/sign-in", signInPage, "Авторизация")
+  .use("/sign-up", signUpPage, "Регистрация")
+  .use("/page404", error404Page, "Ошибка 404")
+  .use("/page500", error500Page, "Ошибка 500")
+  .use("/settings", profilePage, "Профиль")
+  .use("/settings/edit", editProfilePage, "Редактировать профиль")
+  .use("/settings/password", editProfilePasswordPage, "Изменить пароль")
   .start();
-
-console.log(router);

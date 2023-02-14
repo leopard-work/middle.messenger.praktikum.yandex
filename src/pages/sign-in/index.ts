@@ -11,7 +11,6 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 
 const values = {
-  pageTitle: "Авторизация",
   title: "Авторизация",
   login: "Логин",
   password: "Пароль",
@@ -90,13 +89,12 @@ const form = new FormValidate("form", {
 });
 
 const signInPage = () => {
-  const content = new Component("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: template,
     form: form,
   });
-  return { pageTitle: values.pageTitle, content: content };
 };
 
 export default signInPage;

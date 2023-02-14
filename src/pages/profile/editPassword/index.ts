@@ -96,13 +96,12 @@ const form = new FormValidate("form", {
 });
 
 const editProfilePasswordPage = () => {
-  const content = new Component("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: editPasswordTemplate,
     form: form,
   });
-  return { pageTitle: values.pageTitleEditPassword, content: content };
 };
 
 export default editProfilePasswordPage;

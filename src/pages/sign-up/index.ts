@@ -13,7 +13,6 @@ import tempNav from "../../components/temp-nav";
 const signUpPage = () => {
   const values = {
     template: template,
-    pageTitle: "Регистрация",
     title: "Регистрация",
     email: "Почта",
     login: "Логин",
@@ -156,13 +155,12 @@ const signUpPage = () => {
     },
   });
 
-  const content = new Component("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: template,
     form: form,
   });
-  return { pageTitle: values.pageTitle, content: content };
 };
 
 export default signUpPage;

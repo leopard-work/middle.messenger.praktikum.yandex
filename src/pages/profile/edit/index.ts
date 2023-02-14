@@ -133,13 +133,12 @@ const form = new FormValidate("form", {
 });
 
 const editProfilePage = () => {
-  const content = new Component("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: editTemplate,
     form: form,
   });
-  return { pageTitle: values.pageTitleEdit, content: content };
 };
 
 export default editProfilePage;

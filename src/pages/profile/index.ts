@@ -6,7 +6,6 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 
 export const values = {
-  pageTitle: "Профиль",
   title: "Профиль",
   photo: "Загрузить фото",
   email: "Почта",
@@ -19,9 +18,7 @@ export const values = {
   edit_password: "Изменить пароль",
   sign_out: "Выйти",
   back: '<svg height="512px" style="enable-background:new 0 0 512 512;" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>',
-  pageTitleEdit: "Редактировать профиль",
   titleEdit: "Редактировать профиль",
-  pageTitleEditPassword: "Изменить пароль",
   titleEditPassword: "Изменить пароль",
   oldPassword: "Старый пароль",
   newPassword: "Новый пароль",
@@ -90,7 +87,7 @@ const inputs = {
 setInputsValidate(inputs);
 
 const profilePage = () => {
-  const content = new Component("div", {
+  return new Component("div", {
     template: template,
     tempNav: tempNav(),
     backLink: Link({
@@ -111,7 +108,6 @@ const profilePage = () => {
     }),
     signOutLink: Link({ children: values.sign_out, href: "/" }),
   });
-  return { pageTitle: values.pageTitle, content: content };
 };
 
 export default profilePage;

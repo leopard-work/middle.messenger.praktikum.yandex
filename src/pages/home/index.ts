@@ -16,7 +16,6 @@ const homePage = () => {
 
   const values = {
     template: template,
-    pageTitle: "Страница чатов",
     search_placeholder: "Поиск...",
     message_placeholder: "Сообщение...",
   };
@@ -69,8 +68,7 @@ const homePage = () => {
     },
   });
 
-  const content = new Component("div", { ...values, ...modules, form: form });
-  return { pageTitle: values.pageTitle, content: content };
+  return new Component("div", { ...values, ...modules, form: form });
 };
 
 export default homePage;

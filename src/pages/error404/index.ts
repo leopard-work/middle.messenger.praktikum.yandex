@@ -8,13 +8,11 @@ const error404Page = () => {
   const values = {
     template: template,
     tempNav: tempNav(),
-    pageTitle: "Ошибка 404",
     title: "Ошибка 404",
     text: "Извините, такой страницы нет",
     backLink: Link({ children: "Назад к чатам", href: "/" }),
   };
-  const content = new Component("div", values);
-  return { pageTitle: values.pageTitle, content: content };
+  return new Component("div", values);
 };
 
 export default error404Page;

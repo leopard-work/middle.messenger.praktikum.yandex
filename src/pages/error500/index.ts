@@ -8,13 +8,11 @@ const error500Page = () => {
   const values = {
     template: template,
     tempNav: tempNav(),
-    pageTitle: "Ошибка 500",
     title: "Ошибка 500",
     text: "Ошибка сервера, попробуйте зайти позже",
     backLink: Link({ children: "Назад к чатам", href: "/" }),
   };
-  const content = new Component("div", values);
-  return { pageTitle: values.pageTitle, content: content };
+  return new Component("div", values);
 };
 
 export default error500Page;
