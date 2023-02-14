@@ -32,7 +32,8 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass();
+      console.log(this._blockClass);
+      this._block = this._blockClass().content;
       render(this._props.rootQuery, this._block);
       return;
     }

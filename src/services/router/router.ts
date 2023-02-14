@@ -1,3 +1,5 @@
+import { Route } from "./index";
+
 class Router {
   constructor(rootQuery) {
     if (Router.__instance) {
