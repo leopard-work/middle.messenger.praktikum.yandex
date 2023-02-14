@@ -53,11 +53,6 @@ class Router {
     if (pathname[pathname.length - 1] === "/") pathname = pathname.slice(0, -1);
     let route = this.getRoute(pathname);
 
-    if (route && route._props.protect) {
-      this.go("/sign-in");
-      return;
-    }
-
     const title = document.querySelector("title");
 
     if (this._currentRoute) {
@@ -70,6 +65,11 @@ class Router {
       });
 
     if (route) {
+      if (this.checkProtect(route)) {
+        this.go(this._protectedPath);
+        return;
+      }
+
       this._currentRoute = route;
       if (title)
         title.textContent = this._currentRoute._props.pageTitle as string;
@@ -100,6 +100,12 @@ class Router {
 
   getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
+  }
+
+  checkProtect(route: Route) {
+    if (route._props.protect) {
+      return true;
+    }
   }
 
   setErrorPage(block: routeBlockClassProps) {
