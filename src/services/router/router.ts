@@ -7,6 +7,7 @@ class Router {
   _currentRoute: Route | null | undefined;
   _rootQuery!: string;
   _error404Page!: routeBlockClassProps;
+  _protectedPath!: string;
 
   private static __instance: Router;
 
@@ -19,14 +20,21 @@ class Router {
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
+    this._protectedPath = "";
 
     Router.__instance = this;
   }
 
-  use(pathname: string, block: routeBlockClassProps, pageTitle?: string) {
+  use(
+    pathname: string,
+    block: routeBlockClassProps,
+    pageTitle: string,
+    protect?: boolean
+  ) {
     const route = new Route(pathname, block, {
       rootQuery: this._rootQuery,
       pageTitle: pageTitle,
+      protect: protect,
     });
     this.routes.push(route);
     return this;
@@ -44,6 +52,12 @@ class Router {
   _onRoute(pathname: string) {
     if (pathname[pathname.length - 1] === "/") pathname = pathname.slice(0, -1);
     let route = this.getRoute(pathname);
+
+    if (route && route._props.protect) {
+      this.go("/sign-in");
+      return;
+    }
+
     const title = document.querySelector("title");
 
     if (this._currentRoute) {
@@ -88,8 +102,13 @@ class Router {
     return this.routes.find((route) => route.match(pathname));
   }
 
-  errorPage(block: routeBlockClassProps) {
+  setErrorPage(block: routeBlockClassProps) {
     this._error404Page = block;
+    return;
+  }
+
+  setProtectedPath(pathname: string) {
+    this._protectedPath = pathname;
     return;
   }
 }
