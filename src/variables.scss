@@ -1,21 +1,16 @@
-//$color_blue: #f0f4f8;
-//$color_blue2: #013a71;
-//$color_red: #b30838;
-//$color_gray: #c4c4c4;
-//$color_gray2: #fbfbfb;
-//$color_gray3: #efefef;
-//$anim: all 0.3s;
-
 @import "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap";
 
 :root {
   --color-blue: #f0f4f8;
   --color-blue2: #013a71;
+  --color-blue2-rgb: 1 58 113;
   --color-red: #b30838;
+  --color-red-rgb: 179 8 56;
   --color-gray: #c4c4c4;
   --color-gray2: #fbfbfb;
   --color-gray3: #efefef;
+  --color-gray4: #d3d3d3;
   --anim: all 0.3s;
   --font-titles: "Oswald", sans-serif;
   --font-main: "Open Sans", sans-serif !important;
