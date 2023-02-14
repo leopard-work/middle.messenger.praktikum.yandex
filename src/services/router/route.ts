@@ -1,9 +1,10 @@
 import render from "../../utils/render";
 import Component from "../component";
-
-type routeBlockClassProps = () => { content: Component };
-type routeBlockProps = Component | null;
-type routeProps = { rootQuery: string };
+import {
+  routeBlockClassProps,
+  routeBlockProps,
+  routeProps,
+} from "../../utils/types";
 
 class Route {
   _pathname: string;
