@@ -6,6 +6,7 @@ class Router {
   routes!: Route[];
   _currentRoute: Route | null | undefined;
   _rootQuery!: string;
+  _error404Page!: routeBlockClassProps;
 
   private static __instance: Router;
 
@@ -38,14 +39,21 @@ class Router {
   }
 
   _onRoute(pathname: string) {
-    const route = this.getRoute(pathname);
+    let route = this.getRoute(pathname);
 
     if (this._currentRoute) {
       this._currentRoute.leave();
     }
 
-    this._currentRoute = route;
-    if (route) route.render();
+    if (!route && this._error404Page)
+      route = new Route(pathname, this._error404Page, {
+        rootQuery: this._rootQuery,
+      });
+
+    if (route) {
+      this._currentRoute = route;
+      route.render();
+    }
   }
 
   go(pathname: string) {
@@ -71,6 +79,11 @@ class Router {
 
   getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
+  }
+
+  errorPage(block: routeBlockClassProps) {
+    this._error404Page = block;
+    return;
   }
 }
 

@@ -52,6 +52,8 @@ import editProfilePasswordPage from "./pages/profile/editPassword";
 
 export const router = new Router("#root");
 
+router.errorPage(error404Page);
+
 router
   .use("/", homePage)
   .use("/sign-in", signInPage)
