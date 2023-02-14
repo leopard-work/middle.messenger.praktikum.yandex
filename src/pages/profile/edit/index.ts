@@ -100,7 +100,7 @@ const formButton = new Component("button", {
 const form = new FormValidate("form", {
   backLink: Link({
     children: values.back,
-    href: "/profile",
+    href: "/settings",
     class: "profile__back",
   }),
   ...values,

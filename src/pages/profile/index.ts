@@ -100,14 +100,14 @@ const profilePage = () => {
     }),
     loadPhotoLink: Link({
       children: values.photo,
-      href: "/profile",
+      href: "/settings",
     }),
     ...values,
     ...inputs,
-    editLink: Link({ children: values.edit, href: "/profile/edit" }),
+    editLink: Link({ children: values.edit, href: "/settings/edit" }),
     editPasswordLink: Link({
       children: values.edit_password,
-      href: "/profile/password",
+      href: "/settings/password",
     }),
     signOutLink: Link({ children: values.sign_out, href: "/" }),
   });

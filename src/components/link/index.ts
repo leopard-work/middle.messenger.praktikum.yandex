@@ -1,5 +1,5 @@
 import Component from "../../services/component";
-import { pageOpen } from "../../index";
+import { router } from "../../index";
 
 type LinkProps = {
   children: string;
@@ -20,8 +20,7 @@ const Link = (props: LinkProps) => {
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        pageOpen(props.href);
-        window.history.pushState(null, "", props.href);
+        router.go(props.href);
       },
     },
   });

@@ -25,7 +25,7 @@ const homePage = () => {
     tempNav: tempNav(),
     profileLink: Link({
       children: profileBtnIcon,
-      href: "/profile",
+      href: "/settings",
       class: "nav-info__profile-btn",
     }),
   };

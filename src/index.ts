@@ -1,7 +1,5 @@
 import "reset-css";
 import "./styles.scss";
-import Component from "./services/component";
-import render from "./utils/render";
 import { Router } from "./services/router";
 
 import homePage from "./pages/home/index";
@@ -52,7 +50,7 @@ import editProfilePasswordPage from "./pages/profile/editPassword";
 //
 // pageOpen(pathName);
 
-const router = new Router("#root");
+export const router = new Router("#root");
 
 router
   .use("/", homePage)
@@ -61,7 +59,7 @@ router
   .use("/page404", error404Page)
   .use("/page500", error500Page)
   .use("/settings", profilePage)
-  .use("/settings/efit", editProfilePage)
+  .use("/settings/edit", editProfilePage)
   .use("/settings/password", editProfilePasswordPage)
   .start();
 

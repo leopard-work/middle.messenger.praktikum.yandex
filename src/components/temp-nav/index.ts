@@ -39,9 +39,9 @@ const tempNav = () => {
     Link({ children: "Регистрация", href: "/sign-up" }),
     Link({ children: "Ошибка 404", href: "/page404" }),
     Link({ children: "Ошибка 500", href: "/page500" }),
-    Link({ children: "Профиль", href: "/profile" }),
-    Link({ children: "Изменить данные", href: "/profile/edit" }),
-    Link({ children: "Изменить пароль", href: "/profile/password" }),
+    Link({ children: "Профиль", href: "/settings" }),
+    Link({ children: "Изменить данные", href: "/settings/edit" }),
+    Link({ children: "Изменить пароль", href: "/settings/password" }),
   ];
 
   const linksObj = Object.assign({}, links);
