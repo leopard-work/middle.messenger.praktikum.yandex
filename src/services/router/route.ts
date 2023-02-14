@@ -1,12 +1,17 @@
 import render from "../../utils/render";
+import Component from "../component";
+
+type routeBlockClassProps = () => { content: Component };
+type routeBlockProps = Component | null;
+type routeProps = { rootQuery: string };
 
 class Route {
   _pathname: string;
-  _blockClass: any;
-  _block: any;
-  _props: any;
+  _blockClass: routeBlockClassProps;
+  _block: routeBlockProps;
+  _props: routeProps;
 
-  constructor(pathname: string, view: any, props: any) {
+  constructor(pathname: string, view: routeBlockClassProps, props: routeProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -32,9 +37,8 @@ class Route {
 
   render() {
     if (!this._block) {
-      console.log(this._blockClass);
       this._block = this._blockClass().content;
-      render(this._props.rootQuery, this._block);
+      render(this._props.rootQuery, this._block as Component);
       return;
     }
 
