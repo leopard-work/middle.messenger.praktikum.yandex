@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import parseTemplate from "./parse-template";
 import isEqual from "../utils/is-equal";
 import { BlockProps } from "../utils/types";
+import { Connect } from "./store";
 
 abstract class Block {
   static EVENTS = {
@@ -217,4 +218,6 @@ class Component extends Block {
   }
 }
 
-export default Component;
+export default Connect(Component, (state) => state.test ?? {});
+
+//export default Component;

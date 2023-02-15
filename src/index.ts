@@ -10,6 +10,17 @@ import error500Page from "./pages/error500";
 import profilePage from "./pages/profile";
 import editProfilePage from "./pages/profile/edit";
 import editProfilePasswordPage from "./pages/profile/editPassword";
+import { Actions } from "./services/store";
+
+console.log(Actions.getCustomState());
+
+Actions.addCustomData("aaa");
+
+setTimeout(() => {
+  Actions.addCustomData("bbb");
+}, 5000);
+
+//console.log(Actions.getCustomState());
 
 export const router = new Router("#root");
 
