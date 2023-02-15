@@ -218,6 +218,6 @@ class Component extends Block {
   }
 }
 
-export default Connect(Component, (state) => state.test ?? {});
+// export default Connect(Component, (state) => state.test ?? {});
 
-//export default Component;
+export default Component;

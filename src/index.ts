@@ -11,6 +11,9 @@ import profilePage from "./pages/profile";
 import editProfilePage from "./pages/profile/edit";
 import editProfilePasswordPage from "./pages/profile/editPassword";
 import { Actions } from "./services/store";
+import Store from "./services/store/store";
+
+export const store = new Store();
 
 console.log(Actions.getCustomState());
 

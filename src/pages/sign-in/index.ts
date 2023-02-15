@@ -9,15 +9,22 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import Store from "../../services/store/store";
 
-const values = {
-  title: "Авторизация",
+const store = new Store();
+
+let values = {
+  title: store._state.test,
   login: "Логин",
   password: "Пароль",
   button: "Вход",
   reg_link: "Ещё не зарегистрированы?",
   error: "Ошибка ошибка ошибка",
 };
+
+store.on(Store.EVENT_UPDATE, () => {
+  form.setProps({ title: store._state.test });
+});
 
 const inputs = {
   loginBlock: {
