@@ -4,14 +4,14 @@ export default class Store extends EventBus {
   static EVENT_UPDATE = "update";
   static _instance: Store;
 
-  _state = {};
+  _state:Record<string, unknown> = { };
 
   constructor() {
     if (Store._instance) return Store._instance;
 
     super();
 
-    //this._state = {};
+    this._state = {};
 
     Store._instance = this;
 
@@ -21,7 +21,8 @@ export default class Store extends EventBus {
   }
 
   getState() {
-    return this._state;
+    console.log(this._state);
+    return {...this._state};
   }
 
   removeState() {
@@ -29,7 +30,7 @@ export default class Store extends EventBus {
     this.emit(Store.EVENT_UPDATE);
   }
 
-  set(id, value) {
+  set(id:string, value:unknown) {
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;

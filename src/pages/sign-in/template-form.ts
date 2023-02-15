@@ -1,5 +1,5 @@
 export const form_template = `
-    <h1 class="auth__title">{{ title }}</h1>
+    <h1 class="auth__title">{{ title }} {{test}}</h1>
     <label class="auth__input-text-wrapper">
         {{loginBlock}}
     </label>

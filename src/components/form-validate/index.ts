@@ -1,6 +1,8 @@
 import Component from "../../services/component";
+import { Connect } from "../../services/store";
 
 class Input extends Component {}
+
 
 export class FormValidate extends Component {
   checkFields() {
@@ -13,6 +15,9 @@ export class FormValidate extends Component {
     return ok;
   }
 }
+
+export class aaa extends Connect(FormValidate, (state:any) => state ?? {}) {};
+
 
 export const checkField = (element: unknown, value: string) => {
   if (element instanceof Input) {

@@ -20,6 +20,10 @@ setTimeout(() => {
   Actions.addCustomData("bbb");
 }, 5000);
 
+setTimeout(() => {
+  Actions.addCustomData("ccc");
+}, 10000);
+
 //console.log(Actions.getCustomState());
 
 export const router = new Router("#root");

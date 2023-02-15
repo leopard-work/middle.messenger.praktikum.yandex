@@ -3,8 +3,9 @@ import "../profile/styles.scss";
 import Component from "../../services/component";
 import validateTypes from "../../utils/validate-types";
 import {
+  aaa,
   FormValidate,
-  setInputsValidate,
+  setInputsValidate
 } from "../../components/form-validate";
 import { form_template } from "./template-form";
 import Link from "../../components/link";
@@ -57,7 +58,8 @@ const formButton = new Component("button", {
   },
 });
 
-const form = new FormValidate("form", {
+const form = new aaa("form", {
+  'test': 'xxx',
   ...values,
   ...inputs,
   buttonBlock: formButton,
@@ -87,6 +89,8 @@ const form = new FormValidate("form", {
     },
   },
 });
+
+console.log(form)
 
 const signInPage = () => {
   return new Component("div", {

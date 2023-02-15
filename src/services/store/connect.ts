@@ -1,8 +1,14 @@
+import Component from "../component";
 import Store from "./store";
+import { BlockProps } from "../../utils/types";
 
-export default function connect(Component, mapStateToProps) {
+type connectProps = {
+  new(tag: string, props: BlockProps): Component
+};
+
+export default function connect(Component: connectProps, mapStateToProps: any) {
   return class extends Component {
-    constructor(tag, props = {}) {
+    constructor(tag:string, props = {}) {
       const store = new Store();
 
       super(tag, { ...props, ...mapStateToProps(store.getState()) });
