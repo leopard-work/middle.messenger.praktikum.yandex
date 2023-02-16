@@ -3,12 +3,14 @@ import EventBus from "../event-bus";
 export type storeProps = {
   user: {
     loginSuccess: boolean;
+    userName: string;
   };
 };
 
 const InitialState: storeProps = {
   user: {
     loginSuccess: false,
+    userName: "",
   },
 };
 
