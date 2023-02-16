@@ -8,7 +8,7 @@ const METHODS = {
 type HTTPTransportOptionsProps = {
   method: string;
   headers?: Record<string, string>;
-  data?: { [key: string]: any } | string;
+  data?: Record<string, any> | string;
   timeout?: number;
 };
 
@@ -101,3 +101,5 @@ class HTTPTransport {
     });
   };
 }
+
+export default HTTPTransport;
