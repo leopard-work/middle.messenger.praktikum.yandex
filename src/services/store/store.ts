@@ -1,5 +1,10 @@
 import EventBus from "../event-bus";
-import { storeProps } from "../../utils/types";
+
+export type storeProps = {
+  user: {
+    loginSuccess: boolean;
+  };
+};
 
 const InitialState: storeProps = {
   user: {

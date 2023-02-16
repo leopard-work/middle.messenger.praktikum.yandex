@@ -11,11 +11,3 @@ export type routeProps = {
   pageTitle?: string;
   protect?: boolean;
 };
-
-export type storeProps =
-  | {
-      user: {
-        loginSuccess: boolean;
-      };
-    }
-  | {};
