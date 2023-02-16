@@ -3,7 +3,6 @@ import { Connect } from "../../services/store";
 
 class Input extends Component {}
 
-
 export class FormValidate extends Component {
   checkFields() {
     let ok = true;
@@ -16,8 +15,17 @@ export class FormValidate extends Component {
   }
 }
 
-export class aaa extends Connect(FormValidate, (state:any) => state ?? {}) {};
-
+export class aaa extends Connect(Component, (state: any) => state.user ?? {}) {
+  checkFields() {
+    let ok = true;
+    Object.keys(this.children).forEach((input) => {
+      const value = (this.children[input].getContent() as HTMLInputElement)
+        .value;
+      if (!checkField(this.children[input], value)) ok = false;
+    });
+    return ok;
+  }
+}
 
 export const checkField = (element: unknown, value: string) => {
   if (element instanceof Input) {

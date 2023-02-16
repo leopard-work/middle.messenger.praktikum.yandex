@@ -2,14 +2,11 @@ import { template } from "./template";
 import "../profile/styles.scss";
 import Component from "../../services/component";
 import validateTypes from "../../utils/validate-types";
-import {
-  aaa,
-  FormValidate,
-  setInputsValidate
-} from "../../components/form-validate";
+import { aaa, setInputsValidate } from "../../components/form-validate";
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import { Connect } from "../../services/store";
 
 const values = {
   title: "Авторизация",
@@ -49,9 +46,11 @@ const inputs = {
 
 setInputsValidate(inputs);
 
-const formButton = new Component("button", {
+class bbb extends Connect(Component, (state: any) => state.button ?? {}) {}
+const formButton = new bbb("button", {
+  btn: "x",
   ...values,
-  template: "{{ button }}",
+  template: "{{ button }} {{btn}}",
   attr: {
     type: "submit",
     class: "input-button auth__button",
@@ -59,7 +58,7 @@ const formButton = new Component("button", {
 });
 
 const form = new aaa("form", {
-  'test': 'xxx',
+  test: "xxx",
   ...values,
   ...inputs,
   buttonBlock: formButton,
@@ -90,7 +89,7 @@ const form = new aaa("form", {
   },
 });
 
-console.log(form)
+console.log(form);
 
 const signInPage = () => {
   return new Component("div", {

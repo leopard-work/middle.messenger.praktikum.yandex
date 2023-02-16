@@ -6,8 +6,12 @@ const getCustomState = () => {
   return store.getState();
 };
 
-const addCustomData = (add: string) => {
-  store.set("test", add);
+const addCustomData = (add: any) => {
+  store.set("user", add);
 };
 
-export { getCustomState, addCustomData };
+const addCustomData2 = (add: any) => {
+  store.set("button", add);
+};
+
+export { getCustomState, addCustomData, addCustomData2 };

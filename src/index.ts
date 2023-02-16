@@ -14,14 +14,14 @@ import { Actions } from "./services/store";
 
 console.log(Actions.getCustomState());
 
-Actions.addCustomData("aaa");
+Actions.addCustomData({ test: "aaa" });
 
 setTimeout(() => {
-  Actions.addCustomData("bbb");
+  Actions.addCustomData({ test: "bbb" });
 }, 5000);
 
 setTimeout(() => {
-  Actions.addCustomData("ccc");
+  Actions.addCustomData2({ button: "ccc" });
 }, 10000);
 
 //console.log(Actions.getCustomState());
