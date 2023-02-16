@@ -9,6 +9,7 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import ProtectedPage from "../../components/protected-page";
 
 const signUpPage = () => {
   const values = {
@@ -155,7 +156,7 @@ const signUpPage = () => {
     },
   });
 
-  return new Component("div", {
+  return new ProtectedPage("div", {
     tempNav: tempNav(),
     ...values,
     template: template,

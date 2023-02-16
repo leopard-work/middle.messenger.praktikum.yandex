@@ -9,8 +9,7 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
-import { Connect } from "../../services/store";
-import { storeProps } from "../../utils/types";
+import ProtectedPage from "../../components/protected-page";
 
 const values = {
   title: "Авторизация",
@@ -89,18 +88,6 @@ const form = new FormValidate("form", {
     },
   },
 });
-
-class ProtectedPage extends Connect(
-  Component,
-  (state: storeProps) => state.user.userCheck
-) {
-  render() {
-    let template = "loading...";
-    if (this.props.template && this.props.request)
-      template = this.props.template;
-    return this.compile(template, { ...this.props });
-  }
-}
 
 const signInPage = () => {
   return new ProtectedPage("div", {
