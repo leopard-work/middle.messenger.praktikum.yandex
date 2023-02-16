@@ -1,6 +1,6 @@
 import Component from "../component";
 import Store from "./store";
-import { BlockProps } from "../../utils/types";
+import { BlockProps, storeProps } from "../../utils/types";
 
 type connectProps = {
   new (tag: string, props: BlockProps): Component;
@@ -8,7 +8,7 @@ type connectProps = {
 
 export default function connect(
   Component: connectProps,
-  mapStateToProps: (props: Record<string, unknown>) => Record<string, unknown>
+  mapStateToProps: (props: storeProps) => Record<string, unknown> | {}
 ) {
   return class extends Component {
     constructor(tag: string, props = {}) {

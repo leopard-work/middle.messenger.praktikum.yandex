@@ -11,3 +11,12 @@ export type routeProps = {
   pageTitle?: string;
   protect?: boolean;
 };
+
+export type storeProps = {
+  user: {
+    userCheck: {
+      request: boolean;
+      success: boolean;
+    };
+  };
+};

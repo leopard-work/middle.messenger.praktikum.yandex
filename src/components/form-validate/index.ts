@@ -1,8 +1,13 @@
 import Component from "../../services/component";
+import { Connect } from "../../services/store";
+import { storeProps } from "../../utils/types";
 
 class Input extends Component {}
 
-export class FormValidate extends Component {
+export class FormValidate extends Connect(
+  Component,
+  (state: storeProps) => state.user.userCheck
+) {
   checkFields() {
     let ok = true;
     Object.keys(this.children).forEach((input) => {

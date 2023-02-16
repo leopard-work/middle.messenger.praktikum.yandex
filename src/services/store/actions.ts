@@ -6,10 +6,15 @@ const getFullState = () => {
   return store.getState();
 };
 
-const setUserAuth = (add: string) => {
+const setUserCheck = (add: boolean) => {
   const state = store.getState();
-  const user = state.user ?? {};
-  store.set("user", { ...user, userName: add });
+  if (state.user) {
+    const user = state.user;
+    store.set("user", {
+      ...user,
+      userCheck: { ...user.userCheck, request: add },
+    });
+  }
 };
 
-export { getFullState, setUserAuth };
+export { getFullState, setUserCheck };

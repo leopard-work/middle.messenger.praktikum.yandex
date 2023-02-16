@@ -1,16 +1,12 @@
 import EventBus from "../event-bus";
-
-export type storeProps = {
-  user: {
-    loginSuccess: boolean;
-    userName: string;
-  };
-};
+import { storeProps } from "../../utils/types";
 
 const InitialState: storeProps = {
   user: {
-    loginSuccess: false,
-    userName: "",
+    userCheck: {
+      request: false,
+      success: false,
+    },
   },
 };
 
@@ -18,25 +14,29 @@ export default class Store extends EventBus {
   static EVENT_UPDATE = "update";
   static _instance: Store;
 
-  _state: Record<string, unknown> = {};
+  _state: storeProps = InitialState;
 
   constructor() {
     if (Store._instance) return Store._instance;
     super();
     this._state = InitialState;
     Store._instance = this;
+
+    this.on(Store.EVENT_UPDATE, () => {
+      console.log(this._state);
+    });
   }
 
-  getState() {
+  getState(): storeProps {
     return { ...this._state };
   }
 
   removeState() {
-    this._state = {};
+    this._state = InitialState;
     this.emit(Store.EVENT_UPDATE);
   }
 
-  set(id: keyof storeProps, value: unknown) {
+  set(id: keyof storeProps, value: any) {
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;
