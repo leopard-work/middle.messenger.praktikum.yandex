@@ -16,7 +16,7 @@ console.log(Actions.getFullState());
 
 setTimeout(() => {
   Actions.setUserCheck(true);
-}, 5000);
+}, 3000);
 
 export const router = new Router("#root");
 
