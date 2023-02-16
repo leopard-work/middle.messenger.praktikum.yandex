@@ -203,7 +203,7 @@ abstract class Block {
       const stub = fragment.content.querySelector<HTMLInputElement>(
         `[data-id=${child.id}]`
       );
-      (stub as HTMLElement).replaceWith(child.getContent());
+      if (stub) (stub as HTMLElement).replaceWith(child.getContent());
     });
 
     return fragment.content;

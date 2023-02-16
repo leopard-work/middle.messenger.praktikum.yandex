@@ -93,7 +93,14 @@ const form = new FormValidate("form", {
 class ProtectedPage extends Connect(
   Component,
   (state: storeProps) => state.user.userCheck
-) {}
+) {
+  render() {
+    let template = "loading...";
+    if (this.props.template && this.props.request)
+      template = this.props.template;
+    return this.compile(template, { ...this.props });
+  }
+}
 
 const signInPage = () => {
   return new ProtectedPage("div", {
