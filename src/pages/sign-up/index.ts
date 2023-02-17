@@ -10,6 +10,7 @@ import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
+import { apiUser } from "../../api/user";
 
 const signUpPage = () => {
   const values = {
@@ -137,6 +138,18 @@ const signUpPage = () => {
     events: {
       submit: (event: Event) => {
         event.preventDefault();
+
+        const data = {
+          first_name: "Vladislav4",
+          second_name: "Aaaaaa3",
+          login: "XYtest87655",
+          email: "test106@vlad.love",
+          password: "Abc123abc2",
+          phone: "+79787982240",
+        };
+        console.log(data);
+        apiUser.signup(data);
+
         if (form.checkFields()) {
           const values = new FormData(form.getContent() as HTMLFormElement);
           const data: Record<string, FormDataEntryValue> = {};
@@ -145,12 +158,12 @@ const signUpPage = () => {
           }
           console.log(data);
           (form.getContent() as HTMLFormElement).reset();
-          form.children.buttonBlock.setProps({
-            button: "Отправлено",
-            attr: {
-              disabled: "true",
-            },
-          });
+          // form.children.buttonBlock.setProps({
+          //   button: "Отправлено",
+          //   attr: {
+          //     disabled: "true",
+          //   },
+          // });
         }
       },
     },

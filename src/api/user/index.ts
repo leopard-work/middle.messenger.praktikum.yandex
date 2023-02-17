@@ -6,7 +6,7 @@ const http = new HTTPTransport();
 
 class apiUserService {
   signup(data: any) {
-    return http.post(`${baseUrl}auth/signup`, { data });
+    return http.post(`${baseUrl}auth/signup`, { data: data });
   }
 }
 

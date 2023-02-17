@@ -60,18 +60,11 @@ class HTTPTransport {
     );
   };
 
-  request = (
-    url: string,
-    options: HTTPTransportOptionsProps,
-    timeout = 5000
-  ) => {
-    let { data } = options;
-    const { headers, method } = options;
+  private request<Response>(url: string, options): Promise<Response> {
+    const { method, data } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-
-      if (method === METHODS.GET && data) url += queryStringify(data);
 
       xhr.open(method, url);
 
@@ -79,27 +72,22 @@ class HTTPTransport {
         resolve(xhr);
       };
 
-      xhr.timeout = timeout;
-
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      if (headers) {
-        for (const key in headers) {
-          if (Object.prototype.hasOwnProperty.call(headers, key))
-            xhr.setRequestHeader(key, headers[key]);
-        }
-      }
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-      if (!data || method === METHODS.GET) {
+      xhr.withCredentials = true;
+      xhr.responseType = "json";
+
+      if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        data = JSON.stringify(data);
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     });
-  };
+  }
 }
 
 export default HTTPTransport;
