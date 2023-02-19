@@ -7,7 +7,7 @@ class Router {
   _currentRoute: Route | null | undefined;
   _rootQuery!: string;
   _error404Page!: routeBlockClassProps;
-  _protectedPath!: string;
+  _error500Path!: string;
 
   private static __instance: Router;
 
@@ -20,7 +20,6 @@ class Router {
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
-    this._protectedPath = "";
 
     Router.__instance = this;
   }
@@ -65,11 +64,6 @@ class Router {
       });
 
     if (route) {
-      if (this.checkProtect(route)) {
-        this.go(this._protectedPath);
-        return;
-      }
-
       this._currentRoute = route;
       if (title)
         title.textContent = this._currentRoute._props.pageTitle as string;
@@ -102,20 +96,18 @@ class Router {
     return this.routes.find((route) => route.match(pathname));
   }
 
-  checkProtect(route: Route) {
-    if (route._props.protect) {
-      return true;
-    }
-  }
-
-  setErrorPage(block: routeBlockClassProps) {
+  setError404Page(block: routeBlockClassProps) {
     this._error404Page = block;
     return;
   }
 
-  setProtectedPath(pathname: string) {
-    this._protectedPath = pathname;
+  setError500Path(path: string) {
+    this._error500Path = path;
     return;
+  }
+
+  goToError500() {
+    this.go(this._error500Path);
   }
 }
 

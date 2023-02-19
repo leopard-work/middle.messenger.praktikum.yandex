@@ -8,6 +8,9 @@ class apiUserService {
   signup(data: any) {
     return http.post(`${baseUrl}auth/signup`, { data: data });
   }
+  userInfo() {
+    return http.get(`${baseUrl}auth/user`);
+  }
 }
 
 export const apiUser = new apiUserService();

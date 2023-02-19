@@ -20,8 +20,8 @@ setTimeout(() => {
 
 export const router = new Router("#root");
 
-router.setErrorPage(error404Page);
-router.setProtectedPath("/sign-in");
+router.setError404Page(error404Page);
+router.setError500Path('/page500');
 
 router
   .use("", homePage, "Страница чатов", true)

@@ -11,6 +11,7 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import { apiUser } from "../../api/user";
+import { router } from "../../index";
 
 const signUpPage = () => {
   const values = {
@@ -24,7 +25,7 @@ const signUpPage = () => {
     password: "Пароль",
     password_confirm: "Пароль (ещё раз)",
     button: "Зарегистрироваться",
-    error: "Ошибка ошибка ошибка",
+    error: "",
     login_link: "Войти",
   };
 
@@ -136,34 +137,71 @@ const signUpPage = () => {
       class: "auth",
     },
     events: {
-      submit: (event: Event) => {
+      submit: async (event: Event) => {
         event.preventDefault();
-
-        const data = {
-          first_name: "Vladislav4",
-          second_name: "Aaaaaa3",
-          login: "XYtest87655",
-          email: "test106@vlad.love",
-          password: "Abc123abc2",
-          phone: "+79787982240",
-        };
-        console.log(data);
-        apiUser.signup(data);
-
-        if (form.checkFields()) {
-          const values = new FormData(form.getContent() as HTMLFormElement);
-          const data: Record<string, FormDataEntryValue> = {};
-          for (const pair of values.entries()) {
+        if (!form.checkFields()) {
+          const formValues = new FormData(form.getContent() as HTMLFormElement);
+          let data: Record<string, FormDataEntryValue> = {};
+          for (const pair of formValues.entries()) {
             data[pair[0]] = pair[1];
           }
-          console.log(data);
-          (form.getContent() as HTMLFormElement).reset();
-          // form.children.buttonBlock.setProps({
-          //   button: "Отправлено",
-          //   attr: {
-          //     disabled: "true",
-          //   },
-          // });
+
+          data = {
+            first_name: "Vladislav",
+            second_name: "Second",
+            login: "test0002",
+            email: "test0002@vlad.love",
+            password: "Abc123abc",
+            phone: "+79998887766",
+          };
+
+          form.children.buttonBlock.setProps({
+            button: "Загрузка...",
+            attr: {
+              disabled: "true",
+            },
+          });
+
+          let registerCheck = false;
+
+          await apiUser.signup(data)
+            .then((res) => {
+              form.children.buttonBlock.setProps({
+                button: values.button,
+                attr: {
+                  disabled: "false",
+                },
+              });
+              if (res.status === 200) {
+                form.setProps({error: ''});
+                (form.getContent() as HTMLFormElement).reset();
+                registerCheck = true;
+                return;
+              }
+              if (res.response.reason === "Login already exists") {
+                form.setProps({error: 'Такой пользователь уже существует'});
+                form.children.loginBlock.addClass("input-error");
+                return;
+              }
+              if (res.response.reason === "Email already exists") {
+                form.setProps({error: 'Пользователь с такой почтой уже существует'});
+                form.children.emailBlock.addClass("input-error");
+                return;
+              }
+              form.setProps({error: 'Произошла ошибка, повторите позже'});
+            })
+
+          if (!registerCheck) {
+            apiUser.userInfo().then((res) => {
+              if (res.status === 200) {
+                console.log(res);
+                router.go('');
+                return;
+              }
+              router.goToError500();
+            })
+          }
+
         }
       },
     },

@@ -21,6 +21,11 @@
     margin-top: 8px;
     color: var(--color-red);
     font-size: 12px;
+
+    span {
+      display: block;
+      text-align: center;
+    }
   }
 
   &__title {
