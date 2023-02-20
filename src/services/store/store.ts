@@ -22,12 +22,12 @@ export default class Store extends EventBus {
   static EVENT_UPDATE = "update";
   static _instance: Store;
 
-  _state: storeProps = InitialState;
+  _state: storeProps = { ...InitialState };
 
   constructor() {
     if (Store._instance) return Store._instance;
     super();
-    this._state = InitialState;
+    this._state = { ...InitialState };
     Store._instance = this;
 
     this.on(Store.EVENT_UPDATE, () => {
@@ -40,7 +40,13 @@ export default class Store extends EventBus {
   }
 
   removeState() {
-    this._state = InitialState;
+    this._state = {
+      ...InitialState,
+      user: {
+        ...InitialState.user,
+        userCheck: { success: false, request: true },
+      },
+    };
     this.emit(Store.EVENT_UPDATE);
   }
 

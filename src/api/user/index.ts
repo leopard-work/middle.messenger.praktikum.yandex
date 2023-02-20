@@ -5,11 +5,14 @@ const baseUrl = "https://ya-praktikum.tech/api/v2/";
 const http = new HTTPTransport();
 
 class apiUserService {
-  signup(data: any) {
+  signUp(data: any) {
     return http.post(`${baseUrl}auth/signup`, { data: data });
   }
-  signin(data: any) {
+  signIn(data: any) {
     return http.post(`${baseUrl}auth/signin`, { data: data });
+  }
+  logOut() {
+    return http.post(`${baseUrl}auth/logout`);
   }
   userInfo() {
     return http.get(`${baseUrl}auth/user`);

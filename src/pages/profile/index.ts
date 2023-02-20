@@ -1,9 +1,13 @@
 import { template } from "./template";
 import "./styles.scss";
-import Component from "../../services/component";
 import { setInputsValidate } from "../../components/form-validate";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import ProtectedPage from "../../components/protected-page";
+import Component from "../../services/component";
+import { apiUser } from "../../api/user";
+import { router } from "../../index";
+import { clearState } from "../../services/store/actions";
 
 export const values = {
   title: "Профиль",
@@ -86,8 +90,29 @@ const inputs = {
 
 setInputsValidate(inputs);
 
+const singOutButton = new Component("a", {
+  ...values,
+  template: "{{sign_out}}",
+  attr: {
+    href: "/",
+  },
+  events: {
+    click: (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      apiUser.logOut().then((res) => {
+        if (res.status === 200) {
+          clearState();
+          return;
+        }
+        router.goToError500();
+      });
+    },
+  },
+});
+
 const profilePage = () => {
-  return new Component("div", {
+  return new ProtectedPage("div", {
     template: template,
     tempNav: tempNav(),
     backLink: Link({
@@ -106,7 +131,7 @@ const profilePage = () => {
       children: values.edit_password,
       href: "/settings/password",
     }),
-    signOutLink: Link({ children: values.sign_out, href: "/" }),
+    signOutLink: singOutButton,
   });
 };
 

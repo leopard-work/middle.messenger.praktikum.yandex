@@ -154,7 +154,7 @@ const signUpPage = () => {
 
           let registerCheck = false;
 
-          await apiUser.signup(data).then((res) => {
+          await apiUser.signUp(data).then((res) => {
             form.children.buttonBlock.setProps({
               button: values.button,
               attr: {

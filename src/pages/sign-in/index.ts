@@ -87,7 +87,7 @@ const form = new FormValidate("form", {
 
         let loginCheck = false;
 
-        await apiUser.signin(data).then((res) => {
+        await apiUser.signIn(data).then((res) => {
           form.children.buttonBlock.setProps({
             button: values.button,
             attr: {
