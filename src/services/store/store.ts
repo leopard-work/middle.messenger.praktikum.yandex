@@ -4,9 +4,17 @@ import { storeProps } from "../../utils/types";
 const InitialState: storeProps = {
   user: {
     userCheck: {
-      request: false,
-      success: false,
+      request: true,
+      success: true,
     },
+    avatar: "",
+    display_name: "",
+    email: "",
+    first_name: "",
+    id: -1,
+    login: "",
+    phone: "",
+    second_name: "",
   },
 };
 

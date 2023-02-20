@@ -90,7 +90,7 @@ const form = new FormValidate("form", {
 });
 
 const signInPage = () => {
-  return new ProtectedPage("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: template,

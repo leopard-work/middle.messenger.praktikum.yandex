@@ -9,9 +9,9 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
-import ProtectedPage from "../../components/protected-page";
 import { apiUser } from "../../api/user";
 import { router } from "../../index";
+import { setUser } from "../../services/store/actions";
 
 const signUpPage = () => {
   const values = {
@@ -149,8 +149,8 @@ const signUpPage = () => {
           data = {
             first_name: "Vladislav",
             second_name: "Second",
-            login: "test0002",
-            email: "test0002@vlad.love",
+            login: "test0003",
+            email: "test0003@vlad.love",
             password: "Abc123abc",
             phone: "+79998887766",
           };
@@ -164,50 +164,51 @@ const signUpPage = () => {
 
           let registerCheck = false;
 
-          await apiUser.signup(data)
-            .then((res) => {
-              form.children.buttonBlock.setProps({
-                button: values.button,
-                attr: {
-                  disabled: "false",
-                },
+          await apiUser.signup(data).then((res) => {
+            form.children.buttonBlock.setProps({
+              button: values.button,
+              attr: {
+                disabled: "false",
+              },
+            });
+            if (res.status === 200) {
+              form.setProps({ error: "" });
+              (form.getContent() as HTMLFormElement).reset();
+              registerCheck = true;
+              return;
+            }
+            if (res.response.reason === "Login already exists") {
+              form.setProps({ error: "Такой пользователь уже существует" });
+              form.children.loginBlock.addClass("input-error");
+              return;
+            }
+            if (res.response.reason === "Email already exists") {
+              form.setProps({
+                error: "Пользователь с такой почтой уже существует",
               });
-              if (res.status === 200) {
-                form.setProps({error: ''});
-                (form.getContent() as HTMLFormElement).reset();
-                registerCheck = true;
-                return;
-              }
-              if (res.response.reason === "Login already exists") {
-                form.setProps({error: 'Такой пользователь уже существует'});
-                form.children.loginBlock.addClass("input-error");
-                return;
-              }
-              if (res.response.reason === "Email already exists") {
-                form.setProps({error: 'Пользователь с такой почтой уже существует'});
-                form.children.emailBlock.addClass("input-error");
-                return;
-              }
-              form.setProps({error: 'Произошла ошибка, повторите позже'});
-            })
+              form.children.emailBlock.addClass("input-error");
+              return;
+            }
+            form.setProps({ error: "Произошла ошибка, повторите позже" });
+          });
 
           if (!registerCheck) {
             apiUser.userInfo().then((res) => {
               if (res.status === 200) {
-                console.log(res);
-                router.go('');
+                console.log(res.response);
+                setUser(res.response);
+                //router.go('');
                 return;
               }
               router.goToError500();
-            })
+            });
           }
-
         }
       },
     },
   });
 
-  return new ProtectedPage("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: template,

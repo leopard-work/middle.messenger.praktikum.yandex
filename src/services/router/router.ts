@@ -1,5 +1,6 @@
 import { Route } from "./index";
 import { routeBlockClassProps } from "../../utils/types";
+import { getFullState } from "../store/actions";
 
 class Router {
   history!: History;
@@ -28,12 +29,14 @@ class Router {
     pathname: string,
     block: routeBlockClassProps,
     pageTitle: string,
-    protect?: boolean
+    protectNoUser: boolean,
+    protectUser: boolean
   ) {
     const route = new Route(pathname, block, {
       rootQuery: this._rootQuery,
       pageTitle: pageTitle,
-      protect: protect,
+      protectNoUser: protectNoUser,
+      protectUser: protectUser,
     });
     this.routes.push(route);
     return this;
@@ -64,6 +67,12 @@ class Router {
       });
 
     if (route) {
+      const state = getFullState();
+      if (route._props.protectNoUser && state.user.userCheck.request) {
+        console.log("ok");
+        this.go("/sign-in");
+      }
+
       this._currentRoute = route;
       if (title)
         title.textContent = this._currentRoute._props.pageTitle as string;

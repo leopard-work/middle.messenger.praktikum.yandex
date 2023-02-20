@@ -1,6 +1,5 @@
 import { template } from "./template";
 import "./styles.scss";
-import Component from "../../services/component";
 import tempNav from "../../components/temp-nav";
 import Link from "../../components/link";
 import {
@@ -9,6 +8,7 @@ import {
 } from "../../components/form-validate";
 import validateTypes from "../../utils/validate-types";
 import { templateForm } from "./template-form";
+import ProtectedPage from "../../components/protected-page";
 
 const homePage = () => {
   const profileBtnIcon =
@@ -68,7 +68,7 @@ const homePage = () => {
     },
   });
 
-  return new Component("div", { ...values, ...modules, form: form });
+  return new ProtectedPage("div", { ...values, ...modules, form: form });
 };
 
 export default homePage;

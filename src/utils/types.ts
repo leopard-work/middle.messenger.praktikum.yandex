@@ -9,7 +9,8 @@ export type routeBlockProps = Component | null;
 export type routeProps = {
   rootQuery: string;
   pageTitle?: string;
-  protect?: boolean;
+  protectNoUser?: boolean;
+  protectUser?: boolean;
 };
 
 export type storeProps = {
@@ -18,5 +19,13 @@ export type storeProps = {
       request: boolean;
       success: boolean;
     };
+    avatar: string;
+    display_name: string;
+    email: string;
+    first_name: string;
+    id: number;
+    login: string;
+    phone: string;
+    second_name: string;
   };
 };
