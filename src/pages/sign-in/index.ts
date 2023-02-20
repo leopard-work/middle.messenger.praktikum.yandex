@@ -9,7 +9,9 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
-import ProtectedPage from "../../components/protected-page";
+import { apiUser } from "../../api/user";
+import { setUser } from "../../services/store/actions";
+import { router } from "../../index";
 
 const values = {
   title: "Авторизация",
@@ -17,7 +19,7 @@ const values = {
   password: "Пароль",
   button: "Вход",
   reg_link: "Ещё не зарегистрированы?",
-  error: "Ошибка ошибка ошибка",
+  error: "",
 };
 
 const inputs = {
@@ -68,22 +70,55 @@ const form = new FormValidate("form", {
     class: "auth",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
         const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
         form.children.buttonBlock.setProps({
-          button: "Отправлено",
+          button: "Загрузка...",
           attr: {
             disabled: "true",
           },
         });
+
+        let loginCheck = false;
+
+        await apiUser.signin(data).then((res) => {
+          form.children.buttonBlock.setProps({
+            button: values.button,
+            attr: {
+              disabled: "false",
+            },
+          });
+          if (res.status === 200) {
+            form.setProps({ error: "" });
+            (form.getContent() as HTMLFormElement).reset();
+            loginCheck = true;
+            return;
+          }
+          if (res.response.reason === "Login or password is incorrect") {
+            form.setProps({
+              error: "Неверный логин или пароль",
+            });
+            return;
+          }
+          form.setProps({ error: "Произошла ошибка, повторите позже" });
+        });
+
+        if (loginCheck) {
+          apiUser.userInfo().then((res) => {
+            if (res.status === 200) {
+              setUser(res.response);
+              router.go("");
+              return;
+            }
+            router.goToError500();
+          });
+        }
       }
     },
   },
