@@ -1,7 +1,7 @@
 import EventBus from "../event-bus";
 import { storeProps } from "../../utils/types";
 
-const InitialState: storeProps = {
+export const InitialState: storeProps = {
   user: {
     userCheck: {
       request: false,

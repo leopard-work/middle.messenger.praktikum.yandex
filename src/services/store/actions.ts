@@ -30,4 +30,8 @@ const setUserRequest = () => {
   }
 };
 
-export { getFullState, setUser, setUserRequest };
+const clearState = () => {
+  store.removeState();
+};
+
+export { getFullState, setUser, setUserRequest, clearState };
