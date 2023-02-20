@@ -4,13 +4,14 @@ import { storeProps } from "../../utils/types";
 import { apiUser } from "../../api/user";
 import { setUser, setUserRequest } from "../../services/store/actions";
 import { router } from "../../index";
+import loadingTemplate from "../../pages/layouts/loading";
 
 class ProtectedPage extends Connect(
   Component,
   (state: storeProps) => state.user.userCheck
 ) {
   render() {
-    let template = "loading...";
+    let template = loadingTemplate;
     if (!this.props.request) {
       apiUser.userInfo().then((res) => {
         if (res.status === 200) setUser(res.response);

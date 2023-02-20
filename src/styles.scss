@@ -3,7 +3,6 @@
 * {
   box-sizing: border-box;
   transition: var(--anim);
-  font-family: var(--font-main) !important;
 }
 
 ::placeholder {
@@ -12,6 +11,7 @@
 
 body {
   font-size: 14px;
+  font-family: var(--font-main) !important;
   color: var(--color-blue2) !important;
 }
 
@@ -86,4 +86,13 @@ h1 {
       }
     }
   }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: var(--font-titles);
+  font-size: 30px;
 }
