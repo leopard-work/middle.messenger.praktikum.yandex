@@ -15,6 +15,8 @@ export const router = new Router("#root");
 
 router.setError404Page(error404Page);
 router.setError500Path("/page500");
+router.setProtectUserPath("/sign-in");
+router.setProtectNoUserPath("/settings");
 
 router
   .use("", homePage, "Страница чатов", true, false)

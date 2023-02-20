@@ -10,8 +10,6 @@ class ProtectedPage extends Connect(
   (state: storeProps) => state.user.userCheck
 ) {
   render() {
-    console.log(this.props.success);
-    console.log(this.props.request);
     let template = "loading...";
     if (!this.props.request) {
       apiUser.userInfo().then((res) => {

@@ -139,22 +139,12 @@ const signUpPage = () => {
     events: {
       submit: async (event: Event) => {
         event.preventDefault();
-        if (!form.checkFields()) {
+        if (form.checkFields()) {
           const formValues = new FormData(form.getContent() as HTMLFormElement);
           let data: Record<string, FormDataEntryValue> = {};
           for (const pair of formValues.entries()) {
             data[pair[0]] = pair[1];
           }
-
-          data = {
-            first_name: "Vladislav",
-            second_name: "Second",
-            login: "test0003",
-            email: "test0003@vlad.love",
-            password: "Abc123abc",
-            phone: "+79998887766",
-          };
-
           form.children.buttonBlock.setProps({
             button: "Загрузка...",
             attr: {
@@ -192,12 +182,11 @@ const signUpPage = () => {
             form.setProps({ error: "Произошла ошибка, повторите позже" });
           });
 
-          if (!registerCheck) {
+          if (registerCheck) {
             apiUser.userInfo().then((res) => {
               if (res.status === 200) {
-                console.log(res.response);
                 setUser(res.response);
-                //router.go('');
+                router.go("");
                 return;
               }
               router.goToError500();

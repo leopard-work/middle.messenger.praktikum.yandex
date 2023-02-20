@@ -9,6 +9,8 @@ class Router {
   _rootQuery!: string;
   _error404Page!: routeBlockClassProps;
   _error500Path!: string;
+  _protectUserPath!: string;
+  _protectNoUserPath!: string;
 
   private static __instance: Router;
 
@@ -68,9 +70,22 @@ class Router {
 
     if (route) {
       const state = getFullState();
-      if (route._props.protectNoUser && state.user.userCheck.request) {
-        console.log("ok");
-        this.go("/sign-in");
+      if (
+        route._props.protectNoUser &&
+        state.user.userCheck.request &&
+        !state.user.userCheck.success
+      ) {
+        this.go(this._protectUserPath);
+        return;
+      }
+
+      if (
+        route._props.protectUser &&
+        state.user.userCheck.request &&
+        state.user.userCheck.success
+      ) {
+        this.go(this._protectNoUserPath);
+        return;
       }
 
       this._currentRoute = route;
@@ -112,6 +127,16 @@ class Router {
 
   setError500Path(path: string) {
     this._error500Path = path;
+    return;
+  }
+
+  setProtectUserPath(path: string) {
+    this._protectUserPath = path;
+    return;
+  }
+
+  setProtectNoUserPath(path: string) {
+    this._protectNoUserPath = path;
     return;
   }
 
