@@ -1,8 +1,34 @@
 import Component from "../../services/component";
+import { Connect } from "../../services/store";
+import { storeProps } from "../../utils/types";
+import { getUser } from "../../services/store/actions";
 
-class Input extends Component {}
+export class Input extends Component {}
 
-export class FormValidate extends Component {
+export class FormValidate extends Connect(
+  Component,
+  (state: storeProps) => state.user
+) {
+  render() {
+    const user = getUser();
+    if (user.userCheck.success) {
+      Object.keys(this.children).forEach((inputName) => {
+        if (this.children[inputName] instanceof Input) {
+          const name: string = this.children[inputName].props.attr["name"];
+          const value: Record<string, unknown> = user;
+          this.children[inputName].setProps({
+            attr: {
+              ...this.children[inputName].props.attr,
+              value: value[name],
+            },
+          });
+        }
+      });
+    }
+    let template = "";
+    if (this.props.template) template = this.props.template;
+    return this.compile(template, { ...this.props });
+  }
   checkFields() {
     let ok = true;
     Object.keys(this.children).forEach((input) => {

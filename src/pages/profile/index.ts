@@ -1,13 +1,19 @@
 import { template } from "./template";
 import "./styles.scss";
-import { setInputsValidate } from "../../components/form-validate";
+import {
+  FormValidate,
+  Input,
+  setInputsValidate,
+} from "../../components/form-validate";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
 import { apiUser } from "../../api/user";
 import { router } from "../../index";
-import { clearState } from "../../services/store/actions";
+import { clearState, getUser } from "../../services/store/actions";
+import { Connect } from "../../services/store";
+import { storeProps } from "../../utils/types";
 
 export const values = {
   title: "Профиль",
@@ -111,27 +117,32 @@ const singOutButton = new Component("a", {
   },
 });
 
+const profileForm = new FormValidate("div", {
+  template: template,
+  tempNav: tempNav(),
+  backLink: Link({
+    children: values.back,
+    href: "/",
+    class: "profile__back",
+  }),
+  loadPhotoLink: Link({
+    children: values.photo,
+    href: "/settings",
+  }),
+  ...values,
+  ...inputs,
+  editLink: Link({ children: values.edit, href: "/settings/edit" }),
+  editPasswordLink: Link({
+    children: values.edit_password,
+    href: "/settings/password",
+  }),
+  signOutLink: singOutButton,
+});
+
 const profilePage = () => {
   return new ProtectedPage("div", {
-    template: template,
-    tempNav: tempNav(),
-    backLink: Link({
-      children: values.back,
-      href: "/",
-      class: "profile__back",
-    }),
-    loadPhotoLink: Link({
-      children: values.photo,
-      href: "/settings",
-    }),
-    ...values,
-    ...inputs,
-    editLink: Link({ children: values.edit, href: "/settings/edit" }),
-    editPasswordLink: Link({
-      children: values.edit_password,
-      href: "/settings/password",
-    }),
-    signOutLink: singOutButton,
+    template: "{{page}}",
+    page: profileForm,
   });
 };
 

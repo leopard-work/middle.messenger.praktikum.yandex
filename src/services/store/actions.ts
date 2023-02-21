@@ -7,6 +7,11 @@ const getFullState = () => {
   return store.getState();
 };
 
+const getUser = () => {
+  const state = store.getState();
+  return state.user;
+};
+
 const setUser = (data: Pick<storeProps, "user">) => {
   const state = store.getState();
   if (state.user) {
@@ -34,4 +39,4 @@ const clearState = () => {
   store.removeState();
 };
 
-export { getFullState, setUser, setUserRequest, clearState };
+export { getFullState, setUser, setUserRequest, clearState, getUser };

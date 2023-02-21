@@ -9,6 +9,7 @@ import {
 } from "../../../components/form-validate";
 import Link from "../../../components/link";
 import tempNav from "../../../components/temp-nav";
+import ProtectedPage from "../../../components/protected-page";
 
 const inputs = {
   emailBlock: {
@@ -133,12 +134,19 @@ const form = new FormValidate("form", {
 });
 
 const editProfilePage = () => {
-  return new Component("div", {
+  return new ProtectedPage("div", {
     tempNav: tempNav(),
     ...values,
     template: editTemplate,
     form: form,
   });
 };
+
+// const editProfilePage = () => {
+//   return new ProtectedPage("div", {
+//     template: "{{page}}",
+//     page: profileForm,
+//   });
+// };
 
 export default editProfilePage;

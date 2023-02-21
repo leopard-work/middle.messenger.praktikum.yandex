@@ -19,8 +19,8 @@ export type storeProps = {
       request: boolean;
       success: boolean;
     };
-    avatar: string;
-    display_name: string;
+    avatar: string | null;
+    display_name: string | null;
     email: string;
     first_name: string;
     id: number;
