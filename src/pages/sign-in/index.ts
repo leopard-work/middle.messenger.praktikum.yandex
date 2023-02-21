@@ -94,6 +94,7 @@ const form = new FormValidate("form", {
               disabled: "false",
             },
           });
+          if (res.status === 500) router.goToError500();
           if (res.status === 200) {
             form.setProps({ error: "" });
             (form.getContent() as HTMLFormElement).reset();

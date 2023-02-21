@@ -2,7 +2,6 @@ import { template } from "./template";
 import "./styles.scss";
 import {
   FormValidate,
-  Input,
   setInputsValidate,
 } from "../../components/form-validate";
 import Link from "../../components/link";
@@ -11,9 +10,7 @@ import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
 import { apiUser } from "../../api/user";
 import { router } from "../../index";
-import { clearState, getUser } from "../../services/store/actions";
-import { Connect } from "../../services/store";
-import { storeProps } from "../../utils/types";
+import { clearState } from "../../services/store/actions";
 
 export const values = {
   title: "Профиль",

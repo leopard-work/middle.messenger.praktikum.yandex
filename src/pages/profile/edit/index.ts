@@ -10,6 +10,9 @@ import {
 import Link from "../../../components/link";
 import tempNav from "../../../components/temp-nav";
 import ProtectedPage from "../../../components/protected-page";
+import { apiUser } from "../../../api/user";
+import { router } from "../../../index";
+import { setUser } from "../../../services/store/actions";
 
 const inputs = {
   emailBlock: {
@@ -112,21 +115,34 @@ const form = new FormValidate("form", {
     class: "auth profile",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
-        const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
+        let data: Record<string, FormDataEntryValue> = {};
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
         form.children.buttonBlock.setProps({
-          passwordBtn: "Отправлено",
+          template: "Загрузка...",
           attr: {
             disabled: "true",
           },
+        });
+
+        await apiUser.editProfile(data).then((res) => {
+          form.children.buttonBlock.setProps({
+            template: values.passwordBtn,
+            attr: {
+              disabled: "false",
+            },
+          });
+          if (res.status === 200) {
+            setUser(res.response);
+            router.go("/settings");
+            return;
+          }
+          router.goToError500();
         });
       }
     },
@@ -141,12 +157,5 @@ const editProfilePage = () => {
     form: form,
   });
 };
-
-// const editProfilePage = () => {
-//   return new ProtectedPage("div", {
-//     template: "{{page}}",
-//     page: profileForm,
-//   });
-// };
 
 export default editProfilePage;

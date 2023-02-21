@@ -3,7 +3,7 @@ import { Connect } from "../../services/store";
 import { storeProps } from "../../utils/types";
 import { getUser } from "../../services/store/actions";
 
-export class Input extends Component {}
+class Input extends Component {}
 
 export class FormValidate extends Connect(
   Component,

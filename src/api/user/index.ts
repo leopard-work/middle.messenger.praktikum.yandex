@@ -17,6 +17,9 @@ class apiUserService {
   userInfo() {
     return http.get(`${baseUrl}auth/user`);
   }
+  editProfile(data: any) {
+    return http.put(`${baseUrl}user/profile`, { data: data });
+  }
 }
 
 export const apiUser = new apiUserService();
