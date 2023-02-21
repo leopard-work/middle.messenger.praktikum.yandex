@@ -20,6 +20,9 @@ class apiUserService {
   editProfile(data: any) {
     return http.put(`${baseUrl}user/profile`, { data: data });
   }
+  editPassword(data: any) {
+    return http.put(`${baseUrl}user/password`, { data: data });
+  }
 }
 
 export const apiUser = new apiUserService();

@@ -39,5 +39,6 @@ export const template = `
                 {{signOutLink}}
             </div>
         </div>
+        {{avatarForm}}
     </main>
 `;

@@ -31,6 +31,7 @@ export const values = {
   newPassword: "Новый пароль",
   confirmPassword: "Повторите новый пароль",
   passwordBtn: "Сохранить",
+  error: "",
 };
 
 const inputs = {
@@ -114,6 +115,36 @@ const singOutButton = new Component("a", {
   },
 });
 
+const avatarInput = new Component("input", {
+  attr: { name: "avatar", type: "file" },
+  events: {
+    change: (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const form = target.closest("form") as HTMLFormElement;
+      const button = form.querySelector("button") as HTMLButtonElement;
+      button.click();
+    },
+  },
+});
+
+const avatarForm = new Component("form", {
+  template: "{{input}} <button type='submit'></button>",
+  input: avatarInput,
+  attr: {
+    enctype: "multipart/form-data",
+  },
+  events: {
+    submit: (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const formValues = new FormData(
+        avatarForm.getContent() as HTMLFormElement
+      );
+      console.log(formValues.get("avatar"));
+    },
+  },
+});
+
 const profileForm = new FormValidate("div", {
   template: template,
   tempNav: tempNav(),
@@ -134,6 +165,7 @@ const profileForm = new FormValidate("div", {
     href: "/settings/password",
   }),
   signOutLink: singOutButton,
+  avatarForm: avatarForm,
 });
 
 const profilePage = () => {

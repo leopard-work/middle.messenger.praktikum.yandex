@@ -9,6 +9,8 @@ import {
 import { templateForm } from "./template-form";
 import tempNav from "../../../components/temp-nav";
 import Link from "../../../components/link";
+import { apiUser } from "../../../api/user";
+import { router } from "../../../index";
 
 const inputs = {
   oldPasswordBlock: {
@@ -74,21 +76,41 @@ const form = new FormValidate("form", {
     class: "auth profile",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
-        const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
+        let data: Record<string, FormDataEntryValue> = {};
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
         form.children.buttonBlock.setProps({
-          passwordBtn: "Отправлено",
+          passwordBtn: "Загрузка...",
           attr: {
             disabled: "true",
           },
+        });
+
+        await apiUser.editPassword(data).then((res) => {
+          form.children.buttonBlock.setProps({
+            passwordBtn: values.passwordBtn,
+            attr: {
+              disabled: "false",
+            },
+          });
+
+          if (res.status === 200) {
+            (form.getContent() as HTMLFormElement).reset();
+            form.setProps({ error: "" });
+            router.go("/settings");
+            return;
+          }
+          console.log(res.response);
+          if (res.response.reason === "Password is incorrect") {
+            form.setProps({ error: "Старый пароль неверный" });
+            return;
+          }
+          router.goToError500();
         });
       }
     },
