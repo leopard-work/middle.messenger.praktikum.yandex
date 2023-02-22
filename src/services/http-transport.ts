@@ -8,14 +8,14 @@ const METHODS = {
 type HTTPTransportOptionsProps = {
   method: string;
   headers?: Record<string, string>;
-  data?: Record<string, any> | string;
+  data?: Record<string, string> | string;
   timeout?: number;
 };
 
 type HTTPTransportMethodProps = (
   url: string,
-  options?: HTTPTransportOptionsProps
-) => Promise<XMLHttpRequest>;
+  options?: Omit<HTTPTransportOptionsProps, "method">
+) => Promise<unknown>;
 
 const queryStringify = (data: HTTPTransportOptionsProps["data"]) => {
   const urlParse = new URLSearchParams(data);
@@ -27,7 +27,7 @@ const queryStringify = (data: HTTPTransportOptionsProps["data"]) => {
   return result;
 };
 
-class HTTPTransport {
+export class HTTPTransport {
   get: HTTPTransportMethodProps = (url, options) => {
     return this.request(
       url,
@@ -60,11 +60,17 @@ class HTTPTransport {
     );
   };
 
-  private request<Response>(url: string, options): Promise<Response> {
-    const { method, data } = options;
+  request(
+    url: string,
+    options: HTTPTransportOptionsProps,
+    timeout = 5000
+  ): Promise<XMLHttpRequest> {
+    const { method, data, headers } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+
+      if (method === METHODS.GET && data) url += queryStringify(data);
 
       xhr.open(method, url);
 
@@ -72,11 +78,20 @@ class HTTPTransport {
         resolve(xhr);
       };
 
+      xhr.timeout = timeout;
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      xhr.setRequestHeader("Content-Type", "application/json");
+      if (data instanceof FormData) {
+      } else xhr.setRequestHeader("Content-Type", "application/json");
+
+      if (headers) {
+        for (const key in headers) {
+          if (Object.prototype.hasOwnProperty.call(headers, key))
+            xhr.setRequestHeader(key, headers[key]);
+        }
+      }
 
       xhr.withCredentials = true;
       xhr.responseType = "json";
@@ -84,12 +99,10 @@ class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else if (data instanceof FormData) {
-        xhr.send(data as FormData);
+        xhr.send(data);
       } else {
-        xhr.send(JSON.stringify(data) as XMLHttpRequestBodyInit);
+        xhr.send(JSON.stringify(data));
       }
     });
   }
 }
-
-export default HTTPTransport;

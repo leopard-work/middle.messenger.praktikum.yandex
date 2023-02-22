@@ -1,4 +1,4 @@
-import HTTPTransport from "../../services/http-transport";
+import { HTTPTransport } from "../../services/http-transport";
 
 export const BASEAPI = "https://ya-praktikum.tech/api/v2/";
 
