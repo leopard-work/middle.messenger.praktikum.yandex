@@ -12,6 +12,8 @@ import tempNav from "../../components/temp-nav";
 import { apiUser } from "../../api/user";
 import { setUser } from "../../services/store/actions";
 import { router } from "../../index";
+import CloseFromUserPage from "../../components/close-from-user-page";
+import { signIpProps } from "../../utils/types";
 
 const values = {
   title: "Авторизация",
@@ -87,7 +89,7 @@ const form = new FormValidate("form", {
 
         let loginCheck = false;
 
-        await apiUser.signIn(data).then((res) => {
+        await apiUser.signIn(data as signIpProps).then((res) => {
           form.children.buttonBlock.setProps({
             button: values.button,
             attr: {
@@ -126,7 +128,7 @@ const form = new FormValidate("form", {
 });
 
 const signInPage = () => {
-  return new Component("div", {
+  return new CloseFromUserPage("div", {
     tempNav: tempNav(),
     ...values,
     template: template,

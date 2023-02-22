@@ -11,6 +11,7 @@ import tempNav from "../../../components/temp-nav";
 import Link from "../../../components/link";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
+import { editPasswordProps } from "../../../utils/types";
 
 const inputs = {
   oldPasswordBlock: {
@@ -91,7 +92,7 @@ const form = new FormValidate("form", {
           },
         });
 
-        await apiUser.editPassword(data).then((res) => {
+        await apiUser.editPassword(data as editPasswordProps).then((res) => {
           form.children.buttonBlock.setProps({
             passwordBtn: values.passwordBtn,
             attr: {

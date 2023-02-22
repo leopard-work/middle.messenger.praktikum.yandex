@@ -12,6 +12,8 @@ import tempNav from "../../components/temp-nav";
 import { apiUser } from "../../api/user";
 import { router } from "../../index";
 import { setUser } from "../../services/store/actions";
+import CloseFromUserPage from "../../components/close-from-user-page";
+import { signUpProps } from "../../utils/types";
 
 const signUpPage = () => {
   const values = {
@@ -154,7 +156,7 @@ const signUpPage = () => {
 
           let registerCheck = false;
 
-          await apiUser.signUp(data).then((res) => {
+          await apiUser.signUp(data as signUpProps).then((res) => {
             form.children.buttonBlock.setProps({
               button: values.button,
               attr: {
@@ -197,7 +199,7 @@ const signUpPage = () => {
     },
   });
 
-  return new Component("div", {
+  return new CloseFromUserPage("div", {
     tempNav: tempNav(),
     ...values,
     template: template,

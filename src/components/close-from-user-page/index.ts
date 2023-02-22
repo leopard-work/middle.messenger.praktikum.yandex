@@ -6,7 +6,7 @@ import { setUser, setUserRequest } from "../../services/store/actions";
 import { router } from "../../index";
 import loadingTemplate from "../../pages/layouts/loading";
 
-class ProtectedPage extends Connect(
+class CloseFromUserPage extends Connect(
   Component,
   (state: storeProps) => state.user.userCheck
 ) {
@@ -18,14 +18,13 @@ class ProtectedPage extends Connect(
         else setUserRequest();
       });
     }
-    if (this.props.template && this.props.success && this.props.request)
+    if (this.props.template && !this.props.success && this.props.request)
       template = this.props.template;
-    if (!this.props.success && this.props.request) {
-      router.go("/sign-in");
+    if (this.props.success && this.props.request) {
+      router.go("/settings");
     }
-
     return this.compile(template, { ...this.props });
   }
 }
 
-export default ProtectedPage;
+export default CloseFromUserPage;

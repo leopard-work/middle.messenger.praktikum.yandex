@@ -13,6 +13,7 @@ import ProtectedPage from "../../../components/protected-page";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
 import { setUser } from "../../../services/store/actions";
+import { editProfileProps } from "../../../utils/types";
 
 const inputs = {
   emailBlock: {
@@ -130,7 +131,7 @@ const form = new FormValidate("form", {
           },
         });
 
-        await apiUser.editProfile(data).then((res) => {
+        await apiUser.editProfile(data as editProfileProps).then((res) => {
           form.children.buttonBlock.setProps({
             template: values.passwordBtn,
             attr: {
