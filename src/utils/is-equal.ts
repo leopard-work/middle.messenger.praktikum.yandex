@@ -1,6 +1,8 @@
 type isEqualProps = Record<string, any>;
 
 const isEqual = (object1: isEqualProps, object2: isEqualProps) => {
+  if (!object1 || !object2) return true;
+
   const props1 = Object.getOwnPropertyNames(object1);
   const props2 = Object.getOwnPropertyNames(object2);
 

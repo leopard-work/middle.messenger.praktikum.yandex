@@ -152,8 +152,7 @@ abstract class Block {
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    //return isEqual(oldProps, newProps);
-    return true;
+    return isEqual(oldProps, newProps);
   }
 
   getContent(): HTMLElement {

@@ -185,10 +185,6 @@ const profileForm = new FormValidate("div", {
     class: "profile__back",
   }),
   avatarBlock: new AvatarClass("div", {}),
-  // loadPhotoLink: Link({
-  //   children: values.photo,
-  //   href: "/settings",
-  // }),
   loadPhotoLink: loadPhotoLink,
   ...values,
   ...inputs,
