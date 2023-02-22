@@ -8,9 +8,11 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
-import { apiUser } from "../../api/user";
+import { apiUser, BASEAPI } from "../../api/user";
 import { router } from "../../index";
-import { clearState } from "../../services/store/actions";
+import { clearState, setUser } from "../../services/store/actions";
+import { Connect } from "../../services/store";
+import { storeProps } from "../../utils/types";
 
 export const values = {
   title: "Профиль",
@@ -118,29 +120,58 @@ const singOutButton = new Component("a", {
 const avatarInput = new Component("input", {
   attr: { name: "avatar", type: "file" },
   events: {
-    change: (event: Event) => {
+    change: async (event: Event) => {
       const target = event.target as HTMLInputElement;
-      const form = target.closest("form") as HTMLFormElement;
-      const button = form.querySelector("button") as HTMLButtonElement;
-      button.click();
+      const image = target!.files?.item(0);
+      if (!image) return;
+      const formData = new FormData();
+      formData.append("avatar", image);
+      await apiUser
+        .changeAvatar(formData)
+        .then((res) => {
+          if (res.status === 200) {
+            setUser(res.response);
+            profileForm.setProps({ error: "" });
+            return;
+          }
+          profileForm.setProps({
+            error: "Аватар не соответствует формату или слишком большой",
+          });
+        })
+        .catch(() => {
+          profileForm.setProps({
+            error: "Аватар не соответствует формату или слишком большой",
+          });
+        });
     },
   },
 });
+avatarInput.hide();
 
-const avatarForm = new Component("form", {
-  template: "{{input}} <button type='submit'></button>",
-  input: avatarInput,
+class AvatarClass extends Connect(
+  Component,
+  (state: storeProps) => state.user
+) {
+  render() {
+    let template = "<div></div>";
+    if (this.props.avatar) {
+      template = `<div><img src="${BASEAPI}resources{{avatar}}" alt=""></div>`;
+    }
+    return this.compile(template, { ...this.props });
+  }
+}
+
+const loadPhotoLink = new Component("a", {
+  template: "{{children}}",
+  children: values.photo,
   attr: {
-    enctype: "multipart/form-data",
+    href: "/",
   },
   events: {
-    submit: (event: Event) => {
+    click: (event: Event) => {
       event.preventDefault();
       event.stopPropagation();
-      const formValues = new FormData(
-        avatarForm.getContent() as HTMLFormElement
-      );
-      console.log(formValues.get("avatar"));
+      avatarInput.click();
     },
   },
 });
@@ -153,10 +184,12 @@ const profileForm = new FormValidate("div", {
     href: "/",
     class: "profile__back",
   }),
-  loadPhotoLink: Link({
-    children: values.photo,
-    href: "/settings",
-  }),
+  avatarBlock: new AvatarClass("div", {}),
+  // loadPhotoLink: Link({
+  //   children: values.photo,
+  //   href: "/settings",
+  // }),
+  loadPhotoLink: loadPhotoLink,
   ...values,
   ...inputs,
   editLink: Link({ children: values.edit, href: "/settings/edit" }),
@@ -165,7 +198,7 @@ const profileForm = new FormValidate("div", {
     href: "/settings/password",
   }),
   signOutLink: singOutButton,
-  avatarForm: avatarForm,
+  avatarInput: avatarInput,
 });
 
 const profilePage = () => {

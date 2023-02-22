@@ -152,7 +152,7 @@ abstract class Block {
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    //return !isEqual(oldProps, newProps);
+    //return isEqual(oldProps, newProps);
     return true;
   }
 
@@ -185,6 +185,10 @@ abstract class Block {
 
   removeClass(className: string) {
     this.getContent().classList.remove(className);
+  }
+
+  click() {
+    this.getContent().click();
   }
 
   compile(template: string, props?: BlockProps) {

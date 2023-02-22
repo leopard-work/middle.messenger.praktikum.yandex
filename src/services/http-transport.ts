@@ -83,8 +83,10 @@ class HTTPTransport {
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (data instanceof FormData) {
+        xhr.send(data as FormData);
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(JSON.stringify(data) as XMLHttpRequestBodyInit);
       }
     });
   }

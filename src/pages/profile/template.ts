@@ -5,7 +5,7 @@ export const template = `
             {{backLink}}
             <h1 class="auth__title profile__title">{{ title }}</h1>
             <div class="profile__avatar">
-                <span></span>
+                {{avatarBlock}}
             </div>
             <div class="auth__link profile__edit-avatar">
                 {{loadPhotoLink}}
@@ -29,6 +29,7 @@ export const template = `
             <label class="auth__input-text-wrapper">
                 {{phoneBlock}}
             </label>
+            <p class="auth_error"><span>{{error}}</span></p>
             <div class="auth__link profile__link">
                 {{editLink}}
             </div>
@@ -39,6 +40,7 @@ export const template = `
                 {{signOutLink}}
             </div>
         </div>
-        {{avatarForm}}
+        {{avatarInput}}
+        {{avatarBlock}}
     </main>
 `;
