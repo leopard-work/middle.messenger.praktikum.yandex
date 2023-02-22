@@ -27,7 +27,7 @@ type HTTPTransportOptionsProps = {
 type HTTPTransportMethodProps = (
   url: string,
   options?: Omit<HTTPTransportOptionsProps, "method">
-) => Promise<unknown>;
+) => Promise<XMLHttpRequest>;
 
 const queryStringify = (data: HTTPTransportOptionsProps["data"]) => {
   const urlParse = new URLSearchParams(data as Record<string, string>);
