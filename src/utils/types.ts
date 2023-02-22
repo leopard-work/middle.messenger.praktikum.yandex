@@ -29,3 +29,33 @@ export type storeProps = {
     second_name: string;
   };
 };
+
+export type signIpProps = {
+  login: string;
+  password: string;
+};
+
+export type editProfileProps = {
+  display_name: string;
+  email: string;
+  first_name: string;
+  login: string;
+  phone: string;
+  second_name: string;
+};
+
+export type signUpProps = {
+  email: string;
+  login: string;
+  first_name: string;
+  second_name: string;
+  phone: string;
+  password: string;
+  password_confirm: string;
+};
+
+export type editPasswordProps = {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};

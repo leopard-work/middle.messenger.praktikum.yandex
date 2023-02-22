@@ -1,3 +1,9 @@
+import {
+  editPasswordProps,
+  editProfileProps,
+  signIpProps,
+} from "../utils/types";
+
 const METHODS = {
   GET: "GET",
   PUT: "PUT",
@@ -8,7 +14,12 @@ const METHODS = {
 type HTTPTransportOptionsProps = {
   method: string;
   headers?: Record<string, string>;
-  data?: Record<string, string> | string;
+  data?:
+    | signIpProps
+    | editProfileProps
+    | editPasswordProps
+    | signUpProps
+    | FormData;
   timeout?: number;
 };
 
@@ -18,7 +29,7 @@ type HTTPTransportMethodProps = (
 ) => Promise<unknown>;
 
 const queryStringify = (data: HTTPTransportOptionsProps["data"]) => {
-  const urlParse = new URLSearchParams(data);
+  const urlParse = new URLSearchParams(data as Record<string, string>);
   let result = "?";
   for (const [i, element] of urlParse.entries()) {
     if (i) result += `&`;

@@ -1,6 +1,8 @@
 import EventBus from "../event-bus";
 import { storeProps } from "../../utils/types";
 
+type ValueOf<T> = T[keyof T];
+
 export const InitialState: storeProps = {
   user: {
     userCheck: {
@@ -50,7 +52,7 @@ export default class Store extends EventBus {
     this.emit(Store.EVENT_UPDATE);
   }
 
-  set(id: keyof storeProps, value: any) {
+  set(id: keyof storeProps, value: ValueOf<typeof InitialState>) {
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;
