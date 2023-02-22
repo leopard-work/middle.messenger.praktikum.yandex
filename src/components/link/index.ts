@@ -6,6 +6,8 @@ type LinkProps = {
   href: string;
   class?: string;
   title?: string;
+  onClick?: () => void;
+  modal?: string;
 };
 
 const Link = (props: LinkProps) => {
@@ -15,12 +17,13 @@ const Link = (props: LinkProps) => {
     children: props.children,
     template: "{{children}}",
     attr: {
-      ...props,
+      ...attr,
     },
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        router.go(props.href);
+        if (props.onClick) props.onClick();
+        else router.go(props.href);
       },
     },
   });

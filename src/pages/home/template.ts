@@ -13,7 +13,7 @@ export const template = `
                     {{profileLink}}
                 </div>
                 <div class="nav-users">
-                    <a href="/" class="nav-user">
+                    <a href="/" class="nav-user nav-user_active1">
                         <div class="nav-user__logo">
                             <span></span>
                         </div>
@@ -28,151 +28,11 @@ export const template = `
                             </div>
                         </div>
                     </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Александр</p>
-                                <p class="nav-user__date">1 Мая 2020</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text">Друзья, у меня для вас особенный выпуск новостей!...</p>
-                                <p class="nav-user__counter">1</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user nav-user_active">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/" class="nav-user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Василий</p>
-                                <p class="nav-user__date">Сегодня</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text"><strong>Вы:</strong> Круто!</p>
-                            </div>
-                        </div>
-                    </a>
                 </div>
             </div>
             <div class="chat__content">
-                <div class="chat-info">
+                <div class="chat__change-message">{{chatAddText}}<br> {{chatAddBtn}} </div>
+                <!--<div class="chat-info">
                     <div class="chat-info__user">
                         <div class="nav-user__logo">
                             <span></span>
@@ -213,8 +73,10 @@ export const template = `
                         </div>
                     </div>
                 </div>
-                {{form}}
+                {{form}}-->
             </div>
         </div>
     </main>
+    
+    {{chatAddModal}}
 `;

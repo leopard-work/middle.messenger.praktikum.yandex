@@ -9,6 +9,7 @@ import {
 import validateTypes from "../../utils/validate-types";
 import { templateForm } from "./template-form";
 import ProtectedPage from "../../components/protected-page";
+import modal from "../../components/modal";
 
 const homePage = () => {
   const profileBtnIcon =
@@ -18,6 +19,8 @@ const homePage = () => {
     template: template,
     search_placeholder: "Поиск...",
     message_placeholder: "Сообщение...",
+    chatAddText: "Выберите чат или создайте новый",
+    chatAddBtnText: "Добавить чат",
   };
 
   const modules = {
@@ -68,7 +71,18 @@ const homePage = () => {
     },
   });
 
-  return new ProtectedPage("div", { ...values, ...modules, form: form });
+  return new ProtectedPage("div", {
+    ...values,
+    ...modules,
+    chatAddText: values.chatAddText,
+    chatAddBtn: Link({
+      children: values.chatAddBtnText,
+      href: "/",
+      modal: "chatAdd",
+    }),
+    chatAddModal: modal(),
+    form: form,
+  });
 };
 
 export default homePage;
