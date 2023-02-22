@@ -2,6 +2,7 @@ import {
   editPasswordProps,
   editProfileProps,
   signIpProps,
+  signUpProps,
 } from "../utils/types";
 
 const METHODS = {
