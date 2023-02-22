@@ -6,31 +6,31 @@ import {
   signUpProps,
 } from "../../utils/types";
 
-export const BASEAPI = "https://ya-praktikum.tech/api/v2/";
+export const BASEAPIPATH = "https://ya-praktikum.tech/api/v2/";
 
 const http = new HTTPTransport();
 
 class apiUserService {
   signUp(data: signUpProps) {
-    return http.post(`${BASEAPI}auth/signup`, { data: data });
+    return http.post(`${BASEAPIPATH}auth/signup`, { data: data });
   }
   signIn(data: signIpProps) {
-    return http.post(`${BASEAPI}auth/signin`, { data: data });
+    return http.post(`${BASEAPIPATH}auth/signin`, { data: data });
   }
   logOut() {
-    return http.post(`${BASEAPI}auth/logout`);
+    return http.post(`${BASEAPIPATH}auth/logout`);
   }
   userInfo() {
-    return http.get(`${BASEAPI}auth/user`);
+    return http.get(`${BASEAPIPATH}auth/user`);
   }
   editProfile(data: editProfileProps) {
-    return http.put(`${BASEAPI}user/profile`, { data: data });
+    return http.put(`${BASEAPIPATH}user/profile`, { data: data });
   }
   editPassword(data: editPasswordProps) {
-    return http.put(`${BASEAPI}user/password`, { data: data });
+    return http.put(`${BASEAPIPATH}user/password`, { data: data });
   }
   changeAvatar(data: FormData) {
-    return http.put(`${BASEAPI}user/profile/avatar`, { data: data });
+    return http.put(`${BASEAPIPATH}user/profile/avatar`, { data: data });
   }
 }
 

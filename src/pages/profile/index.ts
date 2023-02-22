@@ -8,7 +8,7 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
-import { apiUser, BASEAPI } from "../../api/user";
+import { apiUser, BASEAPIPATH } from "../../api/user";
 import { router } from "../../index";
 import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
@@ -155,7 +155,7 @@ class AvatarClass extends Connect(
   render() {
     let template = "<div></div>";
     if (this.props.avatar) {
-      template = `<div><img src="${BASEAPI}resources{{avatar}}" alt=""></div>`;
+      template = `<div><img src="${BASEAPIPATH}resources{{avatar}}" alt=""></div>`;
     }
     return this.compile(template, { ...this.props });
   }
