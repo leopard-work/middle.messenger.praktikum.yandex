@@ -96,6 +96,7 @@ abstract class Block {
   }
 
   _addEvents() {
+    this.addEvents();
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -160,6 +161,10 @@ abstract class Block {
   }
 
   render() {
+    return;
+  }
+
+  addEvents() {
     return;
   }
 

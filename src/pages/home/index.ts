@@ -10,6 +10,7 @@ import validateTypes from "../../utils/validate-types";
 import { templateForm } from "./template-form";
 import ProtectedPage from "../../components/protected-page";
 import modal from "../../components/modal";
+import Modal from "../../components/modal";
 
 const homePage = () => {
   const profileBtnIcon =
@@ -48,6 +49,20 @@ const homePage = () => {
 
   setInputsValidate(inputs, "textarea");
 
+  const chatAddModalTpl = `
+    <h1 class="auth__title">Добавить чат</h1>
+    <label class="auth__input-text-wrapper">
+    <input type="text" name="first_name" class="input-text" placeholder="Название чата"></label>
+    <div class="auth__button-wrapper">
+      <button type="submit" class="input-button auth__button profile__button">Добавить</button>
+    </div>
+  `;
+
+  const chatAddModal = new Modal("div", {
+    children: chatAddModalTpl,
+  });
+  chatAddModal.hide();
+
   const form = new FormValidate("form", {
     ...values,
     ...inputs,
@@ -80,7 +95,7 @@ const homePage = () => {
       href: "/",
       modal: "chatAdd",
     }),
-    chatAddModal: modal(),
+    chatAddModal: chatAddModal,
     form: form,
   });
 };
