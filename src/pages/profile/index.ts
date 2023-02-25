@@ -8,11 +8,12 @@ import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
-import { apiUser, BASEAPIPATH } from "../../api/user";
+import { apiUser } from "../../api/user";
 import { router } from "../../index";
 import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
 import { storeProps } from "../../utils/types";
+import { BASEAPIPATH } from "../../api";
 
 export const values = {
   title: "Профиль",

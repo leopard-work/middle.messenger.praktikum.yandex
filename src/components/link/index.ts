@@ -7,7 +7,6 @@ type LinkProps = {
   class?: string;
   title?: string;
   onClick?: () => void;
-  modal?: string;
 };
 
 const Link = (props: LinkProps) => {

@@ -59,3 +59,7 @@ export type editPasswordProps = {
   newPassword: string;
   confirmPassword: string;
 };
+
+export type chatAddProps = {
+  title: string;
+};
