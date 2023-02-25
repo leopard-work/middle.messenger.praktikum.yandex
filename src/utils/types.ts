@@ -29,7 +29,10 @@ export type storeProps = {
     second_name: string;
   };
   chat: {
-    list: any;
+    list: chatListProps[];
+    active: {
+      id: number;
+    };
   };
 };
 
@@ -72,6 +75,19 @@ export type chatListProps = {
   title: string;
   avatar: string;
   unread_count: number;
-  last_message: Record<string, unknown>;
+  last_message?: {
+    time: string;
+    content: string;
+    id: number;
+    user: {
+      avatar: string | null;
+      display_name: string | null;
+      email: string;
+      first_name: string;
+      login: string;
+      phone: string;
+      second_name: string;
+    };
+  };
   time: string;
 };

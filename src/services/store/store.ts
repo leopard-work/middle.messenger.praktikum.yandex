@@ -20,6 +20,9 @@ export const InitialState: storeProps = {
   },
   chat: {
     list: [],
+    active: {
+      id: 0,
+    },
   },
 };
 

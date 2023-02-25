@@ -96,11 +96,15 @@ const homePage = () => {
 `;
 
   apiChat.get().then((res) => {
-    console.log(res);
     setChatList(res.response);
   });
 
   let chatListComponents: Component[] = [];
+
+  const dateParse = (date: string) => {
+    const n = new Date(date);
+    return n.toLocaleString();
+  };
 
   class ChatListClass extends Connect(
     Component,
@@ -114,13 +118,12 @@ const homePage = () => {
         chatListComponents = [];
         template = "{{items}}";
         list.map((item: chatListProps) => {
-          console.log(item);
           let last_message = "Сообщений пока нет...";
           let date = "";
           let unread_count = "";
           if (item.last_message) {
-            last_message = "aaaa";
-            date = "date";
+            last_message = item.last_message.content;
+            date = dateParse(item.last_message.time);
             if (item.unread_count)
               unread_count = `<p class="nav-user__counter">${item.unread_count}</p>`;
           }
@@ -157,8 +160,6 @@ const homePage = () => {
 
   const chatList = new ChatListClass("div", {});
 
-  console.log(chatListComponents);
-
   return new ProtectedPage("div", {
     ...values,
     ...modules,
@@ -171,9 +172,7 @@ const homePage = () => {
         chatAddModal.show();
       },
     }),
-
     chatAddModal: chatAddModal,
-
     form: form,
   });
 };
