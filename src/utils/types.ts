@@ -66,3 +66,12 @@ export type editPasswordProps = {
 export type chatAddProps = {
   title: string;
 };
+
+export type chatListProps = {
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
+  last_message: Record<string, unknown>;
+  time: string;
+};

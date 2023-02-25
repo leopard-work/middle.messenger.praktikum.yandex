@@ -8,6 +8,7 @@ import Component from "../../../services/component";
 import { apiChat } from "../../../api/chat";
 import { chatAddProps } from "../../../utils/types";
 import { router } from "../../../index";
+import { setChatList } from "../../../services/store/actions";
 
 const chatAddModalTpl = `
   <h1 class="auth__title">Добавить чат</h1>
@@ -68,7 +69,6 @@ const chatModalAddForm = new FormValidate("form", {
           .add(data as chatAddProps)
           .then((res) => {
             if (res.status === 200) {
-              console.log("okok");
               addChatCheck = true;
               (chatModalAddForm.getContent() as HTMLFormElement).reset();
               chatAddModal.hide();
@@ -81,9 +81,9 @@ const chatModalAddForm = new FormValidate("form", {
           });
 
         if (addChatCheck) {
-          // await apiChat.get().then((res) => {
-          //   console.log(res);
-          // });
+          await apiChat.get().then((res) => {
+            setChatList(res.response);
+          });
         }
       }
     },
