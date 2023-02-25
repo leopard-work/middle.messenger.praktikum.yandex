@@ -44,17 +44,18 @@
   &__change-message {
     margin: auto;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     color: #000;
 
     a {
       display: inline-block;
-      margin-top: 15px;
+      margin-top: 25px;
       color: var(--color-red);
+      font-size: 16px;
+      text-decoration: none;
 
       &:hover {
         color: var(--color-blue2);
-        text-decoration: none;
       }
     }
   }

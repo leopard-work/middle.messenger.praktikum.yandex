@@ -92,7 +92,8 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100%;
+  //min-height: 100vh;
   font-family: var(--font-titles);
   font-size: 30px;
 }

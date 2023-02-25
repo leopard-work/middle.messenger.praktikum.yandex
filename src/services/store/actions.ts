@@ -12,6 +12,11 @@ const getUser = () => {
   return state.user;
 };
 
+const getChatList = () => {
+  const state = store.getState();
+  return state.chat.list;
+};
+
 const setUser = (data: Pick<storeProps, "user">) => {
   const state = store.getState();
   if (state.user) {
@@ -22,6 +27,15 @@ const setUser = (data: Pick<storeProps, "user">) => {
       userCheck: { ...user.userCheck, request: true, success: true },
     });
   }
+};
+
+const setChatList = (data: Pick<storeProps, "chat">) => {
+  const state = store.getState();
+  const chat = state.chat;
+  store.set("chat", {
+    ...chat,
+    list: data,
+  });
 };
 
 const setUserRequest = () => {
@@ -39,4 +53,12 @@ const clearState = () => {
   store.removeState();
 };
 
-export { getFullState, setUser, setUserRequest, clearState, getUser };
+export {
+  getFullState,
+  setUser,
+  setUserRequest,
+  clearState,
+  getUser,
+  getChatList,
+  setChatList,
+};

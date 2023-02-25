@@ -8,6 +8,9 @@ class apiChatService {
   add(data: chatAddProps) {
     return http.post(`${BASEAPIPATH}chats`, { data: data });
   }
+  get() {
+    return http.get(`${BASEAPIPATH}chats`);
+  }
 }
 
 export const apiChat = new apiChatService();

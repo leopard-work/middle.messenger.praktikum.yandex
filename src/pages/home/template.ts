@@ -13,21 +13,7 @@ export const template = `
                     {{profileLink}}
                 </div>
                 <div class="nav-users">
-                    <a href="/" class="nav-user nav-user_active1">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <div class="nav-user__content">
-                            <div class="nav-user__title-block">
-                                <p class="nav-user__title">Александр</p>
-                                <p class="nav-user__date">1 Мая 2020</p>
-                            </div>
-                            <div class="nav-user__text-block">
-                                <p class="nav-user__text">Друзья, у меня для вас особенный выпуск новостей!...</p>
-                                <p class="nav-user__counter">3</p>
-                            </div>
-                        </div>
-                    </a>
+                    {{chatList}}
                 </div>
             </div>
             <div class="chat__content">

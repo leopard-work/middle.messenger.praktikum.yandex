@@ -62,11 +62,14 @@ const chatModalAddForm = new FormValidate("form", {
           },
         });
 
+        let addChatCheck = false;
+
         await apiChat
           .add(data as chatAddProps)
           .then((res) => {
             if (res.status === 200) {
               console.log("okok");
+              addChatCheck = true;
               (chatModalAddForm.getContent() as HTMLFormElement).reset();
               chatAddModal.hide();
               return;
@@ -76,6 +79,12 @@ const chatModalAddForm = new FormValidate("form", {
           .catch(() => {
             router.goToError500();
           });
+
+        if (addChatCheck) {
+          // await apiChat.get().then((res) => {
+          //   console.log(res);
+          // });
+        }
       }
     },
   },

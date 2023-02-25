@@ -199,7 +199,13 @@ abstract class Block {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      if (Array.isArray(child)) {
+        const temp: string[] = [];
+        child.map((item) => {
+          temp.push(`<div data-id="${item.id}"></div>`);
+        });
+        propsAndStubs[key] = temp;
+      } else propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
     const fragment = this._createDocumentElement(
@@ -208,6 +214,16 @@ abstract class Block {
     fragment.innerHTML = parseTemplate(template, { ...propsAndStubs });
 
     Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.map((item) => {
+          console.log(item._id);
+          const stub = fragment.content.querySelector<HTMLInputElement>(
+            `[data-id=${item.id}]`
+          );
+          if (stub) (stub as HTMLElement).replaceWith(item.getContent());
+        });
+      }
+
       const stub = fragment.content.querySelector<HTMLInputElement>(
         `[data-id=${child.id}]`
       );

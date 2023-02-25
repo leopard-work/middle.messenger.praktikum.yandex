@@ -28,6 +28,9 @@ export type storeProps = {
     phone: string;
     second_name: string;
   };
+  chat: {
+    list: any;
+  };
 };
 
 export type signIpProps = {
