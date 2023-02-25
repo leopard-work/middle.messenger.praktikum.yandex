@@ -30,9 +30,9 @@ export type storeProps = {
   };
   chat: {
     list: chatListProps[];
-    active: {
-      id: number;
-    };
+  };
+  activeChat: {
+    id: number;
   };
 };
 

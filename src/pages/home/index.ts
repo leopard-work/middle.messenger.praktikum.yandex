@@ -14,7 +14,12 @@ import Component from "../../services/component";
 import loadingTemplate from "../layouts/loading";
 import { chatListProps, storeProps } from "../../utils/types";
 import { Connect } from "../../services/store";
-import { getChatList, setChatList } from "../../services/store/actions";
+import {
+  getActiveChatId,
+  getChatList,
+  setActiveChat,
+  setChatList,
+} from "../../services/store/actions";
 import { apiChat } from "../../api/chat";
 
 const profileBtnIcon =
@@ -78,22 +83,20 @@ const form = new FormValidate("form", {
 
 const homePage = () => {
   const chatListItemTpl = `
-
-        <div class="nav-user__logo">
-            <span></span>
+    <div class="nav-user__logo">
+        <span></span>
+    </div>
+    <div class="nav-user__content">
+        <div class="nav-user__title-block">
+            <p class="nav-user__title">{{title}}</p>
+            <p class="nav-user__date">{{date}}</p>
         </div>
-        <div class="nav-user__content">
-            <div class="nav-user__title-block">
-                <p class="nav-user__title">{{title}}</p>
-                <p class="nav-user__date">{{date}}</p>
-            </div>
-            <div class="nav-user__text-block">
-                <p class="nav-user__text">{{last_message}}</p>
-                {{unread_count}}
-            </div>
+        <div class="nav-user__text-block">
+            <p class="nav-user__text">{{last_message}}</p>
+            {{unread_count}}
         </div>
-
-`;
+    </div>
+  `;
 
   apiChat.get().then((res) => {
     setChatList(res.response);
@@ -108,7 +111,7 @@ const homePage = () => {
 
   class ChatListClass extends Connect(
     Component,
-    (state: storeProps) => state.chat.list
+    (state: storeProps) => state.chat
   ) {
     render() {
       let template = loadingTemplate;
@@ -121,12 +124,14 @@ const homePage = () => {
           let last_message = "Сообщений пока нет...";
           let date = "";
           let unread_count = "";
+
           if (item.last_message) {
             last_message = item.last_message.content;
             date = dateParse(item.last_message.time);
             if (item.unread_count)
               unread_count = `<p class="nav-user__counter">${item.unread_count}</p>`;
           }
+
           chatListComponents.push(
             new Component("a", {
               template: chatListItemTpl,
@@ -134,6 +139,7 @@ const homePage = () => {
               last_message: last_message,
               date: date,
               unread_count: unread_count,
+              id: item.id,
               attr: {
                 href: "/",
                 class: "nav-user",
@@ -147,6 +153,11 @@ const homePage = () => {
                   });
                   const target = event.currentTarget as HTMLElement;
                   target.classList.add("nav-user_active");
+                  chatListComponents.map((item) => {
+                    if (item.hasClass("nav-user")) {
+                      setActiveChat(item.props.id);
+                    }
+                  });
                 },
               },
             })
@@ -160,10 +171,47 @@ const homePage = () => {
 
   const chatList = new ChatListClass("div", {});
 
-  return new ProtectedPage("div", {
-    ...values,
-    ...modules,
-    chatList: chatList,
+  const chatContentTpl = `<div class="chat__change-message">{{chatAddText}}<br> {{chatAddBtn}} </div>`;
+
+  const chatContentActiveTpl = `
+    <div class="chat-info">
+        <div class="chat-info__user">
+            <div class="nav-user__logo">
+                <span></span>
+            </div>
+            <p class="chat-info__user-title">Василий</p>
+        </div>
+        <div class="chat-info__btn"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="408px" height="408px" viewBox="0 0 408 408" style="enable-background:new 0 0 408 408;" xml:space="preserve"><g id="more-vert"><path d="M204,102c28.05,0,51-22.95,51-51S232.05,0,204,0s-51,22.95-51,51S175.95,102,204,102z M204,153c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S232.05,153,204,153z M204,306c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S232.05,306,204,306z"/></g></svg></div>
+    </div>
+    <div class="chat-messages">
+        <div class="chat-messages__inner">
+            chat
+        </div>
+    </div>
+    {{chatAddBtn}}
+    {{form}}
+  `;
+
+  class ChatContentClass extends Connect(
+    Component,
+    (state: storeProps) => state.activeChat
+  ) {
+    render() {
+      const chatId = getActiveChatId();
+      let template = chatContentTpl;
+      if (chatId) {
+        template = chatContentActiveTpl;
+        const btn = this.children.chatAddBtn as Component;
+        btn.hide();
+      }
+      return this.compile(template, { ...this.props });
+    }
+  }
+
+  const chatContent = new ChatContentClass("div", {
+    attr: {
+      class: "chat__content",
+    },
     chatAddText: values.chatAddText,
     chatAddBtn: Link({
       children: values.chatAddBtnText,
@@ -172,8 +220,15 @@ const homePage = () => {
         chatAddModal.show();
       },
     }),
-    chatAddModal: chatAddModal,
     form: form,
+  });
+
+  return new ProtectedPage("div", {
+    ...values,
+    ...modules,
+    chatList: chatList,
+    content: chatContent,
+    chatAddModal: chatAddModal,
   });
 };
 

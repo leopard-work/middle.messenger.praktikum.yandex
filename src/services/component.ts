@@ -191,6 +191,10 @@ abstract class Block {
     this.getContent().classList.remove(className);
   }
 
+  hasClass(className: string) {
+    return this.getContent().classList.contains(className);
+  }
+
   click() {
     this.getContent().click();
   }

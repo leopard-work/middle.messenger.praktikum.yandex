@@ -54,6 +54,10 @@ h1 {
   text-transform: uppercase;
 }
 
+textarea {
+  font-family: var(--font-main) !important;
+}
+
 .temp-nav {
   position: absolute;
   z-index: 3;

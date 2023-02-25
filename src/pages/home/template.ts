@@ -16,51 +16,9 @@ export const template = `
                     {{chatList}}
                 </div>
             </div>
-            <div class="chat__content">
-                <div class="chat__change-message">{{chatAddText}}<br> {{chatAddBtn}} </div>
-                <!--<div class="chat-info">
-                    <div class="chat-info__user">
-                        <div class="nav-user__logo">
-                            <span></span>
-                        </div>
-                        <p class="chat-info__user-title">Василий</p>
-                    </div>
-                    <div class="chat-info__btn"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="408px" height="408px" viewBox="0 0 408 408" style="enable-background:new 0 0 408 408;" xml:space="preserve"><g id="more-vert"><path d="M204,102c28.05,0,51-22.95,51-51S232.05,0,204,0s-51,22.95-51,51S175.95,102,204,102z M204,153c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S232.05,153,204,153z M204,306c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S232.05,306,204,306z"/></g></svg></div>
-                </div>
-                <div class="chat-messages">
-                    <div class="chat-messages__inner">
-                        <div class="chat-messages__date">19 июня</div>
-                        <div class="chat-post">
-                            <div class="chat-post__text">
-                                <div class="chat-post__date"><span>11:56</span></div>
-                                <p>Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.</p>
-                                <p>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.</p>
-                                
-                            </div>
-                        </div>
-                        <div class="chat-post">
-                            <div class="chat-post__image">
-                                <img src="https://www.businka-k-businke.ru/image/cache/data-soputstv-feathers-pustelga-400x400.jpg" alt="">
-                                <div class="chat-post__date chat-post__image-date"><span>11:56</span></div>
-                            </div>
-                        </div>
-                        <div class="chat-post chat-post_my">
-                            <div class="chat-post__text chat-post__text_my">
-                                <div class="chat-post__date"><span>12:56</span></div>
-                                <div class="chat-post_check"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="24" height="24"viewBox="0 0 24 24"> <path d="M 12 2 C 6.486 2 2 6.486 2 12 C 2 17.514 6.486 22 12 22 C 17.514 22 22 17.514 22 12 C 22 10.874 21.803984 9.7942031 21.458984 8.7832031 L 19.839844 10.402344 C 19.944844 10.918344 20 11.453 20 12 C 20 16.411 16.411 20 12 20 C 7.589 20 4 16.411 4 12 C 4 7.589 7.589 4 12 4 C 13.633 4 15.151922 4.4938906 16.419922 5.3378906 L 17.851562 3.90625 C 16.203562 2.71225 14.185 2 12 2 z M 21.292969 3.2929688 L 11 13.585938 L 7.7070312 10.292969 L 6.2929688 11.707031 L 11 16.414062 L 22.707031 4.7070312 L 21.292969 3.2929688 z"></path></svg></div>
-                                <p>Круто!</p>
-                            </div>
-                        </div>
-                        <div class="chat-post">
-                            <div class="chat-post__text">
-                                <div class="chat-post__date"><span>11:56</span></div>
-                                <p>Тоже так думаю</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{form}}-->
-            </div>
+
+                {{content}}
+
         </div>
     </main>
     
