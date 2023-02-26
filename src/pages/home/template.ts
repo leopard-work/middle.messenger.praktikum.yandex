@@ -21,4 +21,7 @@ export const template = `
     </main>
     
     {{chatAddModal}}
+    {{chatInfoModal}}
+    {{chatAddUserModal}}
+    {{chatDeleteUserModal}}
 `;
