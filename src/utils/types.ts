@@ -33,6 +33,7 @@ export type storeProps = {
   };
   activeChat: {
     id: number;
+    token: string;
   };
 };
 
@@ -90,4 +91,8 @@ export type chatListProps = {
     };
   };
   time: string;
+};
+
+export type chatToken = {
+  id: number;
 };

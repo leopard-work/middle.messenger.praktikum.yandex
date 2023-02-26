@@ -23,6 +23,7 @@ export const InitialState: storeProps = {
   },
   activeChat: {
     id: -1,
+    token: "",
   },
 };
 

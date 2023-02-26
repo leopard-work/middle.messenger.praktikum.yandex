@@ -10,7 +10,7 @@ export const chatContentActiveTpl = `
   </div>
   <div class="chat-messages">
       <div class="chat-messages__inner">
-          chat
+          {{messages}}
       </div>
   </div>
   {{chatAddBtn}}

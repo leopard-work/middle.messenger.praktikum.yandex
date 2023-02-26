@@ -17,9 +17,9 @@ const getChatList = () => {
   return state.chat.list;
 };
 
-const getActiveChatId = () => {
+const getActiveChat = () => {
   const state = store.getState();
-  return state.activeChat.id;
+  return state.activeChat;
 };
 
 const setUser = (data: Pick<storeProps, "user">) => {
@@ -43,12 +43,13 @@ const setChatList = (data: Pick<storeProps, "chat">) => {
   });
 };
 
-const setActiveChat = (data: number) => {
+const setActiveChat = (data: { id: number; token: string }) => {
   const state = store.getState();
   const activeChat = state.activeChat;
   store.set("activeChat", {
     ...activeChat,
-    id: data,
+    id: data.id,
+    token: data.token,
   });
 };
 
@@ -76,5 +77,5 @@ export {
   getChatList,
   setChatList,
   setActiveChat,
-  getActiveChatId,
+  getActiveChat,
 };

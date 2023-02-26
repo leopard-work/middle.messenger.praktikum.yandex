@@ -147,7 +147,8 @@ const signUpPage = () => {
           for (const pair of formValues.entries()) {
             data[pair[0]] = pair[1];
           }
-          form.children.buttonBlock.setProps({
+          const block = form.children.buttonBlock as Component;
+          block.setProps({
             button: "Загрузка...",
             attr: {
               disabled: "true",

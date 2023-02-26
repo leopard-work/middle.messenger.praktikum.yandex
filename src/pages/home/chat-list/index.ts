@@ -5,6 +5,7 @@ import loadingTemplate from "../../layouts/loading";
 import { getChatList, setActiveChat } from "../../../services/store/actions";
 import { chatListItemTpl } from "./template";
 import dateParse from "../../../utils/date-parse";
+import { apiChat } from "../../../api/chat";
 
 class ChatListClass extends Connect(
   Component,
@@ -50,9 +51,17 @@ class ChatListClass extends Connect(
                 });
                 const target = event.currentTarget as HTMLElement;
                 target.classList.add("nav-user_active");
-                chatListComponents.map((item) => {
+                chatListComponents.map(async (item) => {
                   if (item.hasClass("nav-user_active")) {
-                    setActiveChat(item.props.id);
+                    let token = {
+                      token: "",
+                    };
+                    await apiChat
+                      .getToken({ id: item.props.id })
+                      .then((res) => {
+                        token = res.response;
+                      });
+                    setActiveChat({ id: item.props.id, token: token.token });
                   }
                 });
               },
