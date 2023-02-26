@@ -119,7 +119,10 @@ abstract class Block {
       Object.entries(this.props["attr"]).forEach(([key, value]) => {
         if (typeof value === "string" && this._element != null) {
           if (value != "false") this._element.setAttribute(key, value);
-          else this._element.removeAttribute(key);
+          else {
+            console.log(this._element);
+            this._element.removeAttribute(key);
+          }
         }
       });
     }

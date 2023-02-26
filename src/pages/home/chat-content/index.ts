@@ -94,8 +94,7 @@ class ChatContentClass extends Connect(
       const list = getChatList();
       const activeChat = list!.find((item) => item.id === chatId);
       template = chatContentActiveTpl;
-      const btn = this.children.chatAddBtn as Component;
-      btn.hide();
+
       if (activeChat)
         return this.compile(template, {
           ...this.props,

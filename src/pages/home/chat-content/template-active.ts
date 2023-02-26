@@ -13,6 +13,5 @@ export const chatContentActiveTpl = `
           {{messages}}
       </div>
   </div>
-  {{chatAddBtn}}
   {{form}}
 `;

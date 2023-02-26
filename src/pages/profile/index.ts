@@ -110,7 +110,6 @@ const singOutButton = new Component("a", {
       apiUser.logOut().then((res) => {
         if (res.status === 200) {
           clearState();
-          location.reload();
           return;
         }
         router.goToError500();

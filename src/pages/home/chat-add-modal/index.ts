@@ -68,6 +68,13 @@ const chatModalAddForm = new FormValidate("form", {
         await apiChat
           .add(data as chatAddProps)
           .then((res) => {
+            (chatModalAddForm.children.button as Component).setProps({
+              template: "Добавить",
+              attr: {
+                disabled: "false",
+              },
+            });
+
             if (res.status === 200) {
               addChatCheck = true;
               (chatModalAddForm.getContent() as HTMLFormElement).reset();
