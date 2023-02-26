@@ -10,10 +10,11 @@ import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
 import { apiUser } from "../../api/user";
-import { setUser } from "../../services/store/actions";
+import { setChatList, setUser } from "../../services/store/actions";
 import { router } from "../../index";
 import CloseFromUserPage from "../../components/close-from-user-page";
 import { signIpProps } from "../../utils/types";
+import { apiChat } from "../../api/chat";
 
 const values = {
   title: "Авторизация",
@@ -82,9 +83,9 @@ const form = new FormValidate("form", {
         }
         form.children.buttonBlock.setProps({
           button: "Загрузка...",
-          attr: {
-            disabled: "true",
-          },
+          // attr: {
+          //   disabled: "true",
+          // },
         });
 
         let loginCheck = false;
@@ -113,10 +114,13 @@ const form = new FormValidate("form", {
         });
 
         if (loginCheck) {
-          apiUser.userInfo().then((res) => {
+          await apiUser.userInfo().then((res) => {
             if (res.status === 200) {
               setUser(res.response);
-              router.go("");
+              apiChat.get().then((res) => {
+                setChatList(res.response);
+              });
+              router.go("/");
               return;
             }
             router.goToError500();

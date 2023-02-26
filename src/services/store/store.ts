@@ -57,6 +57,7 @@ export default class Store extends EventBus {
       },
     };
     this.emit(Store.EVENT_UPDATE);
+    return this;
   }
 
   set(id: keyof storeProps, value: any) {

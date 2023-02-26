@@ -27,7 +27,10 @@ class ChatContentClass extends Connect(
     let template = chatContentTpl;
 
     if (chatId !== -1) {
-      this.children = { messages: chatMessages, ...this.children };
+      this.children = {
+        messages: chatMessages,
+        ...this.children,
+      };
 
       const user = getUser();
       const token = chat.token;
@@ -100,6 +103,7 @@ class ChatContentClass extends Connect(
           title: activeChat.title,
         });
     }
+
     return this.compile(template, { ...this.props });
   }
 }

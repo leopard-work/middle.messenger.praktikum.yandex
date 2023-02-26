@@ -3,8 +3,7 @@ type isEqualProps = Record<string, any>;
 const isEqual = (object1: isEqualProps, object2: isEqualProps) => {
   if (!object1 || !object2) {
     //console.log(`${object1} --- ${object2}`);
-    //return object1 !== object2;
-    return false;
+    return object1 !== object2;
   }
 
   const props1 = Object.getOwnPropertyNames(object1);

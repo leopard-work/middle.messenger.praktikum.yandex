@@ -14,6 +14,7 @@ import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
 import { storeProps } from "../../utils/types";
 import { BASEAPIPATH } from "../../api";
+import homePage from "../home";
 
 export const values = {
   title: "Профиль",
@@ -110,6 +111,7 @@ const singOutButton = new Component("a", {
       apiUser.logOut().then((res) => {
         if (res.status === 200) {
           clearState();
+          location.reload();
           return;
         }
         router.goToError500();
