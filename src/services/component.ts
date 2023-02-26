@@ -18,7 +18,7 @@ abstract class Block {
   eventBus: () => EventBus;
   props: BlockProps;
   children: Record<string, Block | Block[]>;
-  id: string | undefined;
+  id: string | undefined = uuid();
 
   constructor(tagName: string | null = "div", propsAndChilds: BlockProps) {
     const { children, props } = this._getChildren(propsAndChilds);
@@ -221,7 +221,7 @@ abstract class Block {
       if (Array.isArray(child)) {
         child.map((item) => {
           const stub = fragment.content.querySelector<HTMLInputElement>(
-            `[data-id=${item.id}]`
+            `[data-id="${item.id}"]`
           );
           if (stub) (stub as HTMLElement).replaceWith(item.getContent());
         });
@@ -229,7 +229,7 @@ abstract class Block {
 
       if (child instanceof Block) {
         const stub = fragment.content.querySelector<HTMLInputElement>(
-          `[data-id=${child.id}]`
+          `[data-id="${child.id}"]`
         );
         if (stub) (stub as HTMLElement).replaceWith(child.getContent());
       }

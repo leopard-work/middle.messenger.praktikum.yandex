@@ -16,9 +16,7 @@ export const template = `
                     {{chatList}}
                 </div>
             </div>
-
-                {{content}}
-
+            {{content}}
         </div>
     </main>
     
