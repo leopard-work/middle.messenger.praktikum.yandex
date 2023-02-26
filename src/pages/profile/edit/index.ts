@@ -124,7 +124,7 @@ const form = new FormValidate("form", {
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        form.children.buttonBlock.setProps({
+        (form.children.buttonBlock as Component).setProps({
           template: "Загрузка...",
           attr: {
             disabled: "true",
@@ -132,7 +132,7 @@ const form = new FormValidate("form", {
         });
 
         await apiUser.editProfile(data as editProfileProps).then((res) => {
-          form.children.buttonBlock.setProps({
+          (form.children.buttonBlock as Component).setProps({
             template: values.passwordBtn,
             attr: {
               disabled: "false",

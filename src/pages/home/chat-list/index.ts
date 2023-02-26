@@ -15,7 +15,7 @@ class ChatListClass extends Connect(
     let template = loadingTemplate;
     const list = getChatList();
 
-    if (list.length) {
+    if (list && list.length) {
       let chatListComponents: Component[] = [];
       template = "{{items}}";
       list.map((item: chatListProps) => {
@@ -70,7 +70,7 @@ class ChatListClass extends Connect(
         );
       });
       this.children = { ...this.children, items: chatListComponents };
-    }
+    } else template = "";
     return this.compile(template, { ...this.props });
   }
 }

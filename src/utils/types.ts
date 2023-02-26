@@ -29,7 +29,7 @@ export type storeProps = {
     second_name: string;
   };
   chat: {
-    list: chatListProps[];
+    list: chatListProps[] | null;
   };
   activeChat: {
     id: number;
@@ -95,4 +95,15 @@ export type chatListProps = {
 
 export type chatToken = {
   id: number;
+};
+
+export type messageTypes = {
+  id: number;
+  user_id: number;
+  chat_id: number;
+  type: string;
+  time: string;
+  content: string;
+  is_read: boolean;
+  file: string | null;
 };

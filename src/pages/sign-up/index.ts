@@ -158,7 +158,7 @@ const signUpPage = () => {
           let registerCheck = false;
 
           await apiUser.signUp(data as signUpProps).then((res) => {
-            form.children.buttonBlock.setProps({
+            (form.children.buttonBlock as Component).setProps({
               button: values.button,
               attr: {
                 disabled: "false",
@@ -172,14 +172,14 @@ const signUpPage = () => {
             }
             if (res.response.reason === "Login already exists") {
               form.setProps({ error: "Такой пользователь уже существует" });
-              form.children.loginBlock.addClass("input-error");
+              (form.children.loginBlock as Component).addClass("input-error");
               return;
             }
             if (res.response.reason === "Email already exists") {
               form.setProps({
                 error: "Пользователь с такой почтой уже существует",
               });
-              form.children.emailBlock.addClass("input-error");
+              (form.children.emailBlock as Component).addClass("input-error");
               return;
             }
             form.setProps({ error: "Произошла ошибка, повторите позже" });

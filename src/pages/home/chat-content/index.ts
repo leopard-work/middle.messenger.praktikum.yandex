@@ -1,6 +1,6 @@
 import { Connect } from "../../../services/store";
 import Component from "../../../services/component";
-import { storeProps } from "../../../utils/types";
+import { messageTypes, storeProps } from "../../../utils/types";
 import {
   getActiveChat,
   getChatList,
@@ -41,7 +41,7 @@ class ChatContentClass extends Connect(
 
       let messages = "";
 
-      const messageAdd = (item) => {
+      const messageAdd = (item: messageTypes) => {
         if (item.user_id === user.id)
           messages += parseTemplate(postTemplateOwner, {
             content: item.content,
@@ -74,7 +74,6 @@ class ChatContentClass extends Connect(
       });
 
       socket.addEventListener("message", (event) => {
-        //console.log("Получены данные", event.data);
         const messagesArr = JSON.parse(event.data);
         if (Array.isArray(messagesArr)) {
           messagesArr.reverse();
@@ -93,7 +92,7 @@ class ChatContentClass extends Connect(
       });
 
       const list = getChatList();
-      const activeChat = list.find((item) => item.id === chatId);
+      const activeChat = list!.find((item) => item.id === chatId);
       template = chatContentActiveTpl;
       const btn = this.children.chatAddBtn as Component;
       btn.hide();

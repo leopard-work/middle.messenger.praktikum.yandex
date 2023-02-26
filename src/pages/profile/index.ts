@@ -14,7 +14,6 @@ import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
 import { storeProps } from "../../utils/types";
 import { BASEAPIPATH } from "../../api";
-import homePage from "../home";
 
 export const values = {
   title: "Профиль",

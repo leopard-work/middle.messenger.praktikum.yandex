@@ -56,7 +56,7 @@ const chatModalAddForm = new FormValidate("form", {
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        chatModalAddForm.children.button.setProps({
+        (chatModalAddForm.children.button as Component).setProps({
           template: "Загрузка...",
           attr: {
             disabled: "true",

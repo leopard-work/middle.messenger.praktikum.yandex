@@ -70,21 +70,6 @@ const homePage = () => {
     setChatList(res.response);
   });
 
-  // class ChatMessagesClass extends Connect(
-  //   Component,
-  //   (state: storeProps) => state.activeChat
-  // ) {
-  //   render() {
-  //     const chat = getActiveChat();
-  //     const chatId = chat.id;
-  //     if (chatId !== -1) {
-  //       console.log(chatId);
-  //     }
-  //     const template = "";
-  //     return this.compile(template, { ...this.props });
-  //   }
-  // }
-
   const chatList = new ChatListClass("div", {});
 
   const chatContent = new ChatContentClass("div", {

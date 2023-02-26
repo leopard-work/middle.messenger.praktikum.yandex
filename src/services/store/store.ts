@@ -19,7 +19,7 @@ export const InitialState: storeProps = {
     second_name: "",
   },
   chat: {
-    list: [],
+    list: null,
   },
   activeChat: {
     id: -1,

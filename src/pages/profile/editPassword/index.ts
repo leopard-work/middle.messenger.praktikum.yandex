@@ -85,7 +85,7 @@ const form = new FormValidate("form", {
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        form.children.buttonBlock.setProps({
+        (form.children.buttonBlock as Component).setProps({
           passwordBtn: "Загрузка...",
           attr: {
             disabled: "true",
@@ -93,7 +93,7 @@ const form = new FormValidate("form", {
         });
 
         await apiUser.editPassword(data as editPasswordProps).then((res) => {
-          form.children.buttonBlock.setProps({
+          (form.children.buttonBlock as Component).setProps({
             passwordBtn: values.passwordBtn,
             attr: {
               disabled: "false",
@@ -106,7 +106,6 @@ const form = new FormValidate("form", {
             router.go("/settings");
             return;
           }
-          console.log(res.response);
           if (res.response.reason === "Password is incorrect") {
             form.setProps({ error: "Старый пароль неверный" });
             return;

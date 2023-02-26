@@ -81,17 +81,17 @@ const form = new FormValidate("form", {
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        form.children.buttonBlock.setProps({
+        (form.children.buttonBlock as Component).setProps({
           button: "Загрузка...",
-          // attr: {
-          //   disabled: "true",
-          // },
+          attr: {
+            disabled: "true",
+          },
         });
 
         let loginCheck = false;
 
         await apiUser.signIn(data as signIpProps).then((res) => {
-          form.children.buttonBlock.setProps({
+          (form.children.buttonBlock as Component).setProps({
             button: values.button,
             attr: {
               disabled: "false",
