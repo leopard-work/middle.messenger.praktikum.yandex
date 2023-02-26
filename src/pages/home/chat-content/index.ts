@@ -10,7 +10,7 @@ import { chatContentTpl } from "./template";
 import { chatContentActiveTpl } from "./template-active";
 import parseTemplate from "../../../services/parse-template";
 import dateParse from "../../../utils/date-parse";
-import { postTemplateOwner } from "./post-template-owner";
+import { templatePostOwner } from "./template-post-owner";
 import { postTemplate } from "./template-post";
 
 const chatMessages = new Component("div", {
@@ -43,7 +43,7 @@ class ChatContentClass extends Connect(
 
       const messageAdd = (item: messageTypes) => {
         if (item.user_id === user.id)
-          messages += parseTemplate(postTemplateOwner, {
+          messages += parseTemplate(templatePostOwner, {
             content: item.content,
             date: dateParse(item.time),
           });
