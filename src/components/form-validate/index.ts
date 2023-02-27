@@ -14,11 +14,12 @@ export class FormValidate extends Connect(
     if (user.userCheck.success) {
       Object.keys(this.children).forEach((inputName) => {
         if (this.children[inputName] instanceof Input) {
-          const name: string = this.children[inputName].props.attr["name"];
+          const name: string = (this.children[inputName] as Component).props
+            .attr["name"];
           const value: Record<string, unknown> = user;
-          this.children[inputName].setProps({
+          (this.children[inputName] as Component).setProps({
             attr: {
-              ...this.children[inputName].props.attr,
+              ...(this.children[inputName] as Component).props.attr,
               value: value[name],
             },
           });
@@ -32,8 +33,9 @@ export class FormValidate extends Connect(
   checkFields() {
     let ok = true;
     Object.keys(this.children).forEach((input) => {
-      const value = (this.children[input].getContent() as HTMLInputElement)
-        .value;
+      const value = (
+        (this.children[input] as Component).getContent() as HTMLInputElement
+      ).value;
       if (!checkField(this.children[input], value)) ok = false;
     });
     return ok;

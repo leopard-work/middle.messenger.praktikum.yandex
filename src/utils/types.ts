@@ -111,3 +111,7 @@ export type messageTypes = {
 export type chatDeleteProps = {
   chatId: number;
 };
+
+export type searchUserProps = {
+  login: string;
+};

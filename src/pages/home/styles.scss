@@ -559,3 +559,40 @@
     }
   }
 }
+
+.modal-users {
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 346px;
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  align-content: center;
+
+  ul {
+    width: 100%;
+  }
+
+  li {
+    border-bottom: solid 1px var(--color-gray3);
+    width: 100%;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      padding: 10px;
+      font-size: 14px;
+
+      &:hover {
+        background-color: rgb(var(--color-blue2-rgb) / 50%);
+        color: #fff;
+      }
+    }
+  }
+}

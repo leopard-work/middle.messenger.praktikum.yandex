@@ -37,6 +37,7 @@ const chatInfoModalChildren = new Component("div", {
     children: "Добавить пользователя",
     href: "/",
     onClick: () => {
+      chatInfoModal.hide();
       chatAddUserModal.show();
     },
   }),

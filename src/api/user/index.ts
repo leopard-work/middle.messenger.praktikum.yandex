@@ -2,6 +2,7 @@ import { HTTPTransport } from "../../services/http-transport";
 import {
   editPasswordProps,
   editProfileProps,
+  searchUserProps,
   signIpProps,
   signUpProps,
 } from "../../utils/types";
@@ -30,6 +31,9 @@ class apiUserService {
   }
   changeAvatar(data: FormData) {
     return http.put(`${BASEAPIPATH}user/profile/avatar`, { data: data });
+  }
+  searchUser(data: searchUserProps) {
+    return http.post(`${BASEAPIPATH}user/search`, { data: data });
   }
 }
 
