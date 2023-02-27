@@ -1,5 +1,5 @@
 const parseTemplate = (template: string, values: { [key: string]: string }) => {
-  const tplRegularVariable = /\{\{(.*?)\}\}/g;
+  const tplRegularVariable = /{{(.*?)}}/g;
 
   let match = null;
   let result = template;
