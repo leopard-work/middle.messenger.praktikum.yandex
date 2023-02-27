@@ -64,7 +64,7 @@ export const checkField = (element: unknown, value: string) => {
   return true;
 };
 
-const validateInput = (event: Event, element: Input) => {
+export const validateInput = (event: Event, element: Input) => {
   const { target } = event;
   const value = (target as HTMLInputElement).value;
   if (event.type !== "focus") checkField(element, value);

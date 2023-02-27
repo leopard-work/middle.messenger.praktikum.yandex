@@ -3,13 +3,14 @@ import Link from "../../../components/link";
 import chatAddModal from "../chat-add-modal";
 import Component from "../../../services/component";
 import { chatDelete } from "../index";
+import chatAddUserModal from "../chat-add-user-modal";
 
 const chatInfoModalTemplate = `
   <h1 class="auth__title">Настройки чата</h1>
   <ul class="modal-info">
     <li>{{chatAddBtn}}</li>
     <li><a href="/">{{chatDelete}}</a></li>
-    <li><a href="/">Добавить пользователя</a></li>
+    <li><a href="/">{{chatAddUserBtn}}</a></li>
     <li><a href="/">Удалить пользователя</a></li>
   </ul> 
 `;
@@ -30,6 +31,13 @@ const chatInfoModalChildren = new Component("div", {
     onClick: () => {
       chatInfoModal.hide();
       chatDelete();
+    },
+  }),
+  chatAddUserBtn: Link({
+    children: "Добавить пользователя",
+    href: "/",
+    onClick: () => {
+      chatAddUserModal.show();
     },
   }),
 });

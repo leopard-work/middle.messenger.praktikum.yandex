@@ -8,11 +8,7 @@ import Component from "../../../services/component";
 import { apiChat } from "../../../api/chat";
 import { chatAddProps } from "../../../utils/types";
 import { router } from "../../../index";
-import {
-  clearActiveChat,
-  setActiveChat,
-  setChatList,
-} from "../../../services/store/actions";
+import { clearActiveChat, setChatList } from "../../../services/store/actions";
 import { wsClose } from "../../../services/ws";
 
 const chatAddModalTpl = `
