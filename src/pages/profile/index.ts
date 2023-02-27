@@ -14,6 +14,7 @@ import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
 import { storeProps } from "../../utils/types";
 import { BASEAPIPATH } from "../../api";
+import { wsClose } from "../../services/ws";
 
 export const values = {
   title: "Профиль",
@@ -107,6 +108,7 @@ const singOutButton = new Component("a", {
     click: (event: Event) => {
       event.preventDefault();
       event.stopPropagation();
+      wsClose();
       apiUser.logOut().then((res) => {
         if (res.status === 200) {
           clearState();

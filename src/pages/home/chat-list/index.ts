@@ -17,6 +17,7 @@ class ChatListClass extends Connect(
 
     if (list && list.length) {
       let chatListComponents: Component[] = [];
+
       list.map((item: chatListProps) => {
         let last_message = "Сообщений пока нет...";
         let date = "";
@@ -68,6 +69,7 @@ class ChatListClass extends Connect(
           })
         );
       });
+
       this.children = { ...this.children, items: chatListComponents };
       template = "{{items}}";
     }

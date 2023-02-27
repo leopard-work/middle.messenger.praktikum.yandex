@@ -48,6 +48,7 @@ const chatModalAddForm = new FormValidate("form", {
     submit: async (event: Event) => {
       event.preventDefault();
       event.stopPropagation();
+
       if (chatModalAddForm.checkFields()) {
         const formValues = new FormData(
           chatModalAddForm.getContent() as HTMLFormElement

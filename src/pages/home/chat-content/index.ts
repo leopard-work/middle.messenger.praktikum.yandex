@@ -12,9 +12,11 @@ import parseTemplate from "../../../services/parse-template";
 import dateParse from "../../../utils/date-parse";
 import { templatePostOwner } from "./template-post-owner";
 import { postTemplate } from "./template-post";
+import loadingTemplate from "../../layouts/loading";
+import WS, { wsClose, wsOpen } from "../../../services/ws";
 
 const chatMessages = new Component("div", {
-  template: "Пусто",
+  template: loadingTemplate,
 });
 
 class ChatContentClass extends Connect(
@@ -35,9 +37,10 @@ class ChatContentClass extends Connect(
       const user = getUser();
       const token = chat.token;
 
-      const socket = new WebSocket(
-        `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${token}`
-      );
+      wsClose();
+
+      let socket = WS;
+      socket = wsOpen(user.id, chatId, token);
 
       let messages = "";
 
@@ -55,22 +58,12 @@ class ChatContentClass extends Connect(
       };
 
       socket.addEventListener("open", () => {
-        socket.send(
+        socket!.send(
           JSON.stringify({
             content: "0",
             type: "get old",
           })
         );
-      });
-
-      socket.addEventListener("close", (event) => {
-        if (event.wasClean) {
-          console.log("Соединение закрыто чисто");
-        } else {
-          console.log("Обрыв соединения");
-        }
-
-        console.log(`Код: ${event.code} | Причина: ${event.reason}`);
       });
 
       socket.addEventListener("message", (event) => {
@@ -81,14 +74,10 @@ class ChatContentClass extends Connect(
             messageAdd(item);
           });
         } else {
-          messageAdd(messagesArr);
+          if (messagesArr.type === "message") messageAdd(messagesArr);
         }
 
         chatMessages.setProps({ template: messages, update: true });
-      });
-
-      socket.addEventListener("error", () => {
-        //console.log("Ошибка");
       });
 
       const list = getChatList();
