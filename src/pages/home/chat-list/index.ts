@@ -7,6 +7,7 @@ import { chatListItemTpl } from "./template";
 import dateParse from "../../../utils/date-parse";
 import { apiChat } from "../../../api/chat";
 import { router } from "../../../index";
+import cropMessage from "../../../utils/crop-message";
 
 class ChatListClass extends Connect(
   Component,
@@ -26,12 +27,7 @@ class ChatListClass extends Connect(
 
         if (item.last_message) {
           last_message = item.last_message.content.replace(/<br\/>/g, " ");
-
-          if (last_message.length > last_message.slice(0, 80).length) {
-            last_message = last_message.slice(0, 80);
-            last_message += "...";
-          } else last_message = last_message.slice(0, 80);
-
+          last_message = cropMessage(last_message);
           date = dateParse(item.last_message.time);
           if (item.unread_count)
             unread_count = `<p class="nav-user__counter">${item.unread_count}</p>`;
@@ -85,7 +81,7 @@ class ChatListClass extends Connect(
 
       this.children = { ...this.children, items: chatListComponents };
       template = "{{items}}";
-    }
+    } else template = "";
     return this.compile(template, { ...this.props });
   }
 }

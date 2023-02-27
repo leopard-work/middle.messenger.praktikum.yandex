@@ -14,6 +14,8 @@ import { templatePostOwner } from "./template-post-owner";
 import { postTemplate } from "./template-post";
 import loadingTemplate from "../../layouts/loading";
 import WS, { wsClose, wsOpen } from "../../../services/ws";
+import { chatList } from "../index";
+import cropMessage from "../../../utils/crop-message";
 
 const chatMessages = new Component("div", {
   template: loadingTemplate,
@@ -74,7 +76,16 @@ class ChatContentClass extends Connect(
             messageAdd(item);
           });
         } else {
-          if (messagesArr.type === "message") messageAdd(messagesArr);
+          if (messagesArr.type === "message") {
+            messageAdd(messagesArr);
+            const activeChatId = getActiveChat().id;
+            (chatList.children.items as Array<Component>)
+              .filter((item) => item.props.id === activeChatId)[0]
+              .setProps({
+                last_message: cropMessage(messagesArr.content),
+                attr: { class: "nav-user nav-user_active" },
+              });
+          }
         }
 
         chatMessages.setProps({ template: messages, update: true });
