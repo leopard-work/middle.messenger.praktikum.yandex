@@ -26,7 +26,8 @@ class ChatListClass extends Connect(
         let unread_count = "";
 
         if (item.last_message) {
-          last_message = item.last_message.content.replace(/<br\/>/g, " ");
+          //last_message = item.last_message.content.replace(/<br\/>/g, " ");
+          last_message = item.last_message.content;
           last_message = cropMessage(last_message);
           date = dateParse(item.last_message.time);
           if (item.unread_count)

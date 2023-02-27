@@ -8,7 +8,12 @@ import Component from "../../../services/component";
 import { apiChat } from "../../../api/chat";
 import { chatAddProps } from "../../../utils/types";
 import { router } from "../../../index";
-import { setChatList } from "../../../services/store/actions";
+import {
+  clearActiveChat,
+  setActiveChat,
+  setChatList,
+} from "../../../services/store/actions";
+import { wsClose } from "../../../services/ws";
 
 const chatAddModalTpl = `
   <h1 class="auth__title">Добавить чат</h1>
@@ -91,6 +96,8 @@ const chatModalAddForm = new FormValidate("form", {
         if (addChatCheck) {
           await apiChat.get().then((res) => {
             setChatList(res.response);
+            wsClose();
+            clearActiveChat();
           });
         }
       }

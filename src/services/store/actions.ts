@@ -53,6 +53,12 @@ const setActiveChat = (data: { id: number; token: string }) => {
   });
 };
 
+const clearActiveChat = () => {
+  store.set("activeChat", {
+    ...InitialState.activeChat,
+  });
+};
+
 const deleteActiveChat = (id: number) => {
   const state = store.getState();
   const chat = state.chat;
@@ -92,4 +98,5 @@ export {
   setActiveChat,
   getActiveChat,
   deleteActiveChat,
+  clearActiveChat,
 };
