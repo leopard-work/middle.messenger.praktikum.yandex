@@ -107,3 +107,7 @@ export type messageTypes = {
   is_read: boolean;
   file: string | null;
 };
+
+export type chatDeleteProps = {
+  chatId: number;
+};

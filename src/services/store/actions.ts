@@ -1,4 +1,4 @@
-import Store from "./store";
+import Store, { InitialState } from "./store";
 import { storeProps } from "../../utils/types";
 
 const store = new Store();
@@ -53,6 +53,19 @@ const setActiveChat = (data: { id: number; token: string }) => {
   });
 };
 
+const deleteActiveChat = (id: number) => {
+  const state = store.getState();
+  const chat = state.chat;
+  const list = chat.list!.filter((item) => item.id !== id);
+  store.set("chat", {
+    ...chat,
+    list: list,
+  });
+  store.set("activeChat", {
+    ...InitialState.activeChat,
+  });
+};
+
 const setUserRequest = () => {
   const state = store.getState();
   if (state.user) {
@@ -78,4 +91,5 @@ export {
   setChatList,
   setActiveChat,
   getActiveChat,
+  deleteActiveChat,
 };

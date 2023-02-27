@@ -120,7 +120,6 @@ abstract class Block {
         if (typeof value === "string" && this._element != null) {
           if (value != "false") this._element.setAttribute(key, value);
           else {
-            console.log(this._element);
             this._element.removeAttribute(key);
           }
         }

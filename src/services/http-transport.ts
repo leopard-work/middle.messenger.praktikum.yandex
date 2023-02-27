@@ -1,5 +1,6 @@
 import {
   chatAddProps,
+  chatDeleteProps,
   chatToken,
   editPasswordProps,
   editProfileProps,
@@ -24,6 +25,7 @@ type HTTPTransportOptionsProps = {
     | signUpProps
     | chatAddProps
     | chatToken
+    | chatDeleteProps
     | FormData;
   timeout?: number;
 };
