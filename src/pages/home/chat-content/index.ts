@@ -28,6 +28,7 @@ class ChatContentClass extends Connect(
     const chatId = chat.id;
     let template = chatContentTpl;
 
+    console.log("ok");
     if (chatId !== -1) {
       this.children = {
         messages: chatMessages,

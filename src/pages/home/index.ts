@@ -60,8 +60,21 @@ const form = new FormValidate("form", {
         for (const pair of values.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        wsSend("test11");
+        if (data.message) {
+          data.message = (data.message as string).replace(
+            /(?:\r\n|\r|\n)/g,
+            "<br/>"
+          );
+          const arr = data.message.split("<br/>");
+          data.message = "";
+          arr.map((item, i) => {
+            if (i) {
+              if (arr[i - 1]) data.message += "<br/>";
+            }
+            data.message += item;
+          });
+          wsSend(data.message);
+        }
         (form.getContent() as HTMLFormElement).reset();
       }
     },

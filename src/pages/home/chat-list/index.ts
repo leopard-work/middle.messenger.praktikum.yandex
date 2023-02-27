@@ -6,6 +6,7 @@ import { getChatList, setActiveChat } from "../../../services/store/actions";
 import { chatListItemTpl } from "./template";
 import dateParse from "../../../utils/date-parse";
 import { apiChat } from "../../../api/chat";
+import { router } from "../../../index";
 
 class ChatListClass extends Connect(
   Component,
@@ -24,7 +25,13 @@ class ChatListClass extends Connect(
         let unread_count = "";
 
         if (item.last_message) {
-          last_message = item.last_message.content;
+          last_message = item.last_message.content.replace(/<br\/>/g, " ");
+
+          if (last_message.length > last_message.slice(0, 80).length) {
+            last_message = last_message.slice(0, 80);
+            last_message += "...";
+          } else last_message = last_message.slice(0, 80);
+
           date = dateParse(item.last_message.time);
           if (item.unread_count)
             unread_count = `<p class="nav-user__counter">${item.unread_count}</p>`;
@@ -60,8 +67,14 @@ class ChatListClass extends Connect(
                       .getToken({ id: item.props.id })
                       .then((res) => {
                         token = res.response;
+                        setActiveChat({
+                          id: item.props.id,
+                          token: token.token,
+                        });
+                      })
+                      .catch(() => {
+                        router.goToError500();
                       });
-                    setActiveChat({ id: item.props.id, token: token.token });
                   }
                 });
               },
