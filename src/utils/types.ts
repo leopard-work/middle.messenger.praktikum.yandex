@@ -115,3 +115,8 @@ export type chatDeleteProps = {
 export type searchUserProps = {
   login: string;
 };
+
+export type chatUserAdd = {
+  users: string[];
+  chatId: number;
+};

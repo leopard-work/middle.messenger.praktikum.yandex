@@ -43,10 +43,14 @@ abstract class Block {
     const props: BlockProps = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (Array.isArray(value)) {
         children[key] = value;
       } else {
-        props[key] = value;
+        if (value instanceof Block) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
       }
     });
 

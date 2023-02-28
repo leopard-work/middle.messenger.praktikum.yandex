@@ -7,6 +7,8 @@ import {
 import Component from "../../../services/component";
 import Modal from "../../../components/modal";
 import { apiUser } from "../../../api/user";
+import { getActiveChat } from "../../../services/store/actions";
+import { apiChat } from "../../../api/chat";
 
 const chatAddUserModalTpl = `
   <h1 class="auth__title">Добавить пользователя</h1>
@@ -27,19 +29,40 @@ const empty = new Component("p", {
   template: "Подходящих результатов нет",
 });
 
+const usersArr: Component[] = [];
+for (let i = 0; i < 10; i++) {
+  usersArr.push(
+    new Component("li", {
+      template: `<a href="/" id="{{id}}">{{login}}</a>`,
+      login: "",
+      events: {
+        click: (event: Event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const link = event.target as HTMLElement;
+          const id = link.getAttribute("id");
+          if (id) {
+            const chat = getActiveChat();
+            if (id && chat.id !== -1) {
+              const data = {
+                users: [id],
+                chatId: chat.id,
+              };
+              apiChat.addUser(data).then((res) => {
+                console.log(res);
+              });
+            }
+            chatAddUserModal.hide();
+          }
+        },
+      },
+    })
+  );
+}
+
 const users = new Component("ul", {
-  template: `
-        <li><a href="/">user1</a></li>
-        <li><a href="/">user2</a></li>
-        <li><a href="/">user3</a></li>
-        <li><a href="/">user1</a></li>
-        <li><a href="/">user2</a></li>
-        <li><a href="/">user3</a></li>
-        <li><a href="/">user1</a></li>
-        <li><a href="/">user2</a></li>
-        <li><a href="/">user3</a></li>
-        <li><a href="/">user3</a></li>
-    `,
+  template: "{{users}}",
+  users: usersArr,
 });
 users.hide();
 
@@ -77,6 +100,9 @@ input.setProps({
           if (res.status === 200) {
             loading.hide();
             if (res.response.length) {
+              res.response.map((item: Record<string, unknown>, i: number) => {
+                usersArr[i].setProps({ login: item.login, id: item.id });
+              });
               users.show();
             } else {
               users.hide();
@@ -85,7 +111,9 @@ input.setProps({
           }
         });
       } else {
-        console.log("clear");
+        empty.show();
+        loading.hide();
+        users.hide();
       }
     },
   },
@@ -102,5 +130,6 @@ const chatModalUserAddForm = new FormValidate("form", {
 const chatAddUserModal = new Modal("div", {
   children: chatModalUserAddForm,
 });
+chatAddUserModal.hide();
 
 export default chatAddUserModal;

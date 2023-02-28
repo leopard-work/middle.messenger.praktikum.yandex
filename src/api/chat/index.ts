@@ -1,6 +1,11 @@
 import { HTTPTransport } from "../../services/http-transport";
 import { BASEAPIPATH } from "../index";
-import { chatAddProps, chatDeleteProps, chatToken } from "../../utils/types";
+import {
+  chatAddProps,
+  chatDeleteProps,
+  chatToken,
+  chatUserAdd,
+} from "../../utils/types";
 
 const http = new HTTPTransport();
 
@@ -16,6 +21,9 @@ class apiChatService {
   }
   getToken(data: chatToken) {
     return http.post(`${BASEAPIPATH}chats/token/${data.id}`, { data: data });
+  }
+  addUser(data: chatUserAdd) {
+    return http.put(`${BASEAPIPATH}chats/users`, { data: data });
   }
 }
 
