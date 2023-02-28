@@ -4,6 +4,7 @@ import chatAddModal from "../chat-add-modal";
 import Component from "../../../services/component";
 import { chatDelete } from "../index";
 import chatAddUserModal from "../chat-add-user-modal";
+import chatDeleteUserModal from "../chat-delete-user-modal";
 
 const chatInfoModalTemplate = `
   <h1 class="auth__title">Настройки чата</h1>
@@ -11,7 +12,7 @@ const chatInfoModalTemplate = `
     <li>{{chatAddBtn}}</li>
     <li><a href="/">{{chatDelete}}</a></li>
     <li><a href="/">{{chatAddUserBtn}}</a></li>
-    <li><a href="/">Удалить пользователя</a></li>
+    <li><a href="/">{{chatDeleteUserBtn}}</a></li>
   </ul> 
 `;
 
@@ -39,6 +40,14 @@ const chatInfoModalChildren = new Component("div", {
     onClick: () => {
       chatInfoModal.hide();
       chatAddUserModal.show();
+    },
+  }),
+  chatDeleteUserBtn: Link({
+    children: "Удалить пользователя",
+    href: "/",
+    onClick: () => {
+      chatInfoModal.hide();
+      chatDeleteUserModal.show();
     },
   }),
 });
