@@ -9,6 +9,7 @@ import Modal from "../../../components/modal";
 import { apiUser } from "../../../api/user";
 import { getActiveChat } from "../../../services/store/actions";
 import { apiChat } from "../../../api/chat";
+import { router } from "../../../index";
 
 const chatAddUserModalTpl = `
   <h1 class="auth__title">Добавить пользователя</h1>
@@ -48,9 +49,16 @@ for (let i = 0; i < 10; i++) {
                 users: [id],
                 chatId: chat.id,
               };
-              apiChat.addUser(data).then((res) => {
-                console.log(res);
-              });
+              apiChat
+                .addUser(data)
+                .then((res) => {
+                  if (res.status !== 200) {
+                    router.goToError500();
+                  }
+                })
+                .catch(() => {
+                  router.goToError500();
+                });
             }
             chatAddUserModal.hide();
           }

@@ -25,8 +25,11 @@ class apiChatService {
   addUser(data: chatUserAdd) {
     return http.put(`${BASEAPIPATH}chats/users`, { data: data });
   }
-  deleteUser(data: { id: number }) {
+  getUsers(data: { id: number }) {
     return http.get(`${BASEAPIPATH}chats/${data.id}/users`);
+  }
+  deleteUser(data: chatUserAdd) {
+    return http.delete(`${BASEAPIPATH}chats/users`, { data: data });
   }
 }
 

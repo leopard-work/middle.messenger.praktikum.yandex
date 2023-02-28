@@ -1,16 +1,12 @@
 import Component from "../../../services/component";
-import validateTypes from "../../../utils/validate-types";
-import {
-  FormValidate,
-  setInputsValidate,
-} from "../../../components/form-validate";
+import { FormValidate } from "../../../components/form-validate";
 import Modal from "../../../components/modal";
 import { apiChat } from "../../../api/chat";
-import { getActiveChat } from "../../../services/store/actions";
+import { getActiveChat, getUser } from "../../../services/store/actions";
+import { router } from "../../../index";
 
 const chatAddUserModalTpl = `
   <h1 class="auth__title">Удалить пользователя</h1>
-  <label class="auth__input-text-wrapper">{{inpName}}</label>
   <div class="modal-users">
     {{loading}}
     {{users}}
@@ -31,12 +27,53 @@ for (let i = 0; i < 10; i++) {
         click: (event: Event) => {
           event.preventDefault();
           event.stopPropagation();
-          alert("ok");
+          const link = event.target as HTMLElement;
+          const id = link.getAttribute("id");
+          if (id) {
+            const chat = getActiveChat();
+            const user = getUser();
+            if (user.id.toString() === id) {
+              alert("Вы не можете удалить самого себя");
+              return false;
+            }
+            if (id && chat.id !== -1) {
+              const data = {
+                users: [id],
+                chatId: chat.id,
+              };
+              apiChat
+                .deleteUser(data)
+                .then((res) => {
+                  if (res.status !== 200) {
+                    router.goToError500();
+                  }
+                })
+                .catch(() => {
+                  router.goToError500();
+                });
+              chatDeleteUserModal.hide();
+            }
+          }
         },
       },
     })
   );
 }
+
+export const chatDeleteGetUsers = () => {
+  const activeChat = getActiveChat();
+  apiChat.getUsers({ id: activeChat.id }).then((res) => {
+    if (res.status == 200) {
+      loading.hide();
+      usersArr.map((item) => item.hide());
+      res.response.map((item: any, i: number) => {
+        usersArr[i].setProps({ login: item.login, id: item.id });
+        usersArr[i].show();
+      });
+      users.show();
+    }
+  });
+};
 
 const users = new Component("ul", {
   template: "{{users}}",
@@ -44,52 +81,8 @@ const users = new Component("ul", {
 });
 users.hide();
 
-const inputs = {
-  inpName: {
-    attr: {
-      name: "login",
-      class: "input-text",
-      placeholder: "Логин пользователя для поиска",
-    },
-    validate: {
-      ...validateTypes.login,
-      class: "auth_error",
-    },
-  },
-};
-
-setInputsValidate(inputs);
-
-const input = inputs.inpName as unknown as Component;
-
-input.setProps({
-  attr: {
-    value: "",
-  },
-  events: {
-    keyup: (event: Event) => {
-      const target = event.target as HTMLFormElement;
-      const value = target.value;
-      console.log(value);
-      const activeChat = getActiveChat();
-      apiChat.deleteUser({ id: activeChat.id }).then((res) => {
-        if (res.status == 200) {
-          loading.hide();
-          usersArr.map((item) => item.hide());
-          res.response.map((item, i: number) => {
-            usersArr[i].setProps({ login: item.login, id: item.id });
-            usersArr[i].show();
-          });
-          users.show();
-        }
-      });
-    },
-  },
-});
-
 const chatModalUserDeleteForm = new FormValidate("form", {
   template: chatAddUserModalTpl,
-  ...inputs,
   loading: loading,
   users: users,
 });
