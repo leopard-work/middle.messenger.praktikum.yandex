@@ -34,8 +34,8 @@ const tempNav = () => {
 
   const links = [
     title,
-    Link({ children: "Страница чатов", href: "/" }),
-    Link({ children: "Авторизация", href: "/sign-in" }),
+    Link({ children: "Страница чатов", href: "/messenger" }),
+    Link({ children: "Авторизация", href: "/" }),
     Link({ children: "Регистрация", href: "/sign-up" }),
     Link({ children: "Ошибка 404", href: "/page404" }),
     Link({ children: "Ошибка 500", href: "/page500" }),

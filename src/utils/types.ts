@@ -120,3 +120,15 @@ export type chatUserAdd = {
   users: string[];
   chatId: number;
 };
+
+export type deleteChatUserProps = {
+  id: number;
+  display_name: string | null;
+  email: string;
+  first_name: string;
+  login: string;
+  phone: string;
+  second_name: string;
+  avatar: string | null;
+  role: string;
+};

@@ -21,7 +21,7 @@ class ProtectedPage extends Connect(
     if (this.props.template && this.props.success && this.props.request)
       template = this.props.template;
     if (!this.props.success && this.props.request) {
-      router.go("/sign-in");
+      router.go("/");
     }
 
     return this.compile(template, { ...this.props });

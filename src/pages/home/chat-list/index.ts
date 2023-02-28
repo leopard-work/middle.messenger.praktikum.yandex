@@ -18,7 +18,7 @@ class ChatListClass extends Connect(
     const list = getChatList();
 
     if (list && list.length) {
-      let chatListComponents: Component[] = [];
+      const chatListComponents: Component[] = [];
 
       list.map((item: chatListProps) => {
         let last_message = "Сообщений пока нет...";

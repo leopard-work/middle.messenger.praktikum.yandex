@@ -4,6 +4,7 @@ import Modal from "../../../components/modal";
 import { apiChat } from "../../../api/chat";
 import { getActiveChat, getUser } from "../../../services/store/actions";
 import { router } from "../../../index";
+import { deleteChatUserProps } from "../../../utils/types";
 
 const chatAddUserModalTpl = `
   <h1 class="auth__title">Удалить пользователя</h1>
@@ -66,7 +67,8 @@ export const chatDeleteGetUsers = () => {
     if (res.status == 200) {
       loading.hide();
       usersArr.map((item) => item.hide());
-      res.response.map((item: any, i: number) => {
+      res.response.map((item: deleteChatUserProps, i: number) => {
+        console.log(item);
         usersArr[i].setProps({ login: item.login, id: item.id });
         usersArr[i].show();
       });

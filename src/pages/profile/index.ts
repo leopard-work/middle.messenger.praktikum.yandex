@@ -132,6 +132,7 @@ const avatarInput = new Component("input", {
       await apiUser
         .changeAvatar(formData)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             setUser(res.response);
             profileForm.setProps({ error: "" });
@@ -142,6 +143,7 @@ const avatarInput = new Component("input", {
           });
         })
         .catch(() => {
+          console.log("xxx");
           profileForm.setProps({
             error: "Аватар не соответствует формату или слишком большой",
           });
@@ -184,7 +186,7 @@ const profileForm = new FormValidate("div", {
   tempNav: tempNav(),
   backLink: Link({
     children: values.back,
-    href: "/",
+    href: "/messenger",
     class: "profile__back",
   }),
   avatarBlock: new AvatarClass("div", {}),

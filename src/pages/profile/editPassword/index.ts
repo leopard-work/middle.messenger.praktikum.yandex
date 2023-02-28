@@ -81,7 +81,7 @@ const form = new FormValidate("form", {
       event.preventDefault();
       if (form.checkFields()) {
         const formValues = new FormData(form.getContent() as HTMLFormElement);
-        let data: Record<string, FormDataEntryValue> = {};
+        const data: Record<string, FormDataEntryValue> = {};
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }

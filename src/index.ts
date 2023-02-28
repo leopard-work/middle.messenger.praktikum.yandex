@@ -15,12 +15,12 @@ export const router = new Router("#root");
 
 router.setError404Page(error404Page);
 router.setError500Path("/page500");
-router.setProtectUserPath("/sign-in");
+router.setProtectUserPath("/");
 router.setProtectNoUserPath("/settings");
 
 router
-  .use("", homePage, "Страница чатов", true, false)
-  .use("/sign-in", signInPage, "Авторизация", false, true)
+  .use("/messenger", homePage, "Страница чатов", true, false)
+  .use("", signInPage, "Авторизация", false, true)
   .use("/sign-up", signUpPage, "Регистрация", false, true)
   .use("/page404", error404Page, "Ошибка 404", false, false)
   .use("/page500", error500Page, "Ошибка 500", false, false)

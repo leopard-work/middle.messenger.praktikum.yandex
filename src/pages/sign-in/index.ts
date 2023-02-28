@@ -120,7 +120,7 @@ const form = new FormValidate("form", {
               apiChat.get().then((res) => {
                 setChatList(res.response);
               });
-              router.go("/");
+              router.go("/messenger");
               return;
             }
             router.goToError500();
