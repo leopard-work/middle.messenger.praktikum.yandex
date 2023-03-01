@@ -27,7 +27,11 @@ import cropMessage from "../../utils/crop-message";
 import chatAddUserModal from "./chat-add-user-modal";
 import Modal from "../../components/modal";
 import chatDeleteUserModal from "./chat-delete-user-modal";
-import { setInputsValidateProps, storeProps } from "../../utils/types";
+import {
+  chatListProps,
+  setInputsValidateProps,
+  storeProps,
+} from "../../utils/types";
 import { Connect } from "../../services/store";
 import { BASE_API_PATH } from "../../api";
 
@@ -36,7 +40,7 @@ const profileBtnIcon =
 
 const values = {
   template: template,
-  search_placeholder: "Поиск... (в разработке...)",
+  search_placeholder: "Поиск...",
   message_placeholder: "Сообщение...",
   chatAddText: "Выберите чат или создайте новый",
   chatAddBtnText: "Добавить чат",
@@ -218,6 +222,27 @@ export const errorModal = new Modal("div", {
 });
 errorModal.hide();
 
+const search = new Component("input", {
+  attr: {
+    type: "text",
+    class: "input-text",
+    placeholder: values.search_placeholder,
+  },
+  events: {
+    keyup: (event: Event) => {
+      const target = event.target;
+      const value = (target as HTMLFormElement).value;
+      chatList.props.list.map((item: chatListProps, i: number) => {
+        (chatList.children.items as Array<Component>)[i].hide();
+        if (item.title.indexOf(value) === 0) {
+          console.log(item);
+          (chatList.children.items as Array<Component>)[i].showFlex();
+        }
+      });
+    },
+  },
+});
+
 const homePage = () => {
   apiChat.get().then((res) => {
     setChatList(res.response);
@@ -239,6 +264,7 @@ const homePage = () => {
     errorModal: errorModal,
     chatDeleteUserModal: chatDeleteUserModal,
     avatarInput: avatarInput,
+    search: search,
   });
 };
 

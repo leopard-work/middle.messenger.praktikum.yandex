@@ -111,22 +111,16 @@
     background: transparent;
     border: none;
     outline: none;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     svg {
-      width: 80%;
-      height: 80%;
+      width: 60%;
+      height: 60%;
 
       path {
         fill: var(--color-blue2);
-      }
-    }
-
-    &:hover {
-      svg {
-        path {
-          fill: var(--color-red);
-        }
       }
     }
   }
