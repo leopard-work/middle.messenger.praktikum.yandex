@@ -1,6 +1,5 @@
 import { template } from "./template";
 import "./styles.scss";
-import tempNav from "../../components/temp-nav";
 import Link from "../../components/link";
 import {
   FormValidate,
@@ -250,7 +249,6 @@ const homePage = () => {
 
   return new ProtectedPage("div", {
     ...values,
-    tempNav: tempNav(),
     profileLink: Link({
       children: profileBtnIcon,
       href: "/settings",

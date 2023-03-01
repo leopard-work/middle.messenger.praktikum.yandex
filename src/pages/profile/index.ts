@@ -5,7 +5,6 @@ import {
   setInputsValidate,
 } from "../../components/form-validate";
 import Link from "../../components/link";
-import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
 import { apiUser } from "../../api/user";
@@ -183,7 +182,6 @@ const loadPhotoLink = new Component("a", {
 
 const profileForm = new FormValidate("div", {
   template: template,
-  tempNav: tempNav(),
   backLink: Link({
     children: values.back,
     href: "/messenger",

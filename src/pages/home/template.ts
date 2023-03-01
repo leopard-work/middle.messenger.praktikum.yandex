@@ -1,5 +1,4 @@
 export const template = `
-    {{tempNav}}
     <main>
         <div class="chat">
             <div class="chat__nav">

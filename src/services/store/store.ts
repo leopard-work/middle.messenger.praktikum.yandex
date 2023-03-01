@@ -38,9 +38,9 @@ export default class Store extends EventBus {
     this._state = { ...InitialState };
     Store._instance = this;
 
-    this.on(Store.EVENT_UPDATE, () => {
-      console.log(this._state);
-    });
+    // this.on(Store.EVENT_UPDATE, () => {
+    //   console.log(this._state);
+    // });
   }
 
   getState(): storeProps {

@@ -21,7 +21,7 @@ class CloseFromUserPage extends Connect(
     if (this.props.template && !this.props.success && this.props.request)
       template = this.props.template;
     if (this.props.success && this.props.request) {
-      router.go("/");
+      router.go("/messenger");
     }
     return this.compile(template, { ...this.props });
   }

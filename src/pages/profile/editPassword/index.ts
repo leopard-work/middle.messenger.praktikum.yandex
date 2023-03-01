@@ -7,7 +7,6 @@ import {
   setInputsValidate,
 } from "../../../components/form-validate";
 import { templateForm } from "./template-form";
-import tempNav from "../../../components/temp-nav";
 import Link from "../../../components/link";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
@@ -122,7 +121,6 @@ const form = new FormValidate("form", {
 
 const editProfilePasswordPage = () => {
   return new Component("div", {
-    tempNav: tempNav(),
     ...values,
     template: editPasswordTemplate,
     form: form,
