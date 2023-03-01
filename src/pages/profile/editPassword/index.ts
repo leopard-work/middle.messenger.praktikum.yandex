@@ -9,6 +9,12 @@ import {
 import { templateForm } from "./template-form";
 import tempNav from "../../../components/temp-nav";
 import Link from "../../../components/link";
+import { apiUser } from "../../../api/user";
+import { router } from "../../../index";
+import {
+  editPasswordProps,
+  setInputsValidateProps,
+} from "../../../utils/types";
 
 const inputs = {
   oldPasswordBlock: {
@@ -49,7 +55,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,
@@ -63,7 +69,7 @@ const formButton = new Component("button", {
 const form = new FormValidate("form", {
   backLink: Link({
     children: values.back,
-    href: "/profile",
+    href: "/settings",
     class: "profile__back",
   }),
   ...values,
@@ -74,21 +80,40 @@ const form = new FormValidate("form", {
     class: "auth profile",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
         const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
-        form.children.buttonBlock.setProps({
-          passwordBtn: "Отправлено",
+        (form.children.buttonBlock as Component).setProps({
+          passwordBtn: "Загрузка...",
           attr: {
             disabled: "true",
           },
+        });
+
+        await apiUser.editPassword(data as editPasswordProps).then((res) => {
+          (form.children.buttonBlock as Component).setProps({
+            passwordBtn: values.passwordBtn,
+            attr: {
+              disabled: "false",
+            },
+          });
+
+          if (res.status === 200) {
+            (form.getContent() as HTMLFormElement).reset();
+            form.setProps({ error: "" });
+            router.go("/settings");
+            return;
+          }
+          if (res.response.reason === "Password is incorrect") {
+            form.setProps({ error: "Старый пароль неверный" });
+            return;
+          }
+          router.goToError500();
         });
       }
     },
@@ -96,13 +121,12 @@ const form = new FormValidate("form", {
 });
 
 const editProfilePasswordPage = () => {
-  const content = new Component("div", {
+  return new Component("div", {
     tempNav: tempNav(),
     ...values,
     template: editPasswordTemplate,
     form: form,
   });
-  return { pageTitle: values.pageTitleEditPassword, content: content };
 };
 
 export default editProfilePasswordPage;

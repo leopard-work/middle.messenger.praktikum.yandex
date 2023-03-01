@@ -1,12 +1,22 @@
 import { template } from "./template";
 import "./styles.scss";
-import Component from "../../services/component";
-import { setInputsValidate } from "../../components/form-validate";
+import {
+  FormValidate,
+  setInputsValidate,
+} from "../../components/form-validate";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import ProtectedPage from "../../components/protected-page";
+import Component from "../../services/component";
+import { apiUser } from "../../api/user";
+import { router } from "../../index";
+import { clearState, setUser } from "../../services/store/actions";
+import { Connect } from "../../services/store";
+import { setInputsValidateProps, storeProps } from "../../utils/types";
+import { BASEAPIPATH } from "../../api";
+import { wsClose } from "../../services/ws";
 
 export const values = {
-  pageTitle: "Профиль",
   title: "Профиль",
   photo: "Загрузить фото",
   email: "Почта",
@@ -19,14 +29,13 @@ export const values = {
   edit_password: "Изменить пароль",
   sign_out: "Выйти",
   back: '<svg height="512px" style="enable-background:new 0 0 512 512;" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>',
-  pageTitleEdit: "Редактировать профиль",
   titleEdit: "Редактировать профиль",
-  pageTitleEditPassword: "Изменить пароль",
   titleEditPassword: "Изменить пароль",
   oldPassword: "Старый пароль",
   newPassword: "Новый пароль",
   confirmPassword: "Повторите новый пароль",
   passwordBtn: "Сохранить",
+  error: "",
 };
 
 const inputs = {
@@ -87,31 +96,117 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
+
+const singOutButton = new Component("a", {
+  ...values,
+  template: "{{sign_out}}",
+  attr: {
+    href: "/",
+  },
+  events: {
+    click: (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      wsClose();
+      apiUser.logOut().then((res) => {
+        if (res.status === 200) {
+          clearState();
+          return;
+        }
+        router.goToError500();
+      });
+    },
+  },
+});
+
+const avatarInput = new Component("input", {
+  attr: { name: "avatar", type: "file" },
+  events: {
+    change: async (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const image = target!.files?.item(0);
+      if (!image) return;
+      const formData = new FormData();
+      formData.append("avatar", image);
+      await apiUser
+        .changeAvatar(formData)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            setUser(res.response);
+            profileForm.setProps({ error: "" });
+            return;
+          }
+          profileForm.setProps({
+            error: "Аватар не соответствует формату или слишком большой",
+          });
+        })
+        .catch(() => {
+          console.log("xxx");
+          profileForm.setProps({
+            error: "Аватар не соответствует формату или слишком большой",
+          });
+        });
+    },
+  },
+});
+avatarInput.hide();
+
+class AvatarClass extends Connect(
+  Component,
+  (state: storeProps) => state.user
+) {
+  render() {
+    let template = "<div></div>";
+    if (this.props.avatar) {
+      template = `<div><img src="${BASEAPIPATH}resources{{avatar}}" alt=""></div>`;
+    }
+    return this.compile(template, { ...this.props });
+  }
+}
+
+const loadPhotoLink = new Component("a", {
+  template: "{{children}}",
+  children: values.photo,
+  attr: {
+    href: "/",
+  },
+  events: {
+    click: (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      avatarInput.click();
+    },
+  },
+});
+
+const profileForm = new FormValidate("div", {
+  template: template,
+  tempNav: tempNav(),
+  backLink: Link({
+    children: values.back,
+    href: "/messenger",
+    class: "profile__back",
+  }),
+  avatarBlock: new AvatarClass("div", {}),
+  loadPhotoLink: loadPhotoLink,
+  ...values,
+  ...inputs,
+  editLink: Link({ children: values.edit, href: "/settings/edit" }),
+  editPasswordLink: Link({
+    children: values.edit_password,
+    href: "/settings/password",
+  }),
+  signOutLink: singOutButton,
+  avatarInput: avatarInput,
+});
 
 const profilePage = () => {
-  const content = new Component("div", {
-    template: template,
-    tempNav: tempNav(),
-    backLink: Link({
-      children: values.back,
-      href: "/",
-      class: "profile__back",
-    }),
-    loadPhotoLink: Link({
-      children: values.photo,
-      href: "/profile",
-    }),
-    ...values,
-    ...inputs,
-    editLink: Link({ children: values.edit, href: "/profile/edit" }),
-    editPasswordLink: Link({
-      children: values.edit_password,
-      href: "/profile/password",
-    }),
-    signOutLink: Link({ children: values.sign_out, href: "/" }),
+  return new ProtectedPage("div", {
+    template: "{{page}}",
+    page: profileForm,
   });
-  return { pageTitle: values.pageTitle, content: content };
 };
 
 export default profilePage;

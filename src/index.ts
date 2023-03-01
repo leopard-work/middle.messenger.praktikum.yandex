@@ -1,7 +1,6 @@
 import "reset-css";
 import "./styles.scss";
-import Component from "./services/component";
-import render from "./utils/render";
+import { Router } from "./services/router";
 
 import homePage from "./pages/home/index";
 import signInPage from "./pages/sign-in";
@@ -12,41 +11,26 @@ import profilePage from "./pages/profile";
 import editProfilePage from "./pages/profile/edit";
 import editProfilePasswordPage from "./pages/profile/editPassword";
 
-const root = document.querySelector("#root");
-const title = document.querySelector("title");
+export const router = new Router("#root");
 
-const pathName = window.location.pathname;
+router.setError404Page(error404Page);
+router.setError500Path("/page500");
+router.setProtectUserPath("/");
+router.setProtectNoUserPath("/settings");
 
-type templateProps = {
-  pageTitle: string;
-  content: Component;
-};
-type pagesProps = {
-  [key: string]: templateProps;
-};
-
-const pages: pagesProps = {
-  "": homePage(),
-  "/sign-in": signInPage(),
-  "/sign-up": signUpPage(),
-  "/page404": error404Page(),
-  "/page500": error500Page(),
-  "/profile": profilePage(),
-  "/profile/edit": editProfilePage(),
-  "/profile/password": editProfilePasswordPage(),
-};
-
-export const pageOpen = (pathName: string) => {
-  let page = error404Page();
-  if (pathName[pathName.length - 1] === "/") pathName = pathName.slice(0, -1);
-  if (pages[pathName]) page = pages[pathName];
-
-  if (title != null && root != null) {
-    title.textContent = page.pageTitle;
-    render("#root", page.content);
-  }
-
-  return true;
-};
-
-pageOpen(pathName);
+router
+  .use("/messenger", homePage, "Страница чатов", true, false)
+  .use("", signInPage, "Авторизация", false, true)
+  .use("/sign-up", signUpPage, "Регистрация", false, true)
+  .use("/page404", error404Page, "Ошибка 404", false, false)
+  .use("/page500", error500Page, "Ошибка 500", false, false)
+  .use("/settings", profilePage, "Профиль", true, false)
+  .use("/settings/edit", editProfilePage, "Редактировать профиль", true, false)
+  .use(
+    "/settings/password",
+    editProfilePasswordPage,
+    "Изменить пароль",
+    true,
+    false
+  )
+  .start();

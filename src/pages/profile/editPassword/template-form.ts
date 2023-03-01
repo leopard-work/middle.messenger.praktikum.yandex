@@ -10,6 +10,7 @@ export const templateForm = `
     <label class="auth__input-text-wrapper">
         {{confirmPasswordBlock}}
     </label>
+    <p class="auth_error"><span>{{error}}</span></p>
     <div class="auth__button-wrapper">
         {{buttonBlock}}
     </div>

@@ -9,15 +9,20 @@ import {
 import { form_template } from "./template-form";
 import Link from "../../components/link";
 import tempNav from "../../components/temp-nav";
+import { apiUser } from "../../api/user";
+import { setChatList, setUser } from "../../services/store/actions";
+import { router } from "../../index";
+import CloseFromUserPage from "../../components/close-from-user-page";
+import { setInputsValidateProps, signIpProps } from "../../utils/types";
+import { apiChat } from "../../api/chat";
 
 const values = {
-  pageTitle: "Авторизация",
   title: "Авторизация",
   login: "Логин",
   password: "Пароль",
   button: "Вход",
   reg_link: "Ещё не зарегистрированы?",
-  error: "Ошибка ошибка ошибка",
+  error: "",
 };
 
 const inputs = {
@@ -47,7 +52,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,
@@ -68,35 +73,71 @@ const form = new FormValidate("form", {
     class: "auth",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
         const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
-        form.children.buttonBlock.setProps({
-          button: "Отправлено",
+        (form.children.buttonBlock as Component).setProps({
+          button: "Загрузка...",
           attr: {
             disabled: "true",
           },
         });
+
+        let loginCheck = false;
+
+        await apiUser.signIn(data as signIpProps).then((res) => {
+          (form.children.buttonBlock as Component).setProps({
+            button: values.button,
+            attr: {
+              disabled: "false",
+            },
+          });
+          if (res.status === 500) router.goToError500();
+          if (res.status === 200) {
+            form.setProps({ error: "" });
+            (form.getContent() as HTMLFormElement).reset();
+            loginCheck = true;
+            return;
+          }
+          if (res.response.reason === "Login or password is incorrect") {
+            form.setProps({
+              error: "Неверный логин или пароль",
+            });
+            return;
+          }
+          form.setProps({ error: "Произошла ошибка, повторите позже" });
+        });
+
+        if (loginCheck) {
+          await apiUser.userInfo().then((res) => {
+            if (res.status === 200) {
+              setUser(res.response);
+              apiChat.get().then((res) => {
+                setChatList(res.response);
+              });
+              router.go("/messenger");
+              return;
+            }
+            router.goToError500();
+          });
+        }
       }
     },
   },
 });
 
 const signInPage = () => {
-  const content = new Component("div", {
+  return new CloseFromUserPage("div", {
     tempNav: tempNav(),
     ...values,
     template: template,
     form: form,
   });
-  return { pageTitle: values.pageTitle, content: content };
 };
 
 export default signInPage;

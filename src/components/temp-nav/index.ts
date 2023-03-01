@@ -34,14 +34,14 @@ const tempNav = () => {
 
   const links = [
     title,
-    Link({ children: "Страница чатов", href: "/" }),
-    Link({ children: "Авторизация", href: "/sign-in" }),
+    Link({ children: "Страница чатов", href: "/messenger" }),
+    Link({ children: "Авторизация", href: "/" }),
     Link({ children: "Регистрация", href: "/sign-up" }),
     Link({ children: "Ошибка 404", href: "/page404" }),
     Link({ children: "Ошибка 500", href: "/page500" }),
-    Link({ children: "Профиль", href: "/profile" }),
-    Link({ children: "Изменить данные", href: "/profile/edit" }),
-    Link({ children: "Изменить пароль", href: "/profile/password" }),
+    Link({ children: "Профиль", href: "/settings" }),
+    Link({ children: "Изменить данные", href: "/settings/edit" }),
+    Link({ children: "Изменить пароль", href: "/settings/password" }),
   ];
 
   const linksObj = Object.assign({}, links);

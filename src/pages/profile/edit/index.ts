@@ -9,6 +9,11 @@ import {
 } from "../../../components/form-validate";
 import Link from "../../../components/link";
 import tempNav from "../../../components/temp-nav";
+import ProtectedPage from "../../../components/protected-page";
+import { apiUser } from "../../../api/user";
+import { router } from "../../../index";
+import { setUser } from "../../../services/store/actions";
+import { editProfileProps, setInputsValidateProps } from "../../../utils/types";
 
 const inputs = {
   emailBlock: {
@@ -86,7 +91,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,
@@ -100,7 +105,7 @@ const formButton = new Component("button", {
 const form = new FormValidate("form", {
   backLink: Link({
     children: values.back,
-    href: "/profile",
+    href: "/settings",
     class: "profile__back",
   }),
   ...values,
@@ -111,21 +116,34 @@ const form = new FormValidate("form", {
     class: "auth profile",
   },
   events: {
-    submit: (event: Event) => {
+    submit: async (event: Event) => {
       event.preventDefault();
       if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
-        const data: Record<string, FormDataEntryValue> = {};
-        for (const pair of values.entries()) {
+        const formValues = new FormData(form.getContent() as HTMLFormElement);
+        let data: Record<string, FormDataEntryValue> = {};
+        for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
-        console.log(data);
-        (form.getContent() as HTMLFormElement).reset();
-        form.children.buttonBlock.setProps({
-          passwordBtn: "Отправлено",
+        (form.children.buttonBlock as Component).setProps({
+          template: "Загрузка...",
           attr: {
             disabled: "true",
           },
+        });
+
+        await apiUser.editProfile(data as editProfileProps).then((res) => {
+          (form.children.buttonBlock as Component).setProps({
+            template: values.passwordBtn,
+            attr: {
+              disabled: "false",
+            },
+          });
+          if (res.status === 200) {
+            setUser(res.response);
+            router.go("/settings");
+            return;
+          }
+          router.goToError500();
         });
       }
     },
@@ -133,13 +151,12 @@ const form = new FormValidate("form", {
 });
 
 const editProfilePage = () => {
-  const content = new Component("div", {
+  return new ProtectedPage("div", {
     tempNav: tempNav(),
     ...values,
     template: editTemplate,
     form: form,
   });
-  return { pageTitle: values.pageTitleEdit, content: content };
 };
 
 export default editProfilePage;

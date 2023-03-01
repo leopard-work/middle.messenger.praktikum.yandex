@@ -17,8 +17,8 @@ abstract class Block {
   _id: string = uuid();
   eventBus: () => EventBus;
   props: BlockProps;
-  children: Record<string, Block>;
-  id: string | undefined;
+  children: Record<string, Block | Block[]>;
+  id: string | undefined = uuid();
 
   constructor(tagName: string | null = "div", propsAndChilds: BlockProps) {
     const { children, props } = this._getChildren(propsAndChilds);
@@ -43,10 +43,14 @@ abstract class Block {
     const props: BlockProps = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (Array.isArray(value as Block)) {
         children[key] = value;
       } else {
-        props[key] = value;
+        if (value instanceof Block) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
       }
     });
 
@@ -96,6 +100,7 @@ abstract class Block {
   }
 
   _addEvents() {
+    this.addEvents();
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -118,7 +123,9 @@ abstract class Block {
       Object.entries(this.props["attr"]).forEach(([key, value]) => {
         if (typeof value === "string" && this._element != null) {
           if (value != "false") this._element.setAttribute(key, value);
-          else this._element.removeAttribute(key);
+          else {
+            this._element.removeAttribute(key);
+          }
         }
       });
     }
@@ -152,7 +159,7 @@ abstract class Block {
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    return !isEqual(oldProps, newProps);
+    return isEqual(oldProps, newProps);
   }
 
   getContent(): HTMLElement {
@@ -160,6 +167,10 @@ abstract class Block {
   }
 
   render() {
+    return;
+  }
+
+  addEvents() {
     return;
   }
 
@@ -186,11 +197,25 @@ abstract class Block {
     this.getContent().classList.remove(className);
   }
 
+  hasClass(className: string) {
+    return this.getContent().classList.contains(className);
+  }
+
+  click() {
+    this.getContent().click();
+  }
+
   compile(template: string, props?: BlockProps) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      if (Array.isArray(child)) {
+        const arr: string[] = [];
+        child.map((item) => {
+          arr.push(`<div data-id="${item.id}"></div>`);
+        });
+        propsAndStubs[key] = arr;
+      } else propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
     const fragment = this._createDocumentElement(
@@ -199,10 +224,21 @@ abstract class Block {
     fragment.innerHTML = parseTemplate(template, { ...propsAndStubs });
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector<HTMLInputElement>(
-        `[data-id=${child.id}]`
-      );
-      (stub as HTMLElement).replaceWith(child.getContent());
+      if (Array.isArray(child)) {
+        child.map((item) => {
+          const stub = fragment.content.querySelector<HTMLInputElement>(
+            `[data-id="${item.id}"]`
+          );
+          if (stub) (stub as HTMLElement).replaceWith(item.getContent());
+        });
+      }
+
+      if (child instanceof Block) {
+        const stub = fragment.content.querySelector<HTMLInputElement>(
+          `[data-id="${child.id}"]`
+        );
+        if (stub) (stub as HTMLElement).replaceWith(child.getContent());
+      }
     });
 
     return fragment.content;

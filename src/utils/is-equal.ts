@@ -1,27 +1,31 @@
-type isEqualProps = Record<string, any>;
+type isEqualProps = Record<string, unknown>;
 
 const isEqual = (object1: isEqualProps, object2: isEqualProps) => {
-  const props1 = Object.getOwnPropertyNames(object1);
-  const props2 = Object.getOwnPropertyNames(object2);
+  // if (!object1 || !object2) {
+  //   return object1 !== object2;
+  // }
+  //
+  // const props1 = Object.getOwnPropertyNames(object1);
+  // const props2 = Object.getOwnPropertyNames(object2);
+  //
+  // if (props1.length !== props2.length) {
+  //   return true;
+  // }
+  //
+  // for (let i = 0; i < props1.length; i += 1) {
+  //   const prop = props1[i];
+  //   const bothAreObjects =
+  //     typeof object1[prop] === "object" && typeof object2[prop] === "object";
+  //
+  //   if (
+  //     (!bothAreObjects && object1[prop] !== object2[prop]) ||
+  //     (bothAreObjects && !isEqual(object1[prop], object2[prop]))
+  //   ) {
+  //     return false;
+  //   }
+  // }
 
-  if (props1.length !== props2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < props1.length; i += 1) {
-    const prop = props1[i];
-    const bothAreObjects =
-      typeof object1[prop] === "object" && typeof object2[prop] === "object";
-
-    if (
-      (!bothAreObjects && object1[prop] !== object2[prop]) ||
-      (bothAreObjects && !isEqual(object1[prop], object2[prop]))
-    ) {
-      return false;
-    }
-  }
-
-  return true;
+  return object1 !== object2;
 };
 
 export default isEqual;

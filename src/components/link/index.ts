@@ -1,11 +1,12 @@
 import Component from "../../services/component";
-import { pageOpen } from "../../index";
+import { router } from "../../index";
 
 type LinkProps = {
   children: string;
   href: string;
   class?: string;
   title?: string;
+  onClick?: () => void;
 };
 
 const Link = (props: LinkProps) => {
@@ -15,13 +16,13 @@ const Link = (props: LinkProps) => {
     children: props.children,
     template: "{{children}}",
     attr: {
-      ...props,
+      ...attr,
     },
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        pageOpen(props.href);
-        window.history.pushState(null, "", props.href);
+        if (props.onClick) props.onClick();
+        else router.go(props.href);
       },
     },
   });

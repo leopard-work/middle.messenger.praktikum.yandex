@@ -2,8 +2,7 @@
 
 .auth-wrapper {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -16,12 +15,17 @@
   max-width: 600px;
   border-radius: 5px;
   padding: 40px;
-  background-color: $color_blue;
+  background-color: var(--color-blue);
 
   &_error {
     margin-top: 8px;
-    color: $color_red;
+    color: var(--color-red);
     font-size: 12px;
+
+    span {
+      display: block;
+      text-align: center;
+    }
   }
 
   &__title {
@@ -37,8 +41,7 @@
 
   &__button-wrapper {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -54,9 +57,10 @@
     a {
       font-size: 14px;
       text-decoration: none;
-      color: $color_blue2;
+      color: var(--color-blue2);
+
       &:hover {
-        color: $color_red;
+        color: var(--color-red);
       }
     }
   }
@@ -67,7 +71,7 @@
 
   &__input-text {
     &:disabled {
-      background-color: #ffffff;
+      background-color: #fff;
     }
   }
 
@@ -77,28 +81,33 @@
 
   &__sign-out {
     a {
-      color: $color_red;
+      color: var(--color-red);
 
       &:hover {
-        color: #000000;
+        color: #000;
       }
     }
   }
 
   &__avatar {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     align-content: center;
     margin-bottom: 16px;
 
-    span {
+    div {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background-color: transparentize(#000000, 0.9);
+      background-color: rgb(0 0 0 / 10%);
+
+      img {
+        height: 100%;
+        max-width: 100%;
+        border-radius: 50%;
+      }
     }
   }
 
@@ -115,14 +124,15 @@
     svg {
       width: 40px;
       height: 40px;
+
       polygon {
-        fill: $color_blue2 !important;
+        fill: var(--color-blue2) !important;
       }
     }
 
     &:hover {
       svg polygon {
-        fill: $color_red !important;
+        fill: var(--color-red) !important;
       }
     }
   }

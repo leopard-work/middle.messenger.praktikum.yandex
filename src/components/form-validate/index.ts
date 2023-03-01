@@ -1,13 +1,41 @@
 import Component from "../../services/component";
+import { Connect } from "../../services/store";
+import { setInputsValidateProps, storeProps } from "../../utils/types";
+import { getUser } from "../../services/store/actions";
 
 class Input extends Component {}
 
-export class FormValidate extends Component {
+export class FormValidate extends Connect(
+  Component,
+  (state: storeProps) => state.user
+) {
+  render() {
+    const user = getUser();
+    if (user.userCheck.success) {
+      Object.keys(this.children).forEach((inputName) => {
+        if (this.children[inputName] instanceof Input) {
+          const name: string = (this.children[inputName] as Component).props
+            .attr["name"];
+          const value: Record<string, unknown> = user;
+          (this.children[inputName] as Component).setProps({
+            attr: {
+              ...(this.children[inputName] as Component).props.attr,
+              value: value[name],
+            },
+          });
+        }
+      });
+    }
+    let template = "";
+    if (this.props.template) template = this.props.template;
+    return this.compile(template, { ...this.props });
+  }
   checkFields() {
     let ok = true;
     Object.keys(this.children).forEach((input) => {
-      const value = (this.children[input].getContent() as HTMLInputElement)
-        .value;
+      const value = (
+        (this.children[input] as Component).getContent() as HTMLInputElement
+      ).value;
       if (!checkField(this.children[input], value)) ok = false;
     });
     return ok;
@@ -38,7 +66,7 @@ export const checkField = (element: unknown, value: string) => {
   return true;
 };
 
-const validateInput = (event: Event, element: Input) => {
+export const validateInput = (event: Event, element: Input) => {
   const { target } = event;
   const value = (target as HTMLInputElement).value;
   if (event.type !== "focus") checkField(element, value);
@@ -46,11 +74,11 @@ const validateInput = (event: Event, element: Input) => {
 };
 
 export const setInputsValidate = (
-  inputs: Record<string, any>,
+  inputs: Record<string, setInputsValidateProps>,
   tag = "input"
 ) => {
   Object.keys(inputs).forEach((inputName) => {
-    inputs[inputName] = new Input(tag, {
+    (inputs[inputName] as Component) = new Input(tag, {
       attr: inputs[inputName]["attr"],
       validate: inputs[inputName]["validate"],
       events: {

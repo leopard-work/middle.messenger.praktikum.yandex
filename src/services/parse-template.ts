@@ -1,5 +1,5 @@
 const parseTemplate = (template: string, values: { [key: string]: string }) => {
-  const tplRegularVariable = /\{\{(.*?)\}\}/g;
+  const tplRegularVariable = /{{(.*?)}}/g;
 
   let match = null;
   let result = template;
@@ -10,6 +10,13 @@ const parseTemplate = (template: string, values: { [key: string]: string }) => {
       continue;
     }
     const data = values[variableName];
+    if (Array.isArray(data)) {
+      let value = "";
+      data.map((item) => {
+        value += item;
+      });
+      result = result.replace(match[0], value);
+    }
     result = result.replace(match[0], data);
   }
 
