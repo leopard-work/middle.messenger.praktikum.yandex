@@ -75,6 +75,7 @@ class ChatContentClass extends Connect(
           messagesArr.map((item) => {
             messageAdd(item);
           });
+          scrollChat();
         } else {
           if (messagesArr.type === "message") {
             messageAdd(messagesArr);
@@ -85,6 +86,7 @@ class ChatContentClass extends Connect(
                 last_message: cropMessage(messagesArr.content),
                 attr: { class: "nav-user nav-user_active" },
               });
+            scrollChat();
           }
         }
 
@@ -110,5 +112,18 @@ class ChatContentClass extends Connect(
     return this.compile(template, { ...this.props });
   }
 }
+
+const scrollChat = () => {
+  const chat_messages = document.getElementById("chat_messages");
+  if (chat_messages) {
+    const scroll = setInterval(() => {
+      chat_messages.scrollTo({
+        top: chat_messages.scrollHeight,
+        behavior: "smooth",
+      });
+      clearInterval(scroll);
+    }, 100);
+  }
+};
 
 export default ChatContentClass;

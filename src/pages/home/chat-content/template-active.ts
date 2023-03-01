@@ -8,7 +8,7 @@ export const chatContentActiveTpl = `
       </div>
       {{chatInfoBtn}}
   </div>
-  <div class="chat-messages">
+  <div class="chat-messages" id="chat_messages">
       <div class="chat-messages__inner">
           {{messages}}
       </div>
