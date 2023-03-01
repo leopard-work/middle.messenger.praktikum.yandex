@@ -39,6 +39,7 @@ export type storeProps = {
   activeChat: {
     id: number;
     token: string;
+    createdBy: number;
   };
 };
 
@@ -77,6 +78,7 @@ export type chatAddProps = {
 };
 
 export type chatListProps = {
+  created_by?: number;
   id: number;
   title: string;
   avatar: string;

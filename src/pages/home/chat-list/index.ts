@@ -42,6 +42,7 @@ class ChatListClass extends Connect(
             date: date,
             unread_count: unread_count,
             id: item.id,
+            createdBy: item.created_by,
             attr: {
               href: "/",
               class: "nav-user",
@@ -67,6 +68,7 @@ class ChatListClass extends Connect(
                         setActiveChat({
                           id: item.props.id,
                           token: token.token,
+                          createdBy: item.props.createdBy,
                         });
                       })
                       .catch(() => {
