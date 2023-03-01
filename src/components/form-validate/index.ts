@@ -1,6 +1,6 @@
 import Component from "../../services/component";
 import { Connect } from "../../services/store";
-import { storeProps } from "../../utils/types";
+import { setInputsValidateProps, storeProps } from "../../utils/types";
 import { getUser } from "../../services/store/actions";
 
 class Input extends Component {}
@@ -74,11 +74,11 @@ export const validateInput = (event: Event, element: Input) => {
 };
 
 export const setInputsValidate = (
-  inputs: Record<string, any>,
+  inputs: Record<string, setInputsValidateProps>,
   tag = "input"
 ) => {
   Object.keys(inputs).forEach((inputName) => {
-    inputs[inputName] = new Input(tag, {
+    (inputs[inputName] as Component) = new Input(tag, {
       attr: inputs[inputName]["attr"],
       validate: inputs[inputName]["validate"],
       events: {

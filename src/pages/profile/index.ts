@@ -12,7 +12,7 @@ import { apiUser } from "../../api/user";
 import { router } from "../../index";
 import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
-import { storeProps } from "../../utils/types";
+import { setInputsValidateProps, storeProps } from "../../utils/types";
 import { BASEAPIPATH } from "../../api";
 import { wsClose } from "../../services/ws";
 
@@ -96,7 +96,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const singOutButton = new Component("a", {
   ...values,

@@ -1,4 +1,4 @@
-type isEqualProps = Record<string, any>;
+type isEqualProps = Record<string, unknown>;
 
 const isEqual = (object1: isEqualProps, object2: isEqualProps) => {
   // if (!object1 || !object2) {

@@ -11,7 +11,10 @@ import tempNav from "../../../components/temp-nav";
 import Link from "../../../components/link";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
-import { editPasswordProps } from "../../../utils/types";
+import {
+  editPasswordProps,
+  setInputsValidateProps,
+} from "../../../utils/types";
 
 const inputs = {
   oldPasswordBlock: {
@@ -52,7 +55,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,

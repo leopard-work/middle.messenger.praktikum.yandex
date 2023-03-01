@@ -6,7 +6,7 @@ import Modal from "../../../components/modal";
 import validateTypes from "../../../utils/validate-types";
 import Component from "../../../services/component";
 import { apiChat } from "../../../api/chat";
-import { chatAddProps } from "../../../utils/types";
+import { chatAddProps, setInputsValidateProps } from "../../../utils/types";
 import { router } from "../../../index";
 import { clearActiveChat, setChatList } from "../../../services/store/actions";
 import { wsClose } from "../../../services/ws";
@@ -31,7 +31,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const button = new Component("button", {
   template: "Добавить",

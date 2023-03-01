@@ -10,6 +10,7 @@ import { apiUser } from "../../../api/user";
 import { getActiveChat } from "../../../services/store/actions";
 import { apiChat } from "../../../api/chat";
 import { router } from "../../../index";
+import { setInputsValidateProps } from "../../../utils/types";
 
 const chatAddUserModalTpl = `
   <h1 class="auth__title">Добавить пользователя</h1>
@@ -88,7 +89,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const input = inputs.inpName as unknown as Component;
 

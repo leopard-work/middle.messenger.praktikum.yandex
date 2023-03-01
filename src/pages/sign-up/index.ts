@@ -13,7 +13,7 @@ import { apiUser } from "../../api/user";
 import { router } from "../../index";
 import { setUser } from "../../services/store/actions";
 import CloseFromUserPage from "../../components/close-from-user-page";
-import { signUpProps } from "../../utils/types";
+import { setInputsValidateProps, signUpProps } from "../../utils/types";
 
 const signUpPage = () => {
   const values = {
@@ -118,7 +118,9 @@ const signUpPage = () => {
     },
   };
 
-  setInputsValidate(inputs);
+  setInputsValidate(
+    inputs as unknown as Record<string, setInputsValidateProps>
+  );
 
   const formButton = new Component("button", {
     ...values,

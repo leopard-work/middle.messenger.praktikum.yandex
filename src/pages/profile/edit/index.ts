@@ -13,7 +13,7 @@ import ProtectedPage from "../../../components/protected-page";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
 import { setUser } from "../../../services/store/actions";
-import { editProfileProps } from "../../../utils/types";
+import { editProfileProps, setInputsValidateProps } from "../../../utils/types";
 
 const inputs = {
   emailBlock: {
@@ -91,7 +91,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,

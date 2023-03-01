@@ -2,6 +2,11 @@ import Component from "../services/component";
 
 export type BlockProps = Record<string, any>;
 
+export type setInputsValidateProps = {
+  attr: Record<string, unknown>;
+  validate?: Record<string, unknown>;
+} & Component;
+
 export type routeBlockClassProps = () => Component;
 
 export type routeBlockProps = Component | null;

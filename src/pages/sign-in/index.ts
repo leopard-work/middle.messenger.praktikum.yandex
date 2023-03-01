@@ -13,7 +13,7 @@ import { apiUser } from "../../api/user";
 import { setChatList, setUser } from "../../services/store/actions";
 import { router } from "../../index";
 import CloseFromUserPage from "../../components/close-from-user-page";
-import { signIpProps } from "../../utils/types";
+import { setInputsValidateProps, signIpProps } from "../../utils/types";
 import { apiChat } from "../../api/chat";
 
 const values = {
@@ -52,7 +52,7 @@ const inputs = {
   },
 };
 
-setInputsValidate(inputs);
+setInputsValidate(inputs as unknown as Record<string, setInputsValidateProps>);
 
 const formButton = new Component("button", {
   ...values,
