@@ -2,6 +2,7 @@ import Component from "../../services/component";
 import { Connect } from "../../services/store";
 import { setInputsValidateProps, storeProps } from "../../utils/types";
 import { getUser } from "../../services/store/actions";
+import { messagesForm } from "../../pages/home";
 
 class Input extends Component {}
 
@@ -39,6 +40,10 @@ export class FormValidate extends Connect(
       if (!checkField(this.children[input], value)) ok = false;
     });
     return ok;
+  }
+
+  submit() {
+    this._element!.dispatchEvent(new Event("submit"));
   }
 }
 
@@ -78,13 +83,35 @@ export const setInputsValidate = (
   tag = "input"
 ) => {
   Object.keys(inputs).forEach((inputName) => {
-    (inputs[inputName] as Component) = new Input(tag, {
-      attr: inputs[inputName]["attr"],
-      validate: inputs[inputName]["validate"],
-      events: {
-        blur: (event: Event) => validateInput(event, inputs[inputName]),
-        focus: (event: Event) => validateInput(event, inputs[inputName]),
-      },
-    });
+    if (tag !== "textarea") {
+      (inputs[inputName] as Component) = new Input(tag, {
+        attr: inputs[inputName]["attr"],
+        validate: inputs[inputName]["validate"],
+        events: {
+          blur: (event: Event) => validateInput(event, inputs[inputName]),
+          focus: (event: Event) => validateInput(event, inputs[inputName]),
+        },
+      });
+    } else {
+      (inputs[inputName] as Component) = new Input(tag, {
+        attr: inputs[inputName]["attr"],
+        validate: inputs[inputName]["validate"],
+        events: {
+          blur: (event: Event) => validateInput(event, inputs[inputName]),
+          focus: (event: Event) => validateInput(event, inputs[inputName]),
+          keydown: (event: Event) => {
+            if (
+              (event as KeyboardEvent).keyCode == 13 &&
+              !(event as KeyboardEvent).shiftKey
+            ) {
+              event.preventDefault();
+              messagesForm.submit();
+            } else {
+              return;
+            }
+          },
+        },
+      });
+    }
   });
 };

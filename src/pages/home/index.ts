@@ -61,7 +61,7 @@ setInputsValidate(
   "textarea"
 );
 
-const form = new FormValidate("form", {
+export const messagesForm = new FormValidate("form", {
   ...values,
   ...inputs,
   attr: {
@@ -73,8 +73,10 @@ const form = new FormValidate("form", {
       event.preventDefault();
       event.stopPropagation();
 
-      if (form.checkFields()) {
-        const values = new FormData(form.getContent() as HTMLFormElement);
+      if (messagesForm.checkFields()) {
+        const values = new FormData(
+          messagesForm.getContent() as HTMLFormElement
+        );
         const data: Record<string, FormDataEntryValue> = {};
         for (const pair of values.entries()) {
           data[pair[0]] = pair[1];
@@ -104,7 +106,7 @@ const form = new FormValidate("form", {
               attr: { class: "nav-user nav-user_active" },
             });
         }
-        (form.getContent() as HTMLFormElement).reset();
+        (messagesForm.getContent() as HTMLFormElement).reset();
       }
     },
   },
@@ -152,7 +154,7 @@ const chatContent = new ChatContentClass("div", {
       chatAddModal.show();
     },
   }),
-  form: form,
+  form: messagesForm,
   avatar: avatarBlock,
 });
 
@@ -209,6 +211,7 @@ export const avatarInput = new Component("input", {
     },
   },
 });
+avatarInput.hide();
 
 export const errorModal = new Modal("div", {
   children: "",
