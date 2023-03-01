@@ -1,6 +1,6 @@
 {
   "name": "yp_messenger",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Yandex Practicum messenger project",
   "scripts": {
     "dev": "parcel index.html --open",
