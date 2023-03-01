@@ -8,7 +8,7 @@ import dateParse from "../../../utils/date-parse";
 import { apiChat } from "../../../api/chat";
 import { router } from "../../../index";
 import cropMessage from "../../../utils/crop-message";
-import { BASEAPIPATH } from "../../../api";
+import { BASE_API_PATH } from "../../../api";
 
 class ChatAvatarClass extends Connect(
   Component,
@@ -17,7 +17,7 @@ class ChatAvatarClass extends Connect(
   render() {
     let template = "<div></div>";
     if (this.props.avatar) {
-      template = `<div><img src="${BASEAPIPATH}resources{{avatar}}" alt=""></div>`;
+      template = `<div><img src="${BASE_API_PATH}resources{{avatar}}" alt=""></div>`;
     }
     return this.compile(template, { ...this.props });
   }
