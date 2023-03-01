@@ -63,7 +63,8 @@ export const checkField = (element: unknown, value: string) => {
     }
     if (!pattern.test(value)) {
       if (parent) parent.appendChild(error.getContent());
-      element.addClass("input-error");
+      if (element._meta!.tagName !== "textarea")
+        element.addClass("input-error");
       return false;
     }
     element.removeClass("input-error");
