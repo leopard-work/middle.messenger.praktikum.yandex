@@ -2,7 +2,7 @@ export const chatContentActiveTpl = `
   <div class="chat-info">
       <div class="chat-info__user">
           <div class="nav-user__logo">
-              <span></span>
+              {{avatar}}
           </div>
           <p class="chat-info__user-title">{{title}}</p>
       </div>

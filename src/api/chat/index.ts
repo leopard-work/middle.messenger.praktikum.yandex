@@ -31,6 +31,9 @@ class apiChatService {
   deleteUser(data: chatUserAdd) {
     return http.delete(`${BASEAPIPATH}chats/users`, { data: data });
   }
+  changeAvatar(data: FormData) {
+    return http.put(`${BASEAPIPATH}chats/avatar`, { data: data });
+  }
 }
 
 export const apiChat = new apiChatService();

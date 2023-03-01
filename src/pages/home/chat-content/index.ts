@@ -95,11 +95,16 @@ class ChatContentClass extends Connect(
       const activeChat = list!.find((item) => item.id === chatId);
       template = chatContentActiveTpl;
 
-      if (activeChat)
+      if (activeChat) {
+        this.children = {
+          ...this.children,
+        };
+
         return this.compile(template, {
           ...this.props,
           title: activeChat.title,
         });
+      }
     }
 
     return this.compile(template, { ...this.props });

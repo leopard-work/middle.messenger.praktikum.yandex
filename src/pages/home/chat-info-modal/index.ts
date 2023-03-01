@@ -2,7 +2,7 @@ import Modal from "../../../components/modal";
 import Link from "../../../components/link";
 import chatAddModal from "../chat-add-modal";
 import Component from "../../../services/component";
-import { chatDelete } from "../index";
+import { avatarInput, chatDelete } from "../index";
 import chatAddUserModal from "../chat-add-user-modal";
 import chatDeleteUserModal, {
   chatDeleteGetUsers,
@@ -15,6 +15,7 @@ const chatInfoModalTemplate = `
     <li><a href="/">{{chatDelete}}</a></li>
     <li><a href="/">{{chatAddUserBtn}}</a></li>
     <li><a href="/">{{chatDeleteUserBtn}}</a></li>
+    <li><a href="/">{{chatAvatarLoad}}</a></li>
   </ul> 
 `;
 
@@ -51,6 +52,14 @@ const chatInfoModalChildren = new Component("div", {
       chatInfoModal.hide();
       chatDeleteGetUsers();
       chatDeleteUserModal.show();
+    },
+  }),
+  chatAvatarLoad: Link({
+    children: "Изменить аватар чата",
+    href: "/",
+    onClick: () => {
+      chatInfoModal.hide();
+      avatarInput.click();
     },
   }),
 });

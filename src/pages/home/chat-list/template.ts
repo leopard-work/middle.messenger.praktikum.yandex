@@ -1,6 +1,6 @@
 export const chatListItemTpl = `
   <div class="nav-user__logo">
-      <span></span>
+      {{avatar}}
   </div>
   <div class="nav-user__content">
       <div class="nav-user__title-block">

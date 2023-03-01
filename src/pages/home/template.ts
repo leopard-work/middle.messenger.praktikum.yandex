@@ -26,4 +26,5 @@ export const template = `
     {{chatDeleteUserModal}}
     {{chatAddUserModal}}
     {{errorModal}}
+    {{avatarInput}}
 `;
