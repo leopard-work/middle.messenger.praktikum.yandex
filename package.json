@@ -6,6 +6,7 @@
     "dev": "parcel index.html --open",
     "build": "parcel build index.html",
     "start": "node ./server.js",
+    "test": "jest",
     "test:lint": "eslint .",
     "test:stylelint": "stylelint src/**/*.scss"
   },
@@ -14,16 +15,19 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "2.8.2",
+    "@types/jest": "^29.4.0",
     "@types/uuid": "9.0.0",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
     "eslint": "8.31.0",
+    "jest": "^29.4.3",
     "parcel": "2.8.2",
     "postcss-scss": "4.0.6",
     "prettier": "2.8.1",
     "stylelint": "14.16.1",
     "stylelint-config-standard-scss": "6.1.0",
     "stylelint-scss": "4.3.0",
+    "ts-jest": "^29.0.5",
     "typescript": "4.9.4"
   },
   "dependencies": {
