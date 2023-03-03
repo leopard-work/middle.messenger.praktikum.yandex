@@ -1,10 +1,26 @@
 import Router from "./router";
 
-describe("Шаблонизатор", () => {
-  const router = new Router("#root");
+const root = "#root";
+const page = "/page";
+const router = new Router("#root");
 
-  it("Проверка обработки", () => {
-    router.go("/sign-up");
-    expect(router.history.length).toBe(4);
+describe("Router", () => {
+  it("Проверка корня", () => {
+    expect(router._rootQuery).toBe(root);
+  });
+
+  it("Проверка пути ошибки 500", () => {
+    router.setError500Path(page);
+    expect(router._error500Path).toBe(page);
+  });
+
+  it("Проверка пути незарегистированного пользователя", () => {
+    router.setProtectUserPath(page);
+    expect(router._protectUserPath).toBe(page);
+  });
+
+  it("Проверка пути зарегистированного пользователя", () => {
+    router.setProtectNoUserPath(page);
+    expect(router._protectNoUserPath).toBe(page);
   });
 });
