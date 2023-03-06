@@ -3,3 +3,6 @@
 /node_modules
 .eslintrc.js
 server.js
+webpack.config.js
+jest.config.js
+postcss.config.js

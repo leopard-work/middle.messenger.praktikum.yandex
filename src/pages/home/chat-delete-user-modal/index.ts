@@ -2,7 +2,7 @@ import Component from "../../../services/component";
 import { FormValidate } from "../../../components/form-validate";
 import Modal from "../../../components/modal";
 import { apiChat } from "../../../api/chat";
-import { getActiveChat, getUser } from "../../../services/store/actions";
+import { getActiveChat } from "../../../services/store/actions";
 import { router } from "../../../index";
 import { deleteChatUserProps } from "../../../utils/types";
 
