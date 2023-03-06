@@ -4,7 +4,7 @@ import Component from "../component";
 const block = () => {
   return new Component("div", {});
 };
-let route = new Route("/", block, {
+const route = new Route("/", block, {
   rootQuery: "#root",
 });
 
