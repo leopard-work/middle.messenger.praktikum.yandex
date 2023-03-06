@@ -15,6 +15,9 @@
     "start": "node ./server.js",
     "prepare": "husky install"
   },
+  "lint-staged": {
+    "*.{js,ts}": "eslint ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leopard-work/middle.messenger.praktikum.yandex.git"
