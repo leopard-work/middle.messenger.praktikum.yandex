@@ -15,7 +15,7 @@ export const router = new Router("#root");
 
 router.setError404Page(error404Page);
 router.setError500Path("/page500");
-router.setProtectUserPath("/");
+routerq.setProtectUserPath("/");
 router.setProtectNoUserPath("/messenger");
 
 router
