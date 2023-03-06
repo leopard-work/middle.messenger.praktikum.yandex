@@ -8,7 +8,7 @@ type connectProps = {
 
 export default function connect(
   Component: connectProps,
-  mapStateToProps: (props: storeProps) => Record<string, unknown> | {}
+  mapStateToProps: (props: storeProps) => Record<string, unknown> | {} // eslint-disable-line
 ) {
   return class extends Component {
     constructor(tag: string, props = {}) {
