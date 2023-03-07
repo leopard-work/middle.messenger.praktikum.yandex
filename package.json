@@ -1,17 +1,17 @@
 {
   "name": "yp_messenger",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Yandex Practicum messenger project",
   "main": "index.js",
   "scripts": {
     "test": "jest --env=jsdom",
     "test:lint": "eslint .",
     "test:stylelint": "stylelint src/**/*.scss",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "dev": "webpack serve",
+    "build": "webpack --mode=production --node-env=production --config webpack.prod.js",
+    "build:dev": "webpack --mode=development --config webpack.dev.js",
+    "build:prod": "webpack --mode=production --node-env=production --config webpack.prod.js",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "dev": "webpack serve --open --config webpack.dev.js",
     "start": "node ./server.js",
     "prepare": "husky install"
   },
@@ -63,6 +63,7 @@
     "typescript": "4.9.5",
     "webpack": "5.75.0",
     "webpack-cli": "5.0.1",
-    "webpack-dev-server": "4.11.1"
+    "webpack-dev-server": "4.11.1",
+    "webpack-merge": "^5.8.0"
   }
 }
