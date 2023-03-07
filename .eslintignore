@@ -1,5 +1,11 @@
 /dist
 **/*.min.js
+**/*.test.js
 /node_modules
 .eslintrc.js
 server.js
+webpack.common.js
+webpack.dev.js
+webpack.prod.js
+jest.config.js
+postcss.config.js

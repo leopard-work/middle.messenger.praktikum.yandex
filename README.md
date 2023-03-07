@@ -2,11 +2,15 @@
 
 Используется компонентный подход с простым шаблонизатором.
 
-Проект доступен по ссылке [https://regal-trifle-19850c.netlify.app/](https://regal-trifle-19850c.netlify.app/)
+Проект доступен по ссылкам: 
+
+[https://regal-trifle-19850c.netlify.app/](https://regal-trifle-19850c.netlify.app/) 
+
+[https://yp-messager.onrender.com/](https://yp-messager.onrender.com/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a2eb8394-4092-4792-ad4e-5299b9636e3f/deploy-status)](https://app.netlify.com/sites/regal-trifle-19850c/deploys)
 
-#### `#JavaScript` `#TypeScript` `#SCSS` `#БЭМ` `#REST_API` `WebSocket`
+#### `#JavaScript` `#TypeScript` `#SCSS` `#БЭМ` `#REST_API` `#WebSocket`
 
 #
 

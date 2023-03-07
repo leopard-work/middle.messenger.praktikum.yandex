@@ -8,7 +8,6 @@ import {
 } from "../../components/form-validate";
 import { form_template } from "./template-form";
 import Link from "../../components/link";
-import tempNav from "../../components/temp-nav";
 import { apiUser } from "../../api/user";
 import { setChatList, setUser } from "../../services/store/actions";
 import { router } from "../../index";
@@ -133,7 +132,6 @@ const form = new FormValidate("form", {
 
 const signInPage = () => {
   return new CloseFromUserPage("div", {
-    tempNav: tempNav(),
     ...values,
     template: template,
     form: form,

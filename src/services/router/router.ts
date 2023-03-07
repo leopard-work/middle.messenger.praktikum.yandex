@@ -45,7 +45,7 @@ class Router {
   }
 
   start() {
-    window.onpopstate = (event) => {
+    window.onpopstate = (event: PopStateEvent) => {
       type targetProps = EventTarget & { location: Location };
       const target: targetProps = event.currentTarget as targetProps;
       if (target) this._onRoute(target.location.pathname);

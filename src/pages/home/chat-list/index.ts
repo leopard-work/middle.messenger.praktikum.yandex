@@ -8,6 +8,20 @@ import dateParse from "../../../utils/date-parse";
 import { apiChat } from "../../../api/chat";
 import { router } from "../../../index";
 import cropMessage from "../../../utils/crop-message";
+import { BASE_API_PATH } from "../../../api";
+
+class ChatAvatarClass extends Connect(
+  Component,
+  (state: storeProps) => state.chat
+) {
+  render() {
+    let template = "<div></div>";
+    if (this.props.avatar) {
+      template = `<div><img src="${BASE_API_PATH}resources{{avatar}}" alt=""></div>`;
+    }
+    return this.compile(template, { ...this.props });
+  }
+}
 
 class ChatListClass extends Connect(
   Component,
@@ -34,6 +48,8 @@ class ChatListClass extends Connect(
             unread_count = `<p class="nav-user__counter">${item.unread_count}</p>`;
         }
 
+        const avatarBlock = new ChatAvatarClass("div", { avatar: item.avatar });
+
         chatListComponents.push(
           new Component("a", {
             template: chatListItemTpl,
@@ -42,6 +58,8 @@ class ChatListClass extends Connect(
             date: date,
             unread_count: unread_count,
             id: item.id,
+            createdBy: item.created_by,
+            avatar: avatarBlock,
             attr: {
               href: "/",
               class: "nav-user",
@@ -67,6 +85,7 @@ class ChatListClass extends Connect(
                         setActiveChat({
                           id: item.props.id,
                           token: token.token,
+                          createdBy: item.props.createdBy,
                         });
                       })
                       .catch(() => {

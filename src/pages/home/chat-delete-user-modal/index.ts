@@ -2,7 +2,7 @@ import Component from "../../../services/component";
 import { FormValidate } from "../../../components/form-validate";
 import Modal from "../../../components/modal";
 import { apiChat } from "../../../api/chat";
-import { getActiveChat, getUser } from "../../../services/store/actions";
+import { getActiveChat } from "../../../services/store/actions";
 import { router } from "../../../index";
 import { deleteChatUserProps } from "../../../utils/types";
 
@@ -32,9 +32,8 @@ for (let i = 0; i < 10; i++) {
           const id = link.getAttribute("id");
           if (id) {
             const chat = getActiveChat();
-            const user = getUser();
-            if (user.id.toString() === id) {
-              alert("Вы не можете удалить самого себя");
+            if (+chat.createdBy === +id) {
+              alert("Вы не можете удалить владельца чата");
               return false;
             }
             if (id && chat.id !== -1) {
@@ -68,7 +67,6 @@ export const chatDeleteGetUsers = () => {
       loading.hide();
       usersArr.map((item) => item.hide());
       res.response.map((item: deleteChatUserProps, i: number) => {
-        console.log(item);
         usersArr[i].setProps({ login: item.login, id: item.id });
         usersArr[i].show();
       });

@@ -5,7 +5,6 @@ import {
   setInputsValidate,
 } from "../../components/form-validate";
 import Link from "../../components/link";
-import tempNav from "../../components/temp-nav";
 import ProtectedPage from "../../components/protected-page";
 import Component from "../../services/component";
 import { apiUser } from "../../api/user";
@@ -13,7 +12,7 @@ import { router } from "../../index";
 import { clearState, setUser } from "../../services/store/actions";
 import { Connect } from "../../services/store";
 import { setInputsValidateProps, storeProps } from "../../utils/types";
-import { BASEAPIPATH } from "../../api";
+import { BASE_API_PATH } from "../../api";
 import { wsClose } from "../../services/ws";
 
 export const values = {
@@ -160,7 +159,7 @@ class AvatarClass extends Connect(
   render() {
     let template = "<div></div>";
     if (this.props.avatar) {
-      template = `<div><img src="${BASEAPIPATH}resources{{avatar}}" alt=""></div>`;
+      template = `<div><img src="${BASE_API_PATH}resources{{avatar}}" alt=""></div>`;
     }
     return this.compile(template, { ...this.props });
   }
@@ -183,7 +182,6 @@ const loadPhotoLink = new Component("a", {
 
 const profileForm = new FormValidate("div", {
   template: template,
-  tempNav: tempNav(),
   backLink: Link({
     children: values.back,
     href: "/messenger",

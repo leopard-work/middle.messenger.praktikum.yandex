@@ -105,8 +105,8 @@ export class HTTPTransport {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      if (data instanceof FormData) {
-      } else xhr.setRequestHeader("Content-Type", "application/json");
+      if (!(data instanceof FormData))
+        xhr.setRequestHeader("Content-Type", "application/json");
 
       if (headers) {
         for (const key in headers) {

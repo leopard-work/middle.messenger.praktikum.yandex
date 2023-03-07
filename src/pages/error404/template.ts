@@ -1,5 +1,4 @@
 export const template = `
-    {{tempNav}}
     <main class="page-error">
         <h1 class="page-error__title">{{title}}</h1>
         <p class="page-error__text">{{text}}</p>

@@ -22,6 +22,7 @@ export const InitialState: storeProps = {
   activeChat: {
     id: -1,
     token: "",
+    createdBy: -1,
   },
 };
 
@@ -58,10 +59,7 @@ export default class Store extends EventBus {
     return this;
   }
 
-  set(
-    id: keyof storeProps,
-    value: storeProps["user"] & storeProps["chat"] & storeProps["activeChat"]
-  ) {
+  set(id: keyof storeProps, value: any) {
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;

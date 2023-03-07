@@ -185,6 +185,10 @@ abstract class Block {
     this.getContent().style.display = "block";
   }
 
+  showFlex() {
+    this.getContent().style.display = "flex";
+  }
+
   hide() {
     this.getContent().style.display = "none";
   }

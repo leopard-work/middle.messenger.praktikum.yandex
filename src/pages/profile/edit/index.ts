@@ -8,7 +8,6 @@ import {
   setInputsValidate,
 } from "../../../components/form-validate";
 import Link from "../../../components/link";
-import tempNav from "../../../components/temp-nav";
 import ProtectedPage from "../../../components/protected-page";
 import { apiUser } from "../../../api/user";
 import { router } from "../../../index";
@@ -120,7 +119,7 @@ const form = new FormValidate("form", {
       event.preventDefault();
       if (form.checkFields()) {
         const formValues = new FormData(form.getContent() as HTMLFormElement);
-        let data: Record<string, FormDataEntryValue> = {};
+        let data: Record<string, FormDataEntryValue> = {}; // eslint-disable-line
         for (const pair of formValues.entries()) {
           data[pair[0]] = pair[1];
         }
@@ -152,7 +151,6 @@ const form = new FormValidate("form", {
 
 const editProfilePage = () => {
   return new ProtectedPage("div", {
-    tempNav: tempNav(),
     ...values,
     template: editTemplate,
     form: form,

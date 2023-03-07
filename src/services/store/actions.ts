@@ -43,13 +43,18 @@ const setChatList = (data: Pick<storeProps, "chat">) => {
   });
 };
 
-const setActiveChat = (data: { id: number; token: string }) => {
+const setActiveChat = (data: {
+  id: number;
+  token: string;
+  createdBy: number;
+}) => {
   const state = store.getState();
   const activeChat = state.activeChat;
   store.set("activeChat", {
     ...activeChat,
     id: data.id,
     token: data.token,
+    createdBy: data.createdBy,
   });
 };
 
